@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MudletPackage>
+<MudletPackage version="1.001">
+	<TriggerPackage>
+		<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+			<name>zapisz oswajanie zwierzecia</name>
+			<script>local raw = matches[2]
+local arr = string.split(raw, " ")
+
+if table.size(arr) == 2 then
+  -- karminie nazwanego zwierzaka jedzeniem lub ryba
+  oswajanie.alias.insert_feeding_entry(arr[1], arr[2])
+elseif table.size(arr) == 3 then
+  -- karminie nazwanego zwierzaka miesem
+  oswajanie.alias.insert_feeding_entry(arr[1], arr[2].." "..arr[3])
+elseif table.size(arr) == 4 then
+  -- karminie nienazwanego zwierzaka jedzeniem lub ryba
+  oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], arr[4])
+elseif table.size(arr) == 5 then
+  -- karminie nienazwanego zwierzaka miesem lub sokola jedzeniem/ryba
+  if( arr[4] == 'miesem' ) then
+    oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], arr[4].." "..arr[5])
+  else
+    oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3].." "..arr[4], arr[5])
+  end
+elseif table.size(arr) == 6 then
+  -- karminie nienazwanego sokola miesem
+  oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3].." "..arr[4], arr[5].." "..arr[6])
+else
+  display("trigger do karmiania nic nie rozpoznal")
+end
+oswajanie.trigger.feed_alert()
+scripts.utils.bind_functional("ocen zwierze", false, false)
+</script>
+			<triggerType>0</triggerType>
+			<conditonLineDelta>0</conditonLineDelta>
+			<mStayOpen>0</mStayOpen>
+			<mCommand></mCommand>
+			<packageName>arkadia-oswajanie</packageName>
+			<mFgColor>#ff0000</mFgColor>
+			<mBgColor>#ffff00</mBgColor>
+			<mSoundFile></mSoundFile>
+			<colorTriggerFgColor>#000000</colorTriggerFgColor>
+			<colorTriggerBgColor>#000000</colorTriggerBgColor>
+			<regexCodeList>
+				<string>^Karmiac (.*) zachecasz(.*)</string>
+				<string>^Karmiac (.*) oswajasz(.*)</string>
+			</regexCodeList>
+			<regexCodePropertyList>
+				<integer>1</integer>
+				<integer>1</integer>
+			</regexCodePropertyList>
+		</Trigger>
+		<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+			<name>ocena zwierzecia</name>
+			<script>oswajanie.trigger.animal_desc(matches[1])</script>
+			<triggerType>0</triggerType>
+			<conditonLineDelta>7</conditonLineDelta>
+			<mStayOpen>2</mStayOpen>
+			<mCommand></mCommand>
+			<packageName>arkadia-oswajanie</packageName>
+			<mFgColor>#ff0000</mFgColor>
+			<mBgColor>#ffff00</mBgColor>
+			<mSoundFile></mSoundFile>
+			<colorTriggerFgColor>#000000</colorTriggerFgColor>
+			<colorTriggerBgColor>#000000</colorTriggerBgColor>
+			<regexCodeList>
+				<string>^Ogladasz dokladnie (.*)$</string>
+				<string>^Sadzac po zachowaniu zwierze jest (.*).$</string>
+			</regexCodeList>
+			<regexCodePropertyList>
+				<integer>1</integer>
+				<integer>1</integer>
+			</regexCodePropertyList>
+		</Trigger>
+	</TriggerPackage>
+		
+        <TimerPackage />
+	<AliasPackage>
+		<Alias isActive="yes" isFolder="no">
+			<name>pokaz oswajanie</name>
+			<script>local animal = string.sub(matches[1], 10)
+oswajanie.alias.print_table_by_animal(animal)</script>
+			<command></command>
+			<packageName>arkadia-oswajanie</packageName>
+			<regex>^/o_pokaz (.*)$</regex>
+		</Alias>
+		<Alias isActive="yes" isFolder="no">
+			<name>pokaz aktywne zwierzeta</name>
+			<script>oswajanie.alias.print_animals()</script>
+			<command></command>
+			<packageName>arkadia-oswajanie</packageName>
+			<regex>^/o_pokaz$</regex>
+		</Alias>
+		<Alias isActive="yes" isFolder="no">
+			<name>pokaz historie oswajania aktywnych zwierzat</name>
+			<script>oswajanie.alias.print_table_by_animal_all()</script>
+			<command></command>
+			<packageName>arkadia-oswajanie</packageName>
+			<regex>^/o_historia$</regex>
+		</Alias>
+		<Alias isActive="yes" isFolder="no">
+			<name>pomoc skryptow oswajania</name>
+			<script>oswajanie.alias.print_help()</script>
+			<command></command>
+			<packageName>arkadia-oswajanie</packageName>
+			<regex>^/o_pomoc$</regex>
+		</Alias>		
+       <Alias isActive="yes" isFolder="no">
+            <name>reczne ladowanie pluginu oswajanie</name>
+            <script>expandAlias("/lua load_plugin('arkadia-oswajanie')")</script>
+            <command></command>
+            <packageName>arkadia-oswajanie</packageName>
+            <regex>^/lpo$</regex>
+        </Alias>
+		<Alias isActive="yes" isFolder="no">
+			<name>wylacz zwierze w bazie</name>
+			<script>local animal = string.sub(matches[1], 11)
+oswajanie.alias.disable(animal)</script>
+			<command></command>
+			<packageName>arkadia-oswajanie</packageName>
+			<regex>^/o_wylacz (.*)$</regex>
+		</Alias>
+		<Alias isActive="yes" isFolder="no">
+			<name>wlacz zwierze w bazie</name>
+			<script>local animal = string.sub(matches[1], 10)
+oswajanie.alias.enable(animal)</script>
+			<command></command>
+			<packageName>arkadia-oswajanie</packageName>
+			<regex>^/o_wlacz (.*)$</regex>
+		</Alias>
+		<Alias isActive="yes" isFolder="no">
+			<name>przemianuj zwierze</name>
+			<script>local animal = string.trim(matches[2])
+			local new_name = string.trim(matches[3])
+			oswajanie.alias.rename(animal, new_name)</script>
+			<command></command>
+			<packageName>arkadia-oswajanie</packageName>
+			<regex>^/o_przemianuj (.*) na (.*)$</regex>
+		</Alias>
+	</AliasPackage>
+        <ActionPackage />
+        <ScriptPackage />
+        <KeyPackage />
+        <HelpPackage>
+                <helpURL></helpURL>
+        </HelpPackage>
+</MudletPackage>

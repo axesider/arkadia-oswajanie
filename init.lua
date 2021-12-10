@@ -1,0 +1,5 @@
+return {
+  "start",
+  "oswajanie",
+  "execute"
+}

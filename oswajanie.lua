@@ -1,3 +1,152 @@
+local warzywa = {
+    ["glowka kapusty"] = {narzednik = "glowka"},
+    ["pomidor"] = {narzednik = "pomidorem"},
+    ["ziemniak"] = {narzednik = "ziemniakiem"},
+    --[""] = {narzednik = ""},   
+}
+
+local szczatki = {
+    ["gruczol"] = {narzednik = "gruczolem"},
+    ["grzebien"] = {narzednik = "grzebieniem"},
+    ["jajko"] = {narzednik = "jajkiem"},
+    ["jajo"] = {narzednik = "jajem"},
+    ["jezor"] = {narzednik = "jezorem"},
+    ["kiel"] = {narzednik = "klem"},
+    ["macka"] = {narzednik = "macka"},
+    ["nerka"] = {narzednik = "nerka"},
+    ["noga"] = {narzednik = "noga"},
+    ["nos"] = {narzednik = "nosem"},
+    ["odnoze"] = {narzednik = "odnozem"},
+    ["oko"] = {narzednik = "okiem"},
+    ["paznokiec"] = {narzednik = "paznokciem"},
+    ["pazur"] = {narzednik = "pazurem"},
+    ["pecherz"] = {narzednik = "pecherzem"},
+    ["serce"] = {narzednik = "sercem"},
+    ["skalp"] = {narzednik = "skalpem"},
+    ["skrzydlo"] = {narzednik = "skrzydlem"},
+    ["ucho"] = {narzednik = "uchem"},
+    ["watroba"] = {narzednik = "watroba"},
+    ["woreczek"] = {narzednik = "woreczkiem"},
+}
+local owoce = {
+    ["agrest"] = {narzednik = "agrestem"},
+    ["cytryna"] = {narzednik = "cytryna"},
+    ["czeresnia"] = {narzednik = "czeresnia"},
+    ["daktyl"] = {narzednik = "daktylem"},
+    ["figa"] = {narzednik = "figa"},
+    ["gruszka"] = {narzednik = "gruszka"},
+    ["jablko"] = {narzednik = "jablkiem"},
+    ["jagoda"] = {narzednik = "jagoda"},
+    ["kisc"] = {narzednik = "kiscia"},   
+    ["malina"] = {narzednik = "malina"},
+    ["mandarynka"] = {narzednik = "mandarynka"},
+    ["mango"] = {narzednik = "mango"},
+    ["melon"] = {narzednik = "melonem"},
+    ["oliwka"] = {narzednik = "oliwka"},
+    ["orzech"] = {narzednik = "orzechem"},
+    ["owoc"] = {narzednik = "owocem"},
+    ["papaja"] = {narzednik = "papaja"},
+    ["pomarancz"] = {narzednik = "pomarancza"},
+    ["sliwka"] = {narzednik = "sliwka"},
+    ["truskawka"] = {narzednik = "truskawka"},
+    ["wisnia"] = {narzednik = "wisnia"},
+}
+local ryby = {
+    ["amarel"] = {short = "zlocistobrazowa", narzednik = "amarelem"},
+    ["amur"] = {short = "ciemnozielona", narzednik = "amurem"},
+    ["antias"] = {short = "czerwonawa", narzednik = "antiasem"},
+    ["apogon"] = {short = "jasnopomaranczowa", narzednik = "apogonem"},
+    ["ateryna"] = {short = "zielonkawa", narzednik = "ateryna"},
+    ["barrakuda"] = {short = "zielonkawobrazowa", narzednik = "barrakuda"},
+    ["barwena"] = {short = "brazowoczerwona", narzednik = "barwena"},
+    ["belona"] = {short = "ciemnoniebieska", narzednik = "belona"},
+    ["beryks"] = {short = "ciemnoczerwona", narzednik = "beryksem"},
+    ["bielmik"] = {short = "jasnomiedziana", narzednik = "bielmikiem"},
+    ["bolen"] = {short = "blekitnawa", narzednik = "bolenem"},
+    ["brama"] = {short = "zielonkawobrazowa", narzednik = "bramem"},
+    ["bulawik"] = {short = "czarna", narzednik = "bulawikiem"},
+    ["certa"] = {short = "srebrzysta", narzednik = "certem"},
+    ["chelon"] = {short = "zielonkawoszara", narzednik = "chelonem"},
+    ["chromis"] = {short = "brazowa", narzednik = "chromisem"},
+    ["czarniak"] = {short = "mosieznozlota", narzednik = "czarniakiem"},
+    ["dorada"] = {short = "metaliczna", narzednik = "dorada"},
+    ["dorsz"] = {short = "jasnoszara", narzednik = "dorszem"},
+    ["drum"] = {short = "pasiasta", narzednik = "drumem"},
+    ["dubiel"] = {short = "srebrzystoszara", narzednik = "dubielem"},
+    ["glowacica"] = {short = "zielonkawoszara", narzednik = "glowacica"},
+    ["glowacz"] = {short = "szara", narzednik = "glowaczem"},
+    ["granik"] = {short = "plamiasta", narzednik = "granikiem"},
+    ["gromadnik"] = {short = "czarnoniebieska", narzednik = "gromadnikiem"},
+    ["iglik"] = {short = "brazowawa", narzednik = "iglikiem"},
+    ["jaskron"] = {short = "czerwonobrazowa", narzednik = "jaskronem"},
+    ["jazgarz"] = {short = "oliwkowozielona", narzednik = "jazgarzem"},
+    ["jelec"] = {short = "stalowoszara", narzednik = "jelcem"},
+    ["jesiotr"] = {short = "brazowoszara", narzednik = "jesiotrem"},
+    ["kabryl"] = {short = "purpurowa", narzednik = "kabrylem"},
+    ["kantar"] = {short = "okraglawa", narzednik = "kantarem"},
+    ["kaprosz"] = {short = "czerwonobrazowa", narzednik = "kaproszem"},
+    ["karas"] = {short = "brazowawa", narzednik = "karasem"},
+    ["karp"] = {short = "szarobrazowa", narzednik = "karpiem"},
+    ["karpienczyk"] = {short = "czerwonozlota", narzednik = "karpienczykiem"},
+    ["kielb"] = {short = "niebieskawobrazowa", narzednik = "kielbem"},
+    ["kielec"] = {short = "srebrzysta", narzednik = "kielcem"},
+    ["kolen"] = {short = "zoltawa", narzednik = "kolenem"},
+    ["konger"] = {short = "wezowata", narzednik = "kongerem"},
+    ["koryfena"] = {short = "blekitnawozielona", narzednik = "koryfenem"},
+    ["kosogon"] = {short = "niebieskoszara", narzednik = "kosogonem"},
+    ["kulbin"] = {short = "srebrzystoszara", narzednik = "kulbinem"},
+    ["labraks"] = {short = "srebrzysta", narzednik = "labraksem"},
+    ["lamna"] = {short = "ciemnoszara", narzednik = "lamna"},
+    ["leszcz"] = {short = "srebrnobrunatna", narzednik = "leszczem" },
+    ["lin"] = {short = "zielonnobrunatna", narzednik = "linem"},
+    ["lipien"] = {short = "srebrzystobiala", narzednik = "lipieniem"},
+    ["losos"] = {short = "oliwkowosrebrzysta", narzednik = "lososiem"},
+    ["makrela"] = {short = "plaska", narzednik = "makrela"},
+    ["makrelosz"] = {short = {"zielonkawobrazowa", "oliwkowosrebrzysta"}, narzednik = "makreloszem"},
+    ["mauryk"] = {short = "prazkowana", narzednik = "maurykiem"},
+    ["mietus"] = {short = "brazowawa", narzednik = "mietusem"},
+    ["morlesz"] = {short = "rozowawa", narzednik = "morleszem"},
+    ["mostelka"] = {short = "czerwonobrazowa", narzednik = "mostelka"},
+    ["murena"] = {short = "zoltawa", narzednik = "murena"},
+    ["nawaga"] = {short = "plamiasta", narzednik = "nawaga"},
+    ["oblada"] = {short = "szarosrebrzysta", narzednik = "oblada"},
+    ["ogak"] = {short = "marmurkowana", narzednik = "ogakiem"},
+    ["okon"] = {short = "pregowana", narzednik = "okoniem"},
+    ["ostrobok"] = {short = "zielononiebieska", narzednik = "ostrobokiem"},
+    ["ostrosz"] = {short = "zoltobrazowa", narzednik = "ostroszem"},
+    ["pagrus"] = {short = "szarosrebrzysta", narzednik = "pagrusem"},
+    ["pilczyk"] = {short = "zoltobrazowa", narzednik = "pilczykiem"},
+    ["piotrosz"] = {short = "zoltawa", narzednik = "piotroszem"},
+    ["piskorz"] = {short = "ciemnobrazowa", narzednik = "piskorzem"},
+    ["plotka"] = {short = "niebieskozielona", narzednik = "plotka"},
+    ["pstrag"] = {short = "nakrapiana", narzednik = "pstragiem"},
+    ["rdzawiec"] = {short = "brazowawa", narzednik = "rdzawiecem"},
+    ["sajka"] = {short = "brazowa", narzednik = "sajka"},
+    ["salpa"] = {short = "srebrzysta", narzednik = "salpa"},
+    ["sandacz"] = {short = "ciemnozielona", narzednik = "sandaczem"},
+    ["sardynka"] = {short = "srebrnoluska", narzednik = "sardynka"},
+    ["seriola"] = {short = "niebieskosrebrzysta", narzednik = "seriola"},
+    ["sieja"] = {short = "srebrzysta", narzednik = "sieja"},
+    ["sierpnik"] = {short = "niebieskawa", narzednik = "sierpnikiem"},
+    ["skalnik"] = {short = "czerwonawa", narzednik = "skalnikiem"},
+    ["sledz"] = {short = "srebrzystozielona", narzednik = "sledziem"},
+    ["sola"] = {short = "wylupiastooka", narzednik = "sola"},
+    ["strojnik"] = {short = "fioletowoniebieska", narzednik = "strojnikiem"},
+    ["strzepiel"] = {short = "wzorzysta", narzednik = "strzepielem"},
+    ["sum"] = {short = "wasata", narzednik = "sumem"},
+    ["szczupak"] = {short = "ciemnozielona", narzednik = "szczupakiem"},
+    ["szprot"] = {short = "niebieskawa", narzednik = "szprotem"},
+    ["tolpyga"] = {short = "olowianoszara", narzednik = "tolpyga"},
+    ["topornik"] = {short = "czarna", narzednik = "topornikiem"},
+    ["tunczyk"] = {short = "stalowoblekitna", narzednik = "tunczykiem"},
+    ["ukleja"] = {short = {"szarozielona", "szarosrebrzysta"}, narzednik = "ukleja"},
+    ["wegorz"] = {short = "wezowata", narzednik = "wegorzem"},
+    ["wezyna"] = {short = "zoltobrazowa", narzednik = "wezyna"},
+    ["widlak"] = {short = "barwna", narzednik = "widlakiem"},
+    ["wzdrega"] = {short = "brazowozielona", narzednik = "wzdrega"},
+    ["?2"] = {short = "zielonobrunatna", narzednik = ""},
+}
+
 function oswajanie.db.load()
   mydb_oswajanie = db:create("feeding", {
     feeding = {
@@ -43,10 +192,17 @@ function oswajanie.trigger.animal_desc(str)
       table.insert(oswajanie.tmp.animal, size, str)
     end
     if ( size == 2 ) then
-      local a = oswajanie.tmp.animal
-      local zwierzak = string.match(a[1], 'Ogladasz dokladnie (.*).')
-      local level = string.match(a[2], 'Sadzac po zachowaniu zwierze jest (.*).')
+      local level = string.match(oswajanie.tmp.animal[2], "Sadzac po zachowaniu zwierze jest (.+)%.") or string.match(oswajanie.tmp.animal[1], "Sadzac po zachowaniu zwierze jest (.+)%.")
+      local zwierzak = string.match(oswajanie.tmp.animal[1], "Ogladasz dokladnie (.+)%.") or string.match(oswajanie.tmp.animal[2], "Ogladasz dokladnie (.+)%.")
       oswajanie.tmp.animal = {}
+      if level == nil then
+        display(oswajanie.tmp.animal)
+        return
+      end
+      if zwierzak == nil then
+        display(oswajanie.tmp.animal)
+        return
+      end
       oswajanie.core.insert_animal_level(zwierzak, level)
     end
   end
@@ -77,7 +233,51 @@ function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, 
   cecho("<grey>|"..oswajanie.core.lcstr(color, col4, " ", col4_len))
   cecho("<grey>|")
   if( string.len(col5) > 0 ) then
-    cechoLink("<light_slate_blue> "..col5, [[send("oswajaj zwierze ]] ..col5.. [[")]], "oswajaj zwierze "..col5, true)
+    local text = col5
+    local czym = col5
+    local symbol = (text=="pokarmem" and "" ) or "?"
+    for k,v in pairs(ryby) do
+        if v.narzednik == text then
+            local opis = ""
+            if type(v.short) == "table" then
+                for p,s in pairs(v.short) do
+                    opis = opis .." " .. s
+                end
+                text = text .. " [".. opis .. "]"
+            else
+                opis = v.short
+            end
+            text = text .. " [".. opis .. "]"
+            symbol = "🐟"
+            break
+        end
+    end
+    for k,v in pairs(owoce) do
+        if v.narzednik == text then
+            symbol = "🍎"
+            break
+        end
+    end
+    
+    for k,v in pairs(warzywa) do
+        if v.narzednik == text then
+            symbol = "🥔"
+            break
+        end
+    end
+    for k,v in pairs(szczatki) do
+        if v.narzednik == text then
+            symbol = "☣"
+            break
+        end
+    end
+     
+    local prefix = "miesem"
+    if text:find(prefix, 1, #prefix) then
+        symbol = "🥩"
+    end
+    echo(symbol)
+    cechoLink("<light_slate_blue> "..text, [[send("oswajaj zwierze ]] ..czym.. [[")]], "oswajaj zwierze "..col5, true)
   end
 end
 
@@ -400,3 +600,47 @@ function oswajanie.trigger.feed_alert()
     end)
   end
 end
+
+zryby = zryby or {
+    ryby_trigger = {}
+}
+
+function zryby:ryba(nazwa)
+    local opis = matches[2]
+    local ryba = " (" .. nazwa..")"
+    
+    selectString(matches[1], 1)
+    replace(matches[1] .. ryba, true)
+    resetFormat()
+end
+
+function zryby:init()
+    for _,v in pairs(self.ryby_trigger) do
+        killTrigger(v)
+    end
+
+    local shorty = {}
+    for k,v in pairs(ryby) do
+        if type(v.short) == "table" then
+            for p,s in pairs(v.short) do
+                if shorty[s] == nil then
+                    shorty[s] = k
+                else
+                    shorty[s] = shorty[s] .. "|"..k
+                end
+            end
+        else
+            if shorty[v.short] == nil then
+                shorty[v.short] = k
+            else
+                shorty[v.short] = shorty[v.short] .. "|"..k
+            end
+        end
+    end
+    for k,v in pairs(shorty) do
+        table.insert(self.ryby_trigger, tempRegexTrigger("[Ss]urowa ("..k..") rybe", function() self:ryba(v) end))
+    end
+
+end
+
+zryby:init()

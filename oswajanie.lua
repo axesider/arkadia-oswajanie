@@ -28,7 +28,7 @@ local szczatki = {
     ["szpon"] = {narzednik = "szponem"},
     ["ucho"] = {narzednik = "uchem"},
     ["watroba"] = {narzednik = "watroba"},
-    ["wij"] = {narzednik = "wijem"},    
+    ["wij"] = {narzednik = "wijem"},
     ["woreczek"] = {narzednik = "woreczkiem"},
 }
 local owoce = {
@@ -184,30 +184,6 @@ function oswajanie.core.insert_animal_level(zwierzak, poziom)
   local r = db:fetch_sql(mydb_oswajanie.feeding, q)
   if( r == nil or table.size(r) == 0 ) then
     db:add(mydb_oswajanie.animals, { animal = zwierzak, level = poziom })
-  end
-end
-
-function oswajanie.trigger.animal_desc(str)
-  local size = table.size(oswajanie.tmp.animal)
-  if ( str ~= nil ) then
-    if ( size < 2 ) then
-      size = size + 1
-      table.insert(oswajanie.tmp.animal, size, str)
-    end
-    if ( size == 2 ) then
-      local level = string.match(oswajanie.tmp.animal[2], "Sadzac po zachowaniu zwierze jest (.+)%.") or string.match(oswajanie.tmp.animal[1], "Sadzac po zachowaniu zwierze jest (.+)%.")
-      local zwierzak = string.match(oswajanie.tmp.animal[1], "Ogladasz dokladnie (.+)%.") or string.match(oswajanie.tmp.animal[2], "Ogladasz dokladnie (.+)%.")
-      oswajanie.tmp.animal = {}
-      if level == nil then
-        display(oswajanie.tmp.animal)
-        return
-      end
-      if zwierzak == nil then
-        display(oswajanie.tmp.animal)
-        return
-      end
-      oswajanie.core.insert_animal_level(zwierzak, level)
-    end
   end
 end
 
@@ -605,7 +581,11 @@ function oswajanie.trigger.feed_alert()
 end
 
 zryby = zryby or {
-    ryby_trigger = {}
+    ryby_trigger = {},
+    ogladasz_trigger = nil,
+    oswojenie_trigger = nil,
+    zmeczenie_trigger = nil,
+    oswajasz_trigger = nil,
 }
 
 function zryby:ryba(nazwa)
@@ -615,6 +595,43 @@ function zryby:ryba(nazwa)
     selectString(matches[1], 1)
     replace(matches[1] .. ryba, true)
     resetFormat()
+end
+
+function zryby:ogladasz()
+    oswajanie.tmp_animal = matches[2]
+    self:enableTrigger()
+    tempTimer(1, function() self:disableTrigger() end)
+end
+
+function zryby:zwierzejest()
+    local zwierzak = oswajanie.tmp_animal
+    local level = matches[2]
+    oswajanie.core.insert_animal_level(zwierzak, level)    
+end
+
+function zryby:zwierze_zmeczenie()
+    local zm = matches[2]
+    local lv = misc.lvl_calc["val_to_next_to_number"][zm]
+    selectString(zm, 1)
+    creplace(zm .. "["..lv.."/5]")
+    resetFormat()
+end
+
+function zryby:enableTrigger()
+    if self.oswojenie_trigger == nil then
+        self.ogladasz_trigger = tempRegexTrigger("^Sadzac po zachowaniu zwierze jest (.*)\\.$", function() self:zwierzejest() end)
+    end
+    if self.zmeczenie_trigger == nil then
+        self.zmeczenie_trigger = tempRegexTrigger("^Jest calkowicie wykonczon[ay] i bedzie potrzebowac jeszcze (.+) czasu do pelnej regeneracji sil\\.$", function() self:zwierze_zmeczenie() end)
+    end
+end
+
+function zryby:disableTrigger()
+    if self.oswojenie_trigger then killTrigger(self.oswojenie_trigger) end
+    if self.zmeczenie_trigger then killTrigger(self.zmeczenie_trigger) end
+end
+
+function zryby:oswajasz()
 end
 
 function zryby:init()
@@ -644,6 +661,39 @@ function zryby:init()
         table.insert(self.ryby_trigger, tempRegexTrigger("[Ss]urowa ("..k..") rybe", function() self:ryba(v) end))
     end
 
+    if self.ogladasz_trigger then killTrigger(self.ogladasz_trigger) end
+    self.ogladasz_trigger = tempRegexTrigger("^Ogladasz dokladnie (.*)\\.$", function() self:ogladasz() end)
+    
+    if self.oswajasz_trigger then killTrigger(self.oswajasz_trigger) end
+    self.oswajasz_trigger = tempRegexTrigger("^Karmiac (.*) (zachecasz|oswajasz) (.*)\\.$", function() self:oswajasz() end)   
+end
+
+function zryby:brakujace_szczatki(animal)
+    echo("Brakujace szczatki:")
+    zryby:brakujace(szczatki, animal)
+end
+
+function zryby:brakujace_owoce(animal)
+    echo("Brakujace owoce:")
+    zryby:brakujace(owoce, animal)
+end
+
+function zryby:brakujace(tablica, animal)
+    local q = "select distinct food from feeding where animal = '".. animal.."'"
+    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    for k,v in pairs(tablica) do
+        local found = false
+        for key, val in pairs(r) do
+            if v.narzednik == val["food"] then
+                found = true
+                break
+            end
+        end
+        if found == false then
+            cechoLink("<light_slate_blue> "..v.narzednik, [[send("oswajaj zwierze ]] ..v.narzednik.. [[")]], "oswajaj zwierze "..v.narzednik, true)
+        end
+    end
+    echo("\n")
 end
 
 zryby:init()

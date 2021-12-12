@@ -1,3 +1,16 @@
+oswajanie = {
+  db = {},
+  alias = {},
+  trigger = {},
+  core = {},
+  tmp = { animal = {} },
+  config = {},
+  version = "0.6"
+}
+mydb_oswajanie = nil
+oswajanie.config.recovery_time = 20 -- in min
+oswajanie.config.feeding_time = 120 -- in hours
+
 local warzywa = {
     ["glowka kapusty"] = {narzednik = "glowka"},
     ["pomidor"] = {narzednik = "pomidorem"},
@@ -632,9 +645,38 @@ function zryby:disableTrigger()
 end
 
 function zryby:oswajasz()
+    local raw = matches[2]
+    local arr = string.split(raw, " ")
+    
+    if table.size(arr) == 2 then
+        -- karmienie nazwanego zwierzaka jedzeniem lub ryba
+        oswajanie.alias.insert_feeding_entry(arr[1], arr[2])
+    elseif table.size(arr) == 3 then
+        -- karmienie nazwanego zwierzaka miesem
+        oswajanie.alias.insert_feeding_entry(arr[1], arr[2].." "..arr[3])
+    elseif table.size(arr) == 4 then
+        -- karmienie nienazwanego zwierzaka jedzeniem lub ryba
+        oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], arr[4])
+    elseif table.size(arr) == 5 then
+        -- karmienie nienazwanego zwierzaka miesem lub sokola jedzeniem/ryba
+        if( arr[4] == 'miesem' ) then
+            oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], arr[4].." "..arr[5])
+        else
+            oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3].." "..arr[4], arr[5])
+        end
+    elseif table.size(arr) == 6 then
+        -- karmienie nienazwanego sokola miesem
+        oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3].." "..arr[4], arr[5].." "..arr[6])
+    else
+        display("trigger do karmiania nic nie rozpoznal")
+    end
+    oswajanie.trigger.feed_alert()
+    scripts.utils.bind_functional("ocen zwierze", false, false)
 end
 
 function zryby:init()
+    scripts:print_log("Laduje plugin arkadia-oswajanie")
+
     for _,v in pairs(self.ryby_trigger) do
         killTrigger(v)
     end
@@ -665,7 +707,11 @@ function zryby:init()
     self.ogladasz_trigger = tempRegexTrigger("^Ogladasz dokladnie (.*)\\.$", function() self:ogladasz() end)
     
     if self.oswajasz_trigger then killTrigger(self.oswajasz_trigger) end
-    self.oswajasz_trigger = tempRegexTrigger("^Karmiac (.*) (zachecasz|oswajasz) (.*)\\.$", function() self:oswajasz() end)   
+    self.oswajasz_trigger = tempRegexTrigger("^Karmiac (.+) (?>zachecasz|oswajasz) .*", function() self:oswajasz() end)
+    
+    oswajanie.db.load()
+
+    tempTimer(5, [[ oswajanie.core.print_start_message() ]])
 end
 
 function zryby:brakujace_szczatki(animal)

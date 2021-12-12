@@ -1,5 +1,3 @@
 return {
-  "start",
-  "oswajanie",
-  "execute"
+  "oswajanie"
 }

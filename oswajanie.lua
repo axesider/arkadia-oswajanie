@@ -1,13 +1,11 @@
 oswajanie = {
-  db = {},
   alias = {},
   trigger = {},
   core = {},
-  tmp = { animal = {} },
   config = {},
   version = "0.6"
 }
-mydb_oswajanie = nil
+
 oswajanie.config.recovery_time = 20 -- in min
 oswajanie.config.feeding_time = 120 -- in hours
 
@@ -163,8 +161,7 @@ local ryby = {
     ["?2"] = {short = "zielonobrunatna", narzednik = ""},
 }
 
-function oswajanie.db.load()
-  mydb_oswajanie = db:create("feeding", {
+mydb_oswajanie = db:create("feeding", {
     feeding = {
       animal = "",
       animal_type = "",
@@ -186,7 +183,6 @@ function oswajanie.db.load()
       _index = { "animal", "level" }
     }
   })
-end
 
 function oswajanie.alias.insert_feeding_entry(zwierzak, pokarm)
   db:add(mydb_oswajanie.feeding, { animal = zwierzak, food = pokarm })
@@ -419,6 +415,9 @@ function oswajanie.alias.print_animals()
     cecho("\n  - <yellow>")
     cechoLink("<yellow>"..v["animal"], [[expandAlias("/o_pokaz ]].. v["animal"] .. [[")]], "/o_pokaz ".. v["animal"], true)
     cechoLink("<grey> (<red>"..a.."<grey>)", command, tip, true)
+    cecho(" sprawdz czego nie jadl:")
+    cechoLink("<light_slate_blue> szczatki", [[zryby:brakujace_szczatki("]] ..v["animal"].. [[")]], "pokaz szcztki", true)
+    cechoLink("<light_slate_blue> owoce", [[zryby:brakujace_owoce("]] ..v["animal"].. [[")]], "pokaz szcztki", true)
   end
   cecho("\n\n")
 end
@@ -520,10 +519,6 @@ function oswajanie.alias.print_help()
     cecho("           Alias przydaje sie gdy w trakcie karmienia nazwiemy zwierze i chcemy zaktualizowac \n")
     cecho("           wczeniejsze wpisy aby zsynchronisowac historie.\n")
     cecho(" ")
-    
-    cecho("\n <yellow>Aliasy administracyjne:<grey>\n\n")
-    cecho(" <light_slate_blue>/lpo<grey> - recznie ladowanie pluginu 'arkadia-oswajanie'.\n")
-    cecho("\n")
 end
 
 function oswajanie.alias.disable(animal)
@@ -596,9 +591,9 @@ end
 zryby = zryby or {
     ryby_trigger = {},
     ogladasz_trigger = nil,
+    oswajasz_trigger = nil,
     oswojenie_trigger = nil,
     zmeczenie_trigger = nil,
-    oswajasz_trigger = nil,
 }
 
 function zryby:ryba(nazwa)
@@ -620,28 +615,26 @@ function zryby:zwierzejest()
     local zwierzak = oswajanie.tmp_animal
     local level = matches[2]
     oswajanie.core.insert_animal_level(zwierzak, level)    
+    self:disableTrigger()
 end
 
 function zryby:zwierze_zmeczenie()
     local zm = matches[2]
     local lv = misc.lvl_calc["val_to_next_to_number"][zm]
-    selectString(zm, 1)
-    creplace(zm .. "["..lv.."/5]")
-    resetFormat()
+    if selectString(zm, 1) > -1 then
+        creplace(zm .. " ["..lv.."/5]")
+        resetFormat()
+    end
 end
 
 function zryby:enableTrigger()
-    if self.oswojenie_trigger == nil then
-        self.ogladasz_trigger = tempRegexTrigger("^Sadzac po zachowaniu zwierze jest (.*)\\.$", function() self:zwierzejest() end)
-    end
-    if self.zmeczenie_trigger == nil then
-        self.zmeczenie_trigger = tempRegexTrigger("^Jest calkowicie wykonczon[ay] i bedzie potrzebowac jeszcze (.+) czasu do pelnej regeneracji sil\\.$", function() self:zwierze_zmeczenie() end)
-    end
+    if self.oswojenie_trigger == nil then self.oswojenie_trigger = tempRegexTrigger("^Sadzac po zachowaniu zwierze jest (.*)\\.$", function() self:zwierzejest() end) end
+    if self.zmeczenie_trigger == nil then self.zmeczenie_trigger = tempRegexTrigger("^Jest calkowicie wykonczon[ay] i bedzie potrzebowac jeszcze (.+) czasu do pelnej regeneracji sil\\.$", function() self:zwierze_zmeczenie() end) end
 end
 
 function zryby:disableTrigger()
-    if self.oswojenie_trigger then killTrigger(self.oswojenie_trigger) end
-    if self.zmeczenie_trigger then killTrigger(self.zmeczenie_trigger) end
+    if self.oswojenie_trigger then killTrigger(self.oswojenie_trigger) self.oswojenie_trigger = nil end
+    if self.zmeczenie_trigger then killTrigger(self.zmeczenie_trigger) self.zmeczenie_trigger = nil end
 end
 
 function zryby:oswajasz()
@@ -709,8 +702,21 @@ function zryby:init()
     if self.oswajasz_trigger then killTrigger(self.oswajasz_trigger) end
     self.oswajasz_trigger = tempRegexTrigger("^Karmiac (.+) (?>zachecasz|oswajasz) .*", function() self:oswajasz() end)
     
-    oswajanie.db.load()
-
+    local dodaj_owoce = true
+    local dodaj_ryby = true
+    for k,v in pairs(scripts.inv.pretty_containers.group_definitions) do
+            if v.name == "ryby"  then dodaj_ryby = false
+        elseif v.name == "owoce" then dodaj_owoce = false end
+    end
+    if dodaj_ryby then
+        local ryby = { "surow[ae] (\\w+) ryb[ey]" }
+        table.insert(scripts.inv.pretty_containers.group_definitions, {name ="ryby", filter = scripts.inv.pretty_containers:create_regexp_filter(ryby) })
+    end
+    if dodaj_owoce then
+        local owoce = { "agrest(|ow|y)","(?(?=zoltych)zoltych cytryn|cytryn(e|y))", "czeresnie","daktyl","fig(|e|i)","grusz(ke|ki|ek)","jabl(ek|ko|ka)","malin(e|y)","mandaryn(ek|ke|ki)","mango","melon(|y)","oliw(ek|ke|ki)","orzech(|y)","papaje","pomarancze","sliwk(e|i)","winogron","wisni(|e)","truskaw(ek|ke|ki)"}
+        table.insert(scripts.inv.pretty_containers.group_definitions, {name ="owoce", filter = scripts.inv.pretty_containers:create_regexp_filter(owoce) })
+    end
+    
     tempTimer(5, [[ oswajanie.core.print_start_message() ]])
 end
 

@@ -32,13 +32,6 @@ oswajanie.alias.print_table_by_animal(animal)</script>
 			<regex>^/o_pomoc$</regex>
 		</Alias>
 		<Alias isActive="yes" isFolder="no">
-			<name>reczne ladowanie pluginu oswajanie</name>
-			<script>expandAlias("/lua load_plugin('arkadia-oswajanie')")</script>
-			<command></command>
-			<packageName>arkadia-oswajanie</packageName>
-			<regex>^/lpo$</regex>
-		</Alias>
-		<Alias isActive="yes" isFolder="no">
 			<name>wylacz zwierze w bazie</name>
 			<script>local animal = string.sub(matches[1], 11)
 oswajanie.alias.disable(animal)</script>

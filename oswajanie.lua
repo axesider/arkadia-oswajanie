@@ -3,7 +3,7 @@ oswajanie = {
   trigger = {},
   core = {},
   config = {},
-  version = "0.6"
+  version = "0.61"
 }
 
 oswajanie.config.recovery_time = 20 -- in min
@@ -72,16 +72,16 @@ local ryby = {
     ["apogon"] = {short = "jasnopomaranczowa", narzednik = "apogonem"},
     ["ateryna"] = {short = "zielonkawa", narzednik = "ateryna"},
     ["barrakuda"] = {short = "zielonkawobrazowa", narzednik = "barrakuda"},
-    ["barwena"] = {short = "brazowoczerwona", narzednik = "barwena"},
+    ["barwena"] = {short = {"brazowoczerwona", "brazowoczerwone"}, narzednik = "barwena"},
     ["belona"] = {short = "ciemnoniebieska", narzednik = "belona"},
     ["beryks"] = {short = "ciemnoczerwona", narzednik = "beryksem"},
-    ["bielmik"] = {short = "jasnomiedziana", narzednik = "bielmikiem"},
+    ["bielmik"] = {short = {"jasnomiedziana","jasnomiedziane"}, narzednik = "bielmikiem"},
     ["bolen"] = {short = "blekitnawa", narzednik = "bolenem"},
     ["brama"] = {short = "zielonkawobrazowa", narzednik = "brama"},
     ["bulawik"] = {short = "czarna", narzednik = "bulawikiem"},
     ["certa"] = {short = "srebrzysta", narzednik = "certa"},
     ["chelon"] = {short = "zielonkawoszara", narzednik = "chelonem"},
-    ["chromis"] = {short = "brazowa", narzednik = "chromisem"},
+    ["chromis"] = {short = {"brazowa","brazowe"}, narzednik = "chromisem"},
     ["czarniak"] = {short = "mosieznozlota", narzednik = "czarniakem"},
     ["dorada"] = {short = "metaliczna", narzednik = "dorada"},
     ["dorsz"] = {short = "jasnoszara", narzednik = "dorszem"},
@@ -104,7 +104,7 @@ local ryby = {
     ["karpienczyk"] = {short = "czerwonozlota", narzednik = "karpienczykiem"},
     ["kielb"] = {short = "niebieskawobrazowa", narzednik = "kielbem"},
     ["kielec"] = {short = "srebrzysta", narzednik = "kielcem"},
-    ["kolen"] = {short = "zoltawa", narzednik = "kolenem"},
+    ["kolen"] = {short = {"zoltawa", "zoltawe"}, narzednik = "kolenem"},
     ["konger"] = {short = "wezowata", narzednik = "kongerem"},
     ["koryfena"] = {short = "blekitnawozielona", narzednik = "koryfena"},
     ["kosogon"] = {short = "niebieskoszara", narzednik = "kosogonem"},
@@ -115,16 +115,16 @@ local ryby = {
     ["lin"] = {short = "zielonobrunatna", narzednik = "linem"},
     ["lipien"] = {short = "srebrzystobiala", narzednik = "lipieniem"},
     ["losos"] = {short = "oliwkowosrebrzysta", narzednik = "lososiem"},
-    ["makrela"] = {short = "plaska", narzednik = "makrela"},
+    ["makrela"] = {short = {"plaska","plaskie"}, narzednik = "makrela"},
     ["makrelosz"] = {short = {"zielonkawobrazowa", "oliwkowosrebrzysta"}, narzednik = "makreloszem"},
-    ["mauryk"] = {short = "prazkowana", narzednik = "maurykiem"},
+    ["mauryk"] = {short = {"prazkowana","prazkowane"}, narzednik = "maurykiem"},
     ["mietus"] = {short = "brazowawa", narzednik = "mietusem"},
     ["morlesz"] = {short = "rozowawa", narzednik = "morleszem"},
     ["mostelka"] = {short = "czerwonobrazowa", narzednik = "mostelka"},
     ["murena"] = {short = "zoltawa", narzednik = "murena"},
     ["nawaga"] = {short = "plamiasta", narzednik = "nawaga"},
-    ["oblada"] = {short = "szarosrebrzysta", narzednik = "oblada"},
-    ["ogak"] = {short = "marmurkowana", narzednik = "ogakiem"},
+    ["oblada"] = {short = {"szarosrebrzysta", "szarosrebrzyste"}, narzednik = "oblada"},
+    ["ogak"] = {short = {"marmurkowana", "marmurkowane"}, narzednik = "ogakiem"},
     ["okon"] = {short = "pregowana", narzednik = "okoniem"},
     ["ostrobok"] = {short = "zielononiebieska", narzednik = "ostrobokiem"},
     ["ostrosz"] = {short = "zoltobrazowa", narzednik = "ostroszem"},
@@ -136,16 +136,16 @@ local ryby = {
     ["pstrag"] = {short = "nakrapiana", narzednik = "pstragiem"},
     ["rdzawiec"] = {short = "brazowawa", narzednik = "rdzawiecem"},
     ["sajka"] = {short = "brazowa", narzednik = "sajka"},
-    ["salpa"] = {short = "srebrzysta", narzednik = "salpa"},
+    ["salpa"] = {short = {"srebrzysta", "srebrzyste"}, narzednik = "salpa"},
     ["sandacz"] = {short = "ciemnozielona", narzednik = "sandaczem"},
-    ["sardynka"] = {short = "srebrnoluska", narzednik = "sardynka"},
+    ["sardynka"] = {short = {"srebrnoluska", "srebrnoluska"}, narzednik = "sardynka"},
     ["seriola"] = {short = "niebieskosrebrzysta", narzednik = "seriola"},
     ["sieja"] = {short = "srebrzysta", narzednik = "sieja"},
     ["sierpnik"] = {short = "niebieskawa", narzednik = "sierpnikiem"},
     ["skalnik"] = {short = "czerwonawa", narzednik = "skalnikiem"},
-    ["sledz"] = {short = "srebrzystozielona", narzednik = "sledziem"},
+    ["sledz"] = {short = {"srebrzystozielona","srebrzystozielone"}, narzednik = "sledziem"},
     ["sola"] = {short = "wylupiastooka", narzednik = "sola"},
-    ["strojnik"] = {short = "fioletowoniebieska", narzednik = "strojnikem"},
+    ["strojnik"] = {short = {"fioletowoniebieska","fioletowoniebieskie"}, narzednik = "strojnikem"},
     ["strzepiel"] = {short = "wzorzysta", narzednik = "strzepielem"},
     ["sum"] = {short = "wasata", narzednik = "sumem"},
     ["szczupak"] = {short = "ciemnozielona", narzednik = "szczupakiem"},
@@ -534,7 +534,7 @@ function oswajanie.alias.rename(animal, new_name)
   if( string.len(animal) > 0 and string.len(new_name) > 0 ) then
     local q = "select _row_id from feeding where animal = '"..animal.."'"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
-    if ( table.size(r) > 0 ) then
+    if table.size(r) > 0 then
       local a1 = db:fetch(mydb_oswajanie.feeding, db:eq(mydb_oswajanie.feeding.animal, animal))
       for k, v in pairs(a1) do
         a1[k]["animal"] = new_name
@@ -543,7 +543,7 @@ function oswajanie.alias.rename(animal, new_name)
     end
     local q1 = "select animal from animals where animal = '"..animal.."'"
     local r1 = db:fetch_sql(mydb_oswajanie.animals, q1)
-    if ( table.size(r1) > 0 ) then
+    if table.size(r1) > 0 then
       local a2 = db:fetch(mydb_oswajanie.animals, db:eq(mydb_oswajanie.animals.animal, animal))
       for k, v in pairs(a2) do
         a2[k]["animal"] = new_name
@@ -595,12 +595,53 @@ zryby = zryby or {
     zmeczenie_trigger = nil,
 }
 
+function zryby:get_nazwe_ryby(ryba, narzednik, animal)
+    local q = "select food, max(strftime('%s',changed)) as count from feeding where animal='"..animal.."' and food='"..narzednik.."'"
+    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    if table.size(r) > 0 and r[1]["count"] then
+        local s = getEpoch() - r[1]["count"]
+        local shortest_feeding_time_in_sec = oswajanie.config.feeding_time * 60 * 60 -- 432000 s
+        if s > shortest_feeding_time_in_sec then
+            return "<green>" .. ryba .. "<reset>"
+        else
+            return ryba
+        end
+    else
+        return "<green>" .. ryba .. "<reset>"
+    end
+    
+end
+
 function zryby:ryba(nazwa)
     local opis = matches[2]
+    
+    local q = "select animal from feeding where active = 1 order by changed desc limit 1"
+    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    
+    if table.size(r) > 0 then
+        local animal = r[1]['animal']
+        nazwa = ""
+        for k,v in pairs(ryby) do
+            if type(v.short) == "table" then
+                for p,s in pairs(v.short) do
+                    if s == opis then
+                        nazwa = nazwa ..(nazwa=="" and "" or "|").. self:get_nazwe_ryby(k, v.narzednik, animal)
+                        break
+                    end
+                end
+            else
+                if v.short == opis then 
+                    nazwa = nazwa ..(nazwa=="" and "" or "|").. self:get_nazwe_ryby(k, v.narzednik, animal)
+                end
+            end
+        end
+       
+    end
+
     local ryba = " (" .. nazwa..")"
     
     selectString(matches[1], 1)
-    replace(matches[1] .. ryba, true)
+    creplace(matches[1] .. ryba)
     resetFormat()
 end
 
@@ -672,6 +713,7 @@ function zryby:init()
     for _,v in pairs(self.ryby_trigger) do
         killTrigger(v)
     end
+    self.ryby_trigger = {}
 
     local shorty = {}
     for k,v in pairs(ryby) do
@@ -692,7 +734,7 @@ function zryby:init()
         end
     end
     for k,v in pairs(shorty) do
-        table.insert(self.ryby_trigger, tempRegexTrigger("[Ss]urowa ("..k..") rybe", function() self:ryba(v) end))
+        table.insert(self.ryby_trigger, tempRegexTrigger("[Ss]urow[ae] ("..k..") ryb[ey]", function() self:ryba(v) end))
     end
 
     if self.ogladasz_trigger then killTrigger(self.ogladasz_trigger) end

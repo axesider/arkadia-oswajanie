@@ -112,7 +112,7 @@ local ryby = {
     ["labraks"] = {short = "srebrzysta", narzednik = "labraksem"},
     ["lamna"] = {short = "ciemnoszara", narzednik = "lamna"},
     ["leszcz"] = {short = "srebrnobrunatna", narzednik = "leszczem" },
-    ["lin"] = {short = "zielonnobrunatna", narzednik = "linem"},
+    ["lin"] = {short = "zielonobrunatna", narzednik = "linem"},
     ["lipien"] = {short = "srebrzystobiala", narzednik = "lipieniem"},
     ["losos"] = {short = "oliwkowosrebrzysta", narzednik = "lososiem"},
     ["makrela"] = {short = "plaska", narzednik = "makrela"},
@@ -158,7 +158,6 @@ local ryby = {
     ["wezyna"] = {short = "zoltobrazowa", narzednik = "wezyna"},
     ["widlak"] = {short = "barwna", narzednik = "widlakiem"},
     ["wzdrega"] = {short = "brazowozielona", narzednik = "wzdrega"},
-    ["?2"] = {short = "zielonobrunatna", narzednik = ""},
 }
 
 mydb_oswajanie = db:create("feeding", {
@@ -517,7 +516,7 @@ function oswajanie.alias.print_help()
     cecho("           chcemy aby pokazywalo historie karmienia konkretnego zwierzecia.\n")
     cecho(" <light_slate_blue>/o_przemianuj <zwierze> na <Imie><grey> - zmienia opis <zwierzecia> w bazie na <imie>.\n")
     cecho("           Alias przydaje sie gdy w trakcie karmienia nazwiemy zwierze i chcemy zaktualizowac \n")
-    cecho("           wczeniejsze wpisy aby zsynchronisowac historie.\n")
+    cecho("           wczeniejsze wpisy aby zsynchronizowac historie.\n")
     cecho(" ")
 end
 
@@ -713,7 +712,7 @@ function zryby:init()
         table.insert(scripts.inv.pretty_containers.group_definitions, {name ="ryby", filter = scripts.inv.pretty_containers:create_regexp_filter(ryby) })
     end
     if dodaj_owoce then
-        local owoce = { "agrest(|ow|y)","(?(?=zoltych)zoltych cytryn|cytryn(e|y))", "czeresnie","daktyl","fig(|e|i)","grusz(ke|ki|ek)","jabl(ek|ko|ka)","malin(e|y)","mandaryn(ek|ke|ki)","mango","melon(|y)","oliw(ek|ke|ki)","orzech(|y)","papaje","pomarancze","sliwk(e|i)","winogron","wisni(|e)","truskaw(ek|ke|ki)"}
+        local owoce = { "agrest(|ow|y)","(?(?=zoltych)zoltych cytryn|cytryn(e|y))", "czeresni(|e)","daktyl","fig(|e|i)","grusz(ke|ki|ek)","jabl(ek|ko|ka)","malin(|e|y)","mandaryn(ek|ke|ki)","mango","melon(|y)","oliw(ek|ke|ki)","orzech(|y)","papaje","pomarancze","sliwk(e|i)","winogron","wisni(|e)","truskaw(ek|ke|ki)"}
         table.insert(scripts.inv.pretty_containers.group_definitions, {name ="owoce", filter = scripts.inv.pretty_containers:create_regexp_filter(owoce) })
     end
     

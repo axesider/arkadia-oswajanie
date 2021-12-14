@@ -65,23 +65,91 @@ local owoce = {
     ["truskawka"] = {narzednik = "truskawka"},
     ["wisnia"] = {narzednik = "wisnia"},
 }
+local przymiotniki = {
+    ["barwna"]              = {"barwne","barwnych"},
+    ["blekitnawa"]          = {"blekitnawe","blekitnawa"},
+    ["blekitnawozielona"]   = {"blekitnawozielone","blekitnawozielona"},
+    ["brazowa"]             = {"brazowe","brazowa"},
+    ["brazowawa"]           = {"brazowawe","brazowawa"},
+    ["brazowoczerwona"]     = {"brazowoczerwone","brazowoczerwona"},
+    ["brazowoszara"]        = {"brazowoszare","brazowoszara"},
+    ["brazowozielona"]      = {"brazowozielone","brazowozielona"},
+    ["ciemnobrazowa"]       = {"ciemnobrazowe","ciemnobrazowa"},
+    ["ciemnoczerwona"]      = {"ciemnoczerwone","ciemnoczerwona"},
+    ["ciemnoniebieska"]     = {"ciemnoniebieskie","ciemnoniebieska"},
+    ["ciemnoszara"]         = {"ciemnoszare","ciemnoszara"},
+    ["ciemnozielona"]       = {"ciemnozielone","ciemnozielona"},
+    ["czarna"]              = {"czarne","czarna"},
+    ["czarnoniebieska"]     = {"czarnoniebieskie","czarnoniebieska"},
+    ["czerwonawa"]          = {"czerwonawe","czerwonawa"},
+    ["czerwonobrazowa"]     = {"czerwonobrazowe","czerwonobrazowa"},
+    ["czerwonozlota"]       = {"czerwonozlote","czerwonozlota"},
+    ["fioletowoniebieska"]  = {"fioletowoniebieskie","fioletowoniebieska"},
+    ["jasnomiedziana"]      = {"jasnomiedziane","jasnomiedziana"},
+    ["jasnopomaranczowa"]   = {"jasnopomaranczowe","jasnopomaranczowa"},
+    ["jasnoszara"]          = {"jasnoszare","jasnoszara"},
+    ["marmurkowana"]        = {"marmurkowane","marmurkowana"},
+    ["metaliczna"]          = {"metaliczne","metaliczna"},
+    ["mosieznozlota"]       = {"mosieznozlote","mosieznozlota"},
+    ["nakrapiana"]          = {"nakrapiane","nakrapiana"},
+    ["niebieskawa"]         = {"niebieskawe","niebieskawa"},
+    ["niebieskawobrazowa"]  = {"niebieskawobrazowe","niebieskawobrazowa"},
+    ["niebieskosrebrzysta"] = {"niebieskosrebrzyste","niebieskosrebrzysta"},
+    ["niebieskoszara"]      = {"niebieskoszare","niebieskoszara"},
+    ["niebieskozielona"]    = {"niebieskozielone","niebieskozielona"},
+    ["okraglawa"]           = {"okraglawe","okraglawa"},
+    ["oliwkowosrebrzysta"]  = {"oliwkowosrebrzyste","oliwkowosrebrzysta"},
+    ["oliwkowozielona"]     = {"oliwkowozielone","oliwkowozielona"},
+    ["olowianoszara"]       = {"olowianoszare","olowianoszara"},
+    ["pasiasta"]            = {"pasiaste","pasiasta"},
+    ["plamiasta"]           = {"plamiaste","plamiasta"},
+    ["plaska"]              = {"plaskie","plaska"},
+    ["prazkowana"]          = {"prazkowane","prazkowana"},
+    ["pregowana"]           = {"pregowane","pregowana"},
+    ["purpurowa"]           = {"purpurowe","purpurowa"},
+    ["rozowawa"]            = {"rozowawe","rozowawa"},
+    ["srebrnobrunatna"]     = {"srebrnobrunatne","srebrnobrunatna"},
+    ["srebrnoluska"]        = {"srebrnoluskie","srebrnoluska"},
+    ["srebrzysta"]          = {"srebrzyste","srebrzysta"},
+    ["srebrzystobiala"]     = {"srebrzystobiale","srebrzystobiala"},
+    ["srebrzystoszara"]     = {"srebrzystoszare","srebrzystoszara"},
+    ["srebrzystozielona"]   = {"srebrzystozielone","srebrzystozielona"},
+    ["stalowoblekitna"]     = {"stalowoblekitne","stalowoblekitna"},
+    ["stalowoszara"]        = {"stalowoszare","stalowoszara"},
+    ["szara"]               = {"szare","szara"},
+    ["szarobrazowa"]        = {"szarobrazowe","szarobrazowa"},
+    ["szarosrebrzysta"]     = {"szarosrebrzyste","szarosrebrzysta"},
+    ["szarozielona"]        = {"szarozielone","szarozielona"},
+    ["wasata"]              = {"wasate","wasata"},
+    ["wezowata"]            = {"wezowate","wezowata"},
+    ["wylupiastooka"]       = {"wylupiastookie","wylupiastooka"},
+    ["wzorzysta"]           = {"wzorzyste","wzorzysta"},
+    ["zielonkawa"]          = {"zielonkawe","zielonkawa"},
+    ["zielonkawobrazowa"]   = {"zielonkawobrazowe","zielonkawobrazowa"},
+    ["zielonkawoszara"]     = {"zielonkawoszare","zielonkawoszara"},
+    ["zielonobrunatna"]     = {"zielonobrunatne","zielonobrunatna"},
+    ["zielononiebieska"]    = {"zielononiebieskie","zielononiebieska"},
+    ["zlocistobrazowa"]     = {"zlocistobrazowe","zlocistobrazowa"},
+    ["zoltawa"]             = {"zoltawe","zoltawa"},
+    ["zoltobrazowa"]        = {"zoltobrazowe","zoltobrazowa"},
+}
 local ryby = {
     ["amarel"]      = {narzednik = "amarelem",      short = "zlocistobrazowa", },
     ["amur"]        = {narzednik = "amurem",        short = "ciemnozielona", },
-    ["antias"]      = {narzednik = "antiasem",      short = "czerwonawa",},
-    ["apogon"]      = {narzednik = "apogonem",      short = "jasnopomaranczowa",},
+    ["antias"]      = {narzednik = "antiasem",      short = "czerwonawa", },
+    ["apogon"]      = {narzednik = "apogonem",      short = "jasnopomaranczowa", },
     ["ateryna"]     = {narzednik = "ateryna",       short = "zielonkawa", },
-    ["barrakuda"]   = {narzednik = "barrakuda",     short = "zielonkawobrazowa",},
-    ["barwena"]     = {narzednik = "barwena",       short = {"brazowoczerwona", "brazowoczerwone"},},
+    ["barrakuda"]   = {narzednik = "barrakuda",     short = "zielonkawobrazowa", },
+    ["barwena"]     = {narzednik = "barwena",       short = "brazowoczerwona", },
     ["belona"]      = {narzednik = "belona",        short = "ciemnoniebieska", },
     ["beryks"]      = {narzednik = "beryksem",      short = "ciemnoczerwona", },
-    ["bielmik"]     = {narzednik = "bielmikiem",    short = {"jasnomiedziana","jasnomiedziane"}, },
+    ["bielmik"]     = {narzednik = "bielmikiem",    short = "jasnomiedziana", },
     ["bolen"]       = {narzednik = "bolenem",       short = "blekitnawa", },
     ["brama"]       = {narzednik = "brama",         short = "zielonkawobrazowa", },
     ["bulawik"]     = {narzednik = "bulawikiem",    short = "czarna", },
-    ["certa"]       = {narzednik = "certa",         short = {"srebrzysta", "srebrzyste","srebrzystych"}, },
+    ["certa"]       = {narzednik = "certa",         short = "srebrzysta", },
     ["chelon"]      = {narzednik = "chelonem",      short = "zielonkawoszara", },
-    ["chromis"]     = {narzednik = "chromisem",     short = {"brazowa","brazowe"}, },
+    ["chromis"]     = {narzednik = "chromisem",     short = "brazowa", },
     ["czarniak"]    = {narzednik = "czarniakem",    short = "mosieznozlota", },
     ["dorada"]      = {narzednik = "dorada",        short = "metaliczna", },
     ["dorsz"]       = {narzednik = "dorszem",       short = "jasnoszara", },
@@ -103,28 +171,28 @@ local ryby = {
     ["karp"]        = {narzednik = "karpiem",       short = "szarobrazowa", },
     ["karpienczyk"] = {narzednik = "karpienczykiem",short = "czerwonozlota", },
     ["kielb"]       = {narzednik = "kielbem",       short = "niebieskawobrazowa", },
-    ["kielec"]      = {narzednik = "kielcem",       short = {"srebrzysta", "srebrzyste","srebrzystych"}, },
-    ["kolen"]       = {narzednik = "kolenem",       short = {"zoltawa", "zoltawe"}, },
+    ["kielec"]      = {narzednik = "kielcem",       short = "srebrzysta", },
+    ["kolen"]       = {narzednik = "kolenem",       short = "zoltawa", },
     ["konger"]      = {narzednik = "kongerem",      short = "wezowata", },
     ["koryfena"]    = {narzednik = "koryfena",      short = "blekitnawozielona", },
     ["kosogon"]     = {narzednik = "kosogonem",     short = "niebieskoszara", },
     ["kulbin"]      = {narzednik = "kulbinem",      short = "srebrzystoszara", },
-    ["labraks"]     = {narzednik = "labraksem",     short = {"srebrzysta", "srebrzyste","srebrzystych"}, },
+    ["labraks"]     = {narzednik = "labraksem",     short = "srebrzysta", },
     ["lamna"]       = {narzednik = "lamna",         short = "ciemnoszara", },
     ["leszcz"]      = {narzednik = "leszczem",      short = "srebrnobrunatna",  },
     ["lin"]         = {narzednik = "linem",         short = "zielonobrunatna", },
     ["lipien"]      = {narzednik = "lipieniem",     short = "srebrzystobiala", },
-    ["losos"]       = {narzednik = "lososiem",      short = {"oliwkowosrebrzysta","oliwkowosrebrzyste"}, },
-    ["makrela"]     = {narzednik = "makrela",       short = {"plaska","plaskie"}, },
-    ["makrelosz"]   = {narzednik = "makreloszem",   short = {"zielonkawobrazowa", "oliwkowosrebrzysta","oliwkowosrebrzyste"}, },
-    ["mauryk"]      = {narzednik = "maurykiem",     short = {"prazkowana","prazkowane"}, },
+    ["losos"]       = {narzednik = "lososiem",      short = "oliwkowosrebrzysta", },
+    ["makrela"]     = {narzednik = "makrela",       short = "plaska", },
+    ["makrelosz"]   = {narzednik = "makreloszem",   short = {"zielonkawobrazowa", "oliwkowosrebrzysta"}, },
+    ["mauryk"]      = {narzednik = "maurykiem",     short = "prazkowana", },
     ["mietus"]      = {narzednik = "mietusem",      short = "brazowawa", },
     ["morlesz"]     = {narzednik = "morleszem",     short = "rozowawa", },
     ["mostelka"]    = {narzednik = "mostelka",      short = "czerwonobrazowa", },
     ["murena"]      = {narzednik = "murena",        short = "zoltawa", },
-    ["nawaga"]      = {narzednik = "nawaga",        short = {"plamiasta","plamiaste"}, },
-    ["oblada"]      = {narzednik = "oblada",        short = {"szarosrebrzysta", "szarosrebrzyste"}, },
-    ["ogak"]        = {narzednik = "ogakiem",       short = {"marmurkowana", "marmurkowane"}, },
+    ["nawaga"]      = {narzednik = "nawaga",        short = "plamiasta", },
+    ["oblada"]      = {narzednik = "oblada",        short = "szarosrebrzysta", },
+    ["ogak"]        = {narzednik = "ogakiem",       short = "marmurkowana", },
     ["okon"]        = {narzednik = "okoniem",       short = "pregowana", },
     ["ostrobok"]    = {narzednik = "ostrobokiem",   short = "zielononiebieska", },
     ["ostrosz"]     = {narzednik = "ostroszem",     short = "zoltobrazowa", },
@@ -135,24 +203,24 @@ local ryby = {
     ["plotka"]      = {narzednik = "plotka",        short = "niebieskozielona", },
     ["pstrag"]      = {narzednik = "pstragiem",     short = "nakrapiana", },
     ["rdzawiec"]    = {narzednik = "rdzawiecem",    short = "brazowawa", },
-    ["sajka"]       = {narzednik = "sajka",         short = {"brazowa","brazowe"}, },
-    ["salpa"]       = {narzednik = "salpa",         short = {"srebrzysta", "srebrzyste","srebrzystych"}, },
+    ["sajka"]       = {narzednik = "sajka",         short = "brazowa", },
+    ["salpa"]       = {narzednik = "salpa",         short = "srebrzysta", },
     ["sandacz"]     = {narzednik = "sandaczem",     short = "ciemnozielona", },
-    ["sardynka"]    = {narzednik = "sardynka",      short = {"srebrnoluska", "srebrnoluska"}, },
+    ["sardynka"]    = {narzednik = "sardynka",      short = "srebrnoluska", },
     ["seriola"]     = {narzednik = "seriola",       short = "niebieskosrebrzysta", },
-    ["sieja"]       = {narzednik = "sieja",         short = {"srebrzysta","srebrzystych"}, },
+    ["sieja"]       = {narzednik = "sieja",         short = "srebrzysta", },
     ["sierpnik"]    = {narzednik = "sierpnikiem",   short = "niebieskawa", },
     ["skalnik"]     = {narzednik = "skalnikiem",    short = "czerwonawa", },
-    ["sledz"]       = {narzednik = "sledziem",      short = {"srebrzystozielona","srebrzystozielone"}, },
+    ["sledz"]       = {narzednik = "sledziem",      short = "srebrzystozielona", },
     ["sola"]        = {narzednik = "sola",          short = "wylupiastooka", },
-    ["strojnik"]    = {narzednik = "strojnikem",    short = {"fioletowoniebieska","fioletowoniebieskie"}, },
+    ["strojnik"]    = {narzednik = "strojnikem",    short = "fioletowoniebieska", },
     ["strzepiel"]   = {narzednik = "strzepielem",   short = "wzorzysta", },
     ["sum"]         = {narzednik = "sumem",         short = "wasata", },
     ["szczupak"]    = {narzednik = "szczupakiem",   short = "ciemnozielona", },
     ["szprot"]      = {narzednik = "szprotem",      short = "niebieskawa", },
     ["tolpyga"]     = {narzednik = "tolpyga",       short = "olowianoszara", },
     ["topornik"]    = {narzednik = "topornikem",    short = "czarna", },
-    ["tunczyk"]     = {narzednik = "tunczykiem",    short = {"stalowoblekitna","stalowoblekitne"}, },
+    ["tunczyk"]     = {narzednik = "tunczykiem",    short = "stalowoblekitna", },
     ["ukleja"]      = {narzednik = "ukleja",        short = {"szarozielona", "szarosrebrzysta"}, },
     ["wegorz"]      = {narzednik = "wegorzem",      short = "wezowata", },
     ["wezyna"]      = {narzednik = "wezyna",        short = "zoltobrazowa", },
@@ -230,7 +298,6 @@ function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, 
                 for p,s in pairs(v.short) do
                     opis = opis .." " .. s
                 end
-                text = text .. " [".. opis .. "]"
             else
                 opis = v.short
             end
@@ -612,25 +679,33 @@ function zryby:get_nazwe_ryby(ryba, narzednik, animal)
     
 end
 
+function zryby:czy_opis(short, opis)
+    if short == opis then return true end
+    for k,v in pairs(przymiotniki[short]) do
+        if v == opis then return true end
+    end
+    return false
+end
+
 function zryby:ryba(nazwa)
     local opis = matches[2]
     
     local q = "select animal from feeding where active = 1 order by changed desc limit 1"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
-    
+
     if table.size(r) > 0 then
         local animal = r[1]['animal']
         nazwa = ""
         for k,v in pairs(ryby) do
             if type(v.short) == "table" then
                 for p,s in pairs(v.short) do
-                    if s == opis then
+                    if self:czy_opis(s, opis) then
                         nazwa = nazwa ..(nazwa=="" and "" or "|").. self:get_nazwe_ryby(k, v.narzednik, animal)
                         break
                     end
                 end
             else
-                if v.short == opis then 
+                if self:czy_opis(v.short, opis) then 
                     nazwa = nazwa ..(nazwa=="" and "" or "|").. self:get_nazwe_ryby(k, v.narzednik, animal)
                 end
             end
@@ -734,7 +809,8 @@ function zryby:init()
         end
     end
     for k,v in pairs(shorty) do
-        table.insert(self.ryby_trigger, tempRegexTrigger("[Ss]urow[ae] ("..k..") ryb[ey]", function() self:ryba(v) end))
+        local opisy = k .. "|"..przymiotniki[k][1].."|"..przymiotniki[k][2]
+        table.insert(self.ryby_trigger, tempRegexTrigger("[Ss]urow[ae] ("..opisy..") ryb[ey]", function() self:ryba(v) end))
     end
 
     if self.ogladasz_trigger then killTrigger(self.ogladasz_trigger) end

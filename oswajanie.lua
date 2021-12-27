@@ -3,7 +3,9 @@ oswajanie = {
   trigger = {},
   core = {},
   config = {},
-  version = "0.61"
+  feeding_date = 0,
+  timer = nil,
+  version = "0.62"
 }
 
 oswajanie.config.recovery_time = 20 -- in min
@@ -207,7 +209,7 @@ local ryby = {
     ["rdzawiec"]    = {narzednik = "rdzawiecem",    short = "brazowawa", },
     ["sajka"]       = {narzednik = "sajka",         short = "brazowa", },
     ["salpa"]       = {narzednik = "salpa",         short = "srebrzysta", opis = "Ryba ma owalne, bocznie sciesnione cialo, pokryte niewielkimi luskami. Jej ubarwienie jest szarosrebrzyste z dziesiecioma zlocistymi, dlugimi paskami wzdluz bokow."},
-    ["sandacz"]     = {narzednik = "sandaczem",     short = "ciemnozielona", },
+    ["sandacz"]     = {narzednik = "sandaczem",     short = "ciemnozielona", opis = "Ryba ta ma mocno wydluzone cialo o spiczasnym pysku z szerokim, koncowym otworem gebowym. W szczekach procz drobnych zebow posiada rowniez duze, chwytne kly. Jej grzbiet pokryty jest ciemnozielonymi, momentami przechodzacymi w szare, drobnymi luskami, boki ma nieco jasniejsze a brzuch bialawy. Dwie oddzielone od siebie, zblizonej dlugosci pletwy grzbietowe oraz pletwa ogonowa naznaczone sa rzedami ciemnych punktow."},
     ["sardynka"]    = {narzednik = "sardynka",      short = "srebrnoluska", },
     ["seriola"]     = {narzednik = "seriola",       short = "niebieskosrebrzysta", },
     ["sieja"]       = {narzednik = "sieja",         short = "srebrzysta", },
@@ -338,29 +340,29 @@ function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, 
 end
 
 function oswajanie.alias.print_table_by_animal(animal)
-  local q = "select f.food, strftime('%Y-%m-%d %H:%M',f.changed, 'localtime') as datetime, strftime('%s',f.changed) as count from feeding as f where f.animal = '"..animal.."' order by count desc"
-  local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    local q = "select f.food, strftime('%Y-%m-%d %H:%M',f.changed, 'localtime') as datetime, strftime('%s',f.changed) as count from feeding as f where f.animal = '"..animal.."' order by count desc"
+    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
 
-  local max_food_len = 0
-  for key, val in pairs(r) do
-    local t = string.len(val["food"])
-    if ( t > max_food_len ) then
-      max_food_len = t
+    local max_food_len = 0
+    for key, val in pairs(r) do
+        local t = string.len(val["food"])
+        if t > max_food_len then
+            max_food_len = t
+        end
     end
-  end
-  
-  local col1_len = 5  --- trzycyfrowa liczba + brzegi
-  local col2_len = 18 --- 2021-09-26 10:14 + brzegi
-  local col3_len = 18 --- 2021-09-26 10:14 + brzegi
-  local col4_len = string.len("calkowicie oddane") + 2
-  local col5_len = 0
-  if( string.len("pokarmem") > max_food_len ) then
-    col5_len = string.len("pokarmem") + 2
-  else
-    col5_len = max_food_len + 2
-  end
-  local sum_line_len = col1_len + 1 + col2_len + 1 + col3_len + 1 + col4_len + 1 + col5_len
-  --- 3  | 2021-09-28 20:30 | 2021-10-03 20:30 | lojalne | mango
+
+    local col1_len = 5  --- trzycyfrowa liczba + brzegi
+    local col2_len = 18 --- 2021-09-26 10:14 + brzegi
+    local col3_len = 18 --- 2021-09-26 10:14 + brzegi
+    local col4_len = string.len("calkowicie oddane") + 2
+    local col5_len = 0
+    if string.len("pokarmem") > max_food_len then
+        col5_len = string.len("pokarmem") + 2
+    else
+        col5_len = max_food_len + 2
+    end
+    local sum_line_len = col1_len + 1 + col2_len + 1 + col3_len + 1 + col4_len + 1 + col5_len
+    --- 3  | 2021-09-28 20:30 | 2021-10-03 20:30 | lojalne | mango
   
   --- title
   cecho("\n")
@@ -370,33 +372,42 @@ function oswajanie.alias.print_table_by_animal(animal)
   oswajanie.core.print_line("<light_slate_blue>", "ile", col1_len, "ostatnio", col2_len, "nastepne", col3_len, "poziom oswojenia", col4_len, "pokarmem", col5_len)
 
   --- content  
-  local tmp, a = {}
-  local s,n,nt
+  local tmp = {}
   local shortest_feeding_time_in_sec = oswajanie.config.feeding_time * 60 * 60 -- 432000 s
   
-  for k, v in pairs(r) do
-    if ( tmp[v['food']] == nil ) then
-      tmp[v['food']] = 1
-      a = oswajanie.core.getfoods_by_animal(animal, v['food'])
-      cecho("\n"..string.rep("-",sum_line_len))
-      for k1, v1 in pairs(a) do
-        if ( k1 == 1 ) then
-          s = getEpoch() - v1["count"]
-          n = shortest_feeding_time_in_sec - s
-          if ( s <= shortest_feeding_time_in_sec ) then
-            nt = os.date('%Y-%m-%d %H:%M', getEpoch()+n)
-            oswajanie.core.print_line("<red>", table.size(a), col1_len, v1["datetime"], col2_len, nt, col3_len, oswajanie.core.getlevel_by_animal(animal, v1["count"]), col4_len, v1["food"], col5_len)
-          else
-            oswajanie.core.print_line("<yellow>", table.size(a), col1_len, v1["datetime"], col2_len, "odrazu", col3_len, oswajanie.core.getlevel_by_animal(animal, v1["count"]), col4_len, v1["food"], col5_len)
-          end
-        else
-          oswajanie.core.print_line("<green>", "", col1_len, v1["datetime"], col2_len, "", col3_len, oswajanie.core.getlevel_by_animal(animal, v1["count"]), col4_len, "", col5_len)
+    for k, v in pairs(r) do
+        if tmp[v['food']] == nil then
+            tmp[v['food']] = 1
+            local a = oswajanie.core.getfoods_by_animal(animal, v['food'])
+            cecho("\n"..string.rep("-",sum_line_len))
+            local prev_epoch = 0
+            local shortest =shortest_feeding_time_in_sec
+            for k1, v1 in pairs(a) do
+                if k1 > 1 then
+                    local diff = prev_epoch - v1["count"]
+                    if diff < shortest then shortest = diff end
+                end
+                prev_epoch = v1["count"]
+            end
+            for k1, v1 in pairs(a) do
+                if k1 == 1 then
+                    local s = getEpoch() - v1["count"]
+                    local n = shortest - s
+                    if s <= shortest then                        
+                        local nt = os.date('%Y-%m-%d %H:%M', getEpoch()+n)
+                        local cl = n < 60*60*24 and "<orange>" or "<red>"
+                        oswajanie.core.print_line(cl, table.size(a), col1_len, v1["datetime"], col2_len, nt, col3_len, oswajanie.core.getlevel_by_animal(animal, v1["count"]), col4_len, v1["food"], col5_len)
+                    else
+                        oswajanie.core.print_line("<yellow>", table.size(a), col1_len, v1["datetime"], col2_len, "odrazu", col3_len, oswajanie.core.getlevel_by_animal(animal, v1["count"]), col4_len, v1["food"], col5_len)
+                    end
+                else
+                    oswajanie.core.print_line("<green>", "", col1_len, v1["datetime"], col2_len, "", col3_len, oswajanie.core.getlevel_by_animal(animal, v1["count"]), col4_len, "", col5_len)
+                end
+            end
         end
-      end
     end
-  end
- cecho("\n"..string.rep("-",sum_line_len))
- cecho("\n")
+    cecho("\n"..string.rep("-",sum_line_len))
+    cecho("\n")
 end
 
 function oswajanie.core.getlevel_by_animal(animal, time)
@@ -548,6 +559,15 @@ function oswajanie.alias.print_table_by_animal_all()
   cecho ("\n"..string.rep("-",sum_line_len).."\n")
 end
 
+function oswajanie.core.getlastanimal()
+    local q = "select animal from feeding where active = 1 order by changed desc limit 1"
+    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    if table.size(r) > 0 then
+        return r[1]['animal']
+    end
+    return ""
+end
+
 function oswajanie.alias.print_help()
     local q = "select animal from feeding where active = 1 order by changed desc limit 1"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
@@ -649,7 +669,7 @@ end
 
 function oswajanie.trigger.feed_alert()
   if ( oswajanie.config.recovery_time > 0 ) then
-    tempTimer(oswajanie.config.recovery_time*60, function() 
+    oswajanie.timer = tempTimer(oswajanie.config.recovery_time*60, function() 
       scripts.ui.notification_center:add_notification("Mozesz oswajac zwierze.")
       scripts.ui:info_action_update("Oswajanie")
     end)
@@ -692,11 +712,9 @@ end
 function zryby:ryba(nazwa)
     local opis = matches[2]
     
-    local q = "select animal from feeding where active = 1 order by changed desc limit 1"
-    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    local animal = oswajanie.core.getlastanimal()
 
-    if table.size(r) > 0 then
-        local animal = r[1]['animal']
+    if animal ~= "" then
         nazwa = ""
         for k,v in pairs(ryby) do
             if type(v.short) == "table" then
@@ -731,7 +749,7 @@ end
 function zryby:zwierzejest()
     local zwierzak = oswajanie.tmp_animal
     local level = matches[2]
-    oswajanie.core.insert_animal_level(zwierzak, level)    
+    oswajanie.core.insert_animal_level(zwierzak, level)
     self:disableTrigger()
 end
 
@@ -739,7 +757,21 @@ function zryby:zwierze_zmeczenie()
     local zm = matches[2]
     local lv = misc.lvl_calc["val_to_next_to_number"][zm]
     if selectString(zm, 1) > -1 then
-        creplace(zm .. " ["..lv.."/5]")
+        local max_czas = (5 - lv) * (oswajanie.config.recovery_time * 60)/5
+        local dt = getEpoch() - oswajanie.feeding_date
+        local czas = oswajanie.config.recovery_time * 60 - dt
+        echo(max_czas.." " ..dt.."\n")
+        if czas < 0 then
+            oswajanie.feeding_date = getEpoch() + max_czas - oswajanie.config.recovery_time * 60
+            czas = max_czas
+            killTimer(oswajanie.timer)
+            oswajanie.timer = tempTimer(czas, function() 
+                scripts.ui.notification_center:add_notification("Mozesz oswajac zwierze.")
+                scripts.ui:info_action_update("Oswajanie")
+                end
+            )
+        end
+        creplace(zm .. " ["..lv.."/5 "..string.format("%d", czas).."s]")
         resetFormat()
     end
 end
@@ -781,6 +813,7 @@ function zryby:oswajasz()
         display("trigger do karmiania nic nie rozpoznal")
     end
     oswajanie.trigger.feed_alert()
+    oswajanie.feeding_date = getEpoch()
     scripts.utils.bind_functional("ocen zwierze", false, false)
 end
 
@@ -840,12 +873,14 @@ function zryby:init()
 end
 
 function zryby:brakujace_szczatki(animal)
-    echo("Brakujace szczatki:")
+    animal = animal or oswajanie.core.getlastanimal()
+    cecho("Brakujace szczatki <yellow>" .. animal .. "<reset>:")
     zryby:brakujace(szczatki, animal)
 end
 
 function zryby:brakujace_owoce(animal)
-    echo("Brakujace owoce:")
+    animal = animal or oswajanie.core.getlastanimal()
+    cecho("Brakujace owoce <yellow>" .. animal .. "<reset>:")
     zryby:brakujace(owoce, animal)
 end
 

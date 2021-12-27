@@ -393,7 +393,7 @@ function oswajanie.alias.print_table_by_animal(animal)
                 if k1 == 1 then
                     local s = getEpoch() - v1["count"]
                     local n = shortest - s
-                    if s <= shortest then                        
+                    if s <= shortest then
                         local nt = os.date('%Y-%m-%d %H:%M', getEpoch()+n)
                         local cl = n < 60*60*24 and "<orange>" or "<red>"
                         oswajanie.core.print_line(cl, table.size(a), col1_len, v1["datetime"], col2_len, nt, col3_len, oswajanie.core.getlevel_by_animal(animal, v1["count"]), col4_len, v1["food"], col5_len)
@@ -669,7 +669,7 @@ end
 
 function oswajanie.trigger.feed_alert()
   if ( oswajanie.config.recovery_time > 0 ) then
-    oswajanie.timer = tempTimer(oswajanie.config.recovery_time*60, function() 
+    oswajanie.timer = tempTimer(oswajanie.config.recovery_time*60, function()
       scripts.ui.notification_center:add_notification("Mozesz oswajac zwierze.")
       scripts.ui:info_action_update("Oswajanie")
     end)
@@ -764,8 +764,8 @@ function zryby:zwierze_zmeczenie()
         if czas < 0 then
             oswajanie.feeding_date = getEpoch() + max_czas - oswajanie.config.recovery_time * 60
             czas = max_czas
-            killTimer(oswajanie.timer)
-            oswajanie.timer = tempTimer(czas, function() 
+            if oswajanie.timer then killTimer(oswajanie.timer) end
+            oswajanie.timer = tempTimer(czas, function()
                 scripts.ui.notification_center:add_notification("Mozesz oswajac zwierze.")
                 scripts.ui:info_action_update("Oswajanie")
                 end

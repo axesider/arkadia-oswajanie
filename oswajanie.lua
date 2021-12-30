@@ -207,7 +207,7 @@ local ryby = {
     ["rdzawiec"]    = {narzednik = "rdzawiecem",    short = "brazowawa", },
     ["sajka"]       = {narzednik = "sajka",         short = "brazowa", },
     ["salpa"]       = {narzednik = "salpa",         short = "srebrzysta", opis = "Ryba ma owalne, bocznie sciesnione cialo, pokryte niewielkimi luskami. Jej ubarwienie jest szarosrebrzyste z dziesiecioma zlocistymi, dlugimi paskami wzdluz bokow."},
-    ["sandacz"]     = {narzednik = "sandaczem",     short = "ciemnozielona", },
+    ["sandacz"]     = {narzednik = "sandaczem",     short = "ciemnozielona", opis = "Ryba ta ma mocno wydluzone cialo o spiczasnym pysku z szerokim, koncowym otworem gebowym. W szczekach procz drobnych zebow posiada rowniez duze, chwytne kly. Jej grzbiet pokryty jest ciemnozielonymi, momentami przechodzacymi w szare, drobnymi luskami, boki ma nieco jasniejsze a brzuch bialawy. Dwie oddzielone od siebie, zblizonej dlugosci pletwy grzbietowe oraz pletwa ogonowa naznaczone sa rzedami ciemnych punktow."},
     ["sardynka"]    = {narzednik = "sardynka",      short = "srebrnoluska", },
     ["seriola"]     = {narzednik = "seriola",       short = "niebieskosrebrzysta", },
     ["sieja"]       = {narzednik = "sieja",         short = "srebrzysta", },
@@ -548,6 +548,15 @@ function oswajanie.alias.print_table_by_animal_all()
   cecho ("\n"..string.rep("-",sum_line_len).."\n")
 end
 
+function oswajanie.core.getlastanimal()
+    local q = "select animal from feeding where active = 1 order by changed desc limit 1"
+    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    if table.size(r) > 0 then
+        return r[1]['animal']
+    end
+    return ""
+end
+
 function oswajanie.alias.print_help()
     local q = "select animal from feeding where active = 1 order by changed desc limit 1"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
@@ -692,11 +701,9 @@ end
 function zryby:ryba(nazwa)
     local opis = matches[2]
     
-    local q = "select animal from feeding where active = 1 order by changed desc limit 1"
-    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    local animal = oswajanie.core.getlastanimal()
 
-    if table.size(r) > 0 then
-        local animal = r[1]['animal']
+    if animal ~= "" then
         nazwa = ""
         for k,v in pairs(ryby) do
             if type(v.short) == "table" then
@@ -840,12 +847,14 @@ function zryby:init()
 end
 
 function zryby:brakujace_szczatki(animal)
-    echo("Brakujace szczatki:")
+    animal = animal or oswajanie.core.getlastanimal()
+    cecho("Brakujace szczatki <yellow>" .. animal .. "<reset>:")
     zryby:brakujace(szczatki, animal)
 end
 
 function zryby:brakujace_owoce(animal)
-    echo("Brakujace owoce:")
+    animal = animal or oswajanie.core.getlastanimal()
+    cecho("Brakujace owoce <yellow>" .. animal .. "<reset>:")
     zryby:brakujace(owoce, animal)
 end
 

@@ -339,7 +339,7 @@ function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, 
   end
 end
 
-function oswajanie.alias.print_table_by_animal(animal)
+function oswajanie.alias.print_table_by_animal(animal, compact)
     local q = "select f.food, strftime('%Y-%m-%d %H:%M',f.changed, 'localtime') as datetime, strftime('%s',f.changed) as count from feeding as f where f.animal = '"..animal.."' order by count desc"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
 
@@ -364,21 +364,22 @@ function oswajanie.alias.print_table_by_animal(animal)
     local sum_line_len = col1_len + 1 + col2_len + 1 + col3_len + 1 + col4_len + 1 + col5_len
     --- 3  | 2021-09-28 20:30 | 2021-10-03 20:30 | lojalne | mango
   
-  --- title
-  cecho("\n")
-  cecho(oswajanie.core.ccstr("<green>", "Oswajane zwierze", "-", sum_line_len))
-  cecho("\n  <white>"..animal.."<grey>")
-  cecho("\n"..string.rep("-",sum_line_len))
-  oswajanie.core.print_line("<light_slate_blue>", "ile", col1_len, "ostatnio", col2_len, "nastepne", col3_len, "poziom oswojenia", col4_len, "pokarmem", col5_len)
+    --- title
+    cecho("\n")
+    cecho(oswajanie.core.ccstr("<green>", "Oswajane zwierze", "-", sum_line_len))
+    cecho("\n  <white>"..animal.."<grey>")
+    cecho("\n"..string.rep("-",sum_line_len))
+    oswajanie.core.print_line("<light_slate_blue>", "ile", col1_len, "ostatnio", col2_len, "nastepne", col3_len, "poziom oswojenia", col4_len, "pokarmem", col5_len)
 
     local tmp = {}
     local shortest_feeding_time_in_sec = oswajanie.config.feeding_time * 60 * 60 -- 432000 s
     local theshortest = shortest_feeding_time_in_sec
+    compact = compact or false
     for k, v in pairs(r) do
         if tmp[v['food']] == nil then
             tmp[v['food']] = 1
             local a = oswajanie.core.getfoods_by_animal(animal, v['food'])
-            cecho("\n"..string.rep("-",sum_line_len))
+            if not compact then  cecho("\n"..string.rep("-", sum_line_len)) end
             local prev_epoch = 0
             local shortest = shortest_feeding_time_in_sec
             for k1, v1 in pairs(a) do
@@ -408,6 +409,9 @@ function oswajanie.alias.print_table_by_animal(animal)
                     end
                 end
                 oswajanie.core.print_line(cl, col1, col1_len, v1["datetime"], col2_len, nt, col3_len, oswajanie.core.getlevel_by_animal(animal, v1["count"]), col4_len, food, col5_len)
+                if compact and k1 == 1 then
+                    break
+                end
             end
         end
     end
@@ -594,7 +598,7 @@ function oswajanie.alias.print_help()
     cecho(" <light_slate_blue>/o_pokaz <zwierze><grey> - pokazuje spis oswajan <zwierzecia>\n")
     cecho("           Klikniecie na wybrane pozywienie wywola probe oswajania tym pokarmem.\n")
     if( table.size(r) > 0 ) then
-      cechoLink("\n <light_slate_blue>/o_pokaz "..r[1]['animal'], [[expandAlias("/o_pokaz ]]..r[1]['animal']..[[")]], "/o_pokaz "..r[1]['animal'], true)
+      cechoLink("\n <light_slate_blue>/o_pokaz "..r[1]['animal'], [[oswajanie.alias.print_table_by_animal("]]..r[1]['animal']..[[", true)]], "/o_pokaz "..r[1]['animal'], true)
       cecho("<grey> - ostatnio oswajane zwierze\n\n")
     end
     cechoLink(" <light_slate_blue>/o_historia", [[expandAlias("/o_historia")]], "/o_historia", true)
@@ -614,14 +618,22 @@ function oswajanie.alias.print_help()
     cecho(" ")
 end
 
+function oswajanie.alias.enable(animal)
+    oswajanie.aktywacja(animal, 1)
+end
+
 function oswajanie.alias.disable(animal)
-  local q = "select animal from feeding where animal = '"..animal.."' group by animal"
-  local r = db:fetch_sql(mydb_oswajanie.feeding, q)
-  if ( table.size(r) > 0 ) then
-    local query = "update feeding set active = 0 where animal = '"..animal.."'"
-    cecho("\n <green>Deaktywuje " .. animal.." w bazie.\n\n")
-    db:fetch_sql(mydb_oswajanie.feeding, query)
-  end
+    oswajanie.aktywacja(animal, 0)
+end
+
+function oswajanie.aktywacja(animal, status)
+    local q = "select animal from feeding where animal = '"..animal.."' group by animal"
+    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    if table.size(r) > 0 then
+        local bob = db:fetch(mydb_oswajanie.feeding, db:eq(mydb_oswajanie.feeding.animal, animal))[1]
+        bob.active = status
+        db:update(mydb_oswajanie.feeding, bob)
+    end
 end
 
 function oswajanie.alias.rename(animal, new_name)
@@ -648,17 +660,6 @@ function oswajanie.alias.rename(animal, new_name)
   else
     cecho("\n <light_slate_blue>/o_przemianuj <zwierze> na <Kogo?><grey>\n\n")
     cecho(" Przyklad: <yellow>/o_przemianuj ostrodzioba podstarzala sojke na Darniaka<grey>\n\n")
-  end
-end
-
-
-function oswajanie.alias.enable(animal)
-  local q = "select animal from feeding where animal = '"..animal.."' group by animal"
-  local r = db:fetch_sql(mydb_oswajanie.feeding, q)
-  if ( table.size(r) > 0 ) then
-    local query = "update feeding set active = 1 where animal = '"..animal.."'"
-    cecho("\n <green>Aktywuje " .. animal.." w bazie.\n\n")
-    db:fetch_sql(mydb_oswajanie.feeding, query)
   end
 end
 
@@ -869,7 +870,7 @@ function zryby:init()
         table.insert(scripts.inv.pretty_containers.group_definitions, {name ="ryby", filter = scripts.inv.pretty_containers:create_regexp_filter(ryby) })
     end
     if dodaj_owoce then
-        local owoce = { "agrest(|ow|y)","(?(?=zoltych)zoltych cytryn|cytryn(e|y))", "czeresni(|e)","daktyl","fig(|e|i)","grusz(ke|ki|ek)","jabl(ek|ko|ka)","malin(|e|y)","mandaryn(ek|ke|ki)","mango","melon(|y)","oliw(ek|ke|ki)","orzech(|y)","papaje","pomarancz(e|y)","sliwk(e|i)","winogron","wisni(|e)","truskaw(ek|ke|ki)"}
+        local owoce = { "agrest(|ow|y)","(?(?=zoltych)zoltych cytryn|cytryn(e|y))", "czeresni(|e)","daktyl","fig(|e|i)","grusz(ke|ki|ek)","jabl(ek|ko|ka)","malin(|e|y)","mandaryn(ek|ke|ki)","mango","melon(|y)","oliw(ek|ke|ki)","orzech(|y)","papaje","pomarancz(e|y)","sliw(ke|ek|ki)","winogron","wisni(|e)","truskaw(ek|ke|ki)"}
         table.insert(scripts.inv.pretty_containers.group_definitions, {name ="owoce", filter = scripts.inv.pretty_containers:create_regexp_filter(owoce) })
     end
     

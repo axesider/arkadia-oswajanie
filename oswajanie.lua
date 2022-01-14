@@ -222,6 +222,7 @@ local ryby = {
     ["sum"]         = {narzednik = "sumem",         short = "wasata", },
     ["szczupak"]    = {narzednik = "szczupakiem",   short = "ciemnozielona", },
     ["szprot"]      = {narzednik = "szprotem",      short = "niebieskawa", },
+    ["tasergal"]    = {narzednik = "tasergalem",    short = "niebieskocostam", },
     ["tolpyga"]     = {narzednik = "tolpyga",       short = "olowianoszara", },
     ["topornik"]    = {narzednik = "topornikem",    short = "czarna", },
     ["tunczyk"]     = {narzednik = "tunczykiem",    short = "stalowoblekitna", },

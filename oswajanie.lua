@@ -223,7 +223,7 @@ local ryby = {
     ["sum"]         = {narzednik = "sumem",         short = "wasata", },
     ["szczupak"]    = {narzednik = "szczupakiem",   short = "ciemnozielona", },
     ["szprot"]      = {narzednik = "szprotem",      short = "niebieskawa", },
-    ["tasergal"]    = {narzednik = "tasergalem",    short = "nieznany", },
+    ["tasergal"]    = {narzednik = "tasergalem",    short = "niebieskawa", },
     ["tolpyga"]     = {narzednik = "tolpyga",       short = "olowianoszara", },
     ["topornik"]    = {narzednik = "topornikem",    short = "czarna", },
     ["tunczyk"]     = {narzednik = "tunczykiem",    short = "stalowoblekitna", },
@@ -258,15 +258,15 @@ mydb_oswajanie = db:create("feeding", {
   })
 
 function oswajanie.alias.insert_feeding_entry(zwierzak, pokarm)
-  db:add(mydb_oswajanie.feeding, { animal = zwierzak, food = pokarm })
+    db:add(mydb_oswajanie.feeding, { animal = zwierzak, food = pokarm })
 end
 
 function oswajanie.core.insert_animal_level(zwierzak, poziom)
-  local q = "select animal from animals where animal='"..zwierzak.."' and level='"..poziom.."' "
-  local r = db:fetch_sql(mydb_oswajanie.feeding, q)
-  if( r == nil or table.size(r) == 0 ) then
-    db:add(mydb_oswajanie.animals, { animal = zwierzak, level = poziom })
-  end
+    local q = "select animal from animals where animal='"..zwierzak.."' and level='"..poziom.."' "
+    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    if( r == nil or table.size(r) == 0 ) then
+        db:add(mydb_oswajanie.animals, { animal = zwierzak, level = poziom })
+    end
 end
 
 function oswajanie.core.lcstr(color, str, fill_char, to_len)
@@ -287,16 +287,7 @@ function oswajanie.core.ccstr(color, str, fill_char, to_len)
   return s
 end
 
-function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, col3_len, col4, col4_len, col5, col5_len)
-  cecho("\n"..oswajanie.core.lcstr(color, col1, " ", col1_len))
-  cecho("<grey>|"..oswajanie.core.lcstr(color, col2, " ", col2_len))
-  cecho("<grey>|"..oswajanie.core.lcstr(color, col3, " ", col3_len))
-  cecho("<grey>|"..oswajanie.core.lcstr(color, col4, " ", col4_len))
-  cecho("<grey>|")
-  if( string.len(col5) > 0 ) then
-    local text = col5
-    local czym = col5
-    local symbol = (text=="pokarmem" and "" ) or "?"
+function oswajanie.core.get_symbol(text)
     for k,v in pairs(ryby) do
         if v.narzednik == text then
             local opis = ""
@@ -308,17 +299,14 @@ function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, 
                 opis = v.short
             end
             text = text .. " [".. opis .. "]"
-            symbol = "🐟"
-            break
+            return "🐟"
         end
     end
     for k,v in pairs(owoce) do
         if v.narzednik == text then
-            symbol = "🍎"
-            break
+            return "🍎"
         end
     end
-    
     for k,v in pairs(warzywa) do
         if v.narzednik == text then
             symbol = "🥔"
@@ -327,15 +315,43 @@ function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, 
     end
     for k,v in pairs(szczatki) do
         if v.narzednik == text then
-            symbol = "☣"
-            break
+            return "☣"
         end
     end
-     
     local prefix = "miesem"
     if text:find(prefix, 1, #prefix) then
-        symbol = "🥩"
+        return "🥩"
     end
+    return "?"
+end
+
+function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, col3_len, col4, col4_len, col5, col5_len)
+    cecho("\n"..oswajanie.core.lcstr(color, col1, " ", col1_len))
+    cecho("<grey>|"..oswajanie.core.lcstr(color, col2, " ", col2_len))
+    cecho("<grey>|"..oswajanie.core.lcstr(color, col3, " ", col3_len))
+    cecho("<grey>|"..oswajanie.core.lcstr(color, col4, " ", col4_len))
+    cecho("<grey>|")
+    if( string.len(col5) > 0 ) then
+        local text = col5
+        local czym = col5
+        local symbol = (text=="pokarmem" and "" ) or oswajanie.core.get_symbol(text)
+        if symbol == "🐟" then
+            for k,v in pairs(ryby) do
+                if v.narzednik == text then
+                    local opis = ""
+                    if type(v.short) == "table" then
+                        for p,s in pairs(v.short) do
+                            opis = opis .." " .. s
+                        end
+                    else
+                        opis = v.short
+                    end
+                    text = text .. " [".. opis .. "]"
+                break
+            end
+        end
+    end
+        
     echo(symbol)
     cechoLink("<light_slate_blue> "..text, [[send("oswajaj zwierze ]] ..czym.. [[")]], "oswajaj zwierze "..col5, true)
   end
@@ -719,7 +735,7 @@ function zryby:czy_opis(short, opis)
 end
 
 function trigger_func_oswajanie_ryby_opis(opis)
-    echo(opis)
+    cecho("<green>"..opis.."<reset>")
 end
 
 function zryby:ryba(nazwa)
@@ -796,28 +812,38 @@ end
 function zryby:oswajasz()
     local raw = matches[2]
     local arr = string.split(raw, " ")
-    
+    local pokarm
     if table.size(arr) == 2 then
         -- karmienie nazwanego zwierzaka jedzeniem lub ryba
-        oswajanie.alias.insert_feeding_entry(arr[1], arr[2])
+        pokarm = arr[2]
+        oswajanie.alias.insert_feeding_entry(arr[1], pokarm)
     elseif table.size(arr) == 3 then
         -- karmienie nazwanego zwierzaka miesem
-        oswajanie.alias.insert_feeding_entry(arr[1], arr[2].." "..arr[3])
+        pokarm = arr[2].." "..arr[3]
+        oswajanie.alias.insert_feeding_entry(arr[1], pokarm)
     elseif table.size(arr) == 4 then
         -- karmienie nienazwanego zwierzaka jedzeniem lub ryba
-        oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], arr[4])
+        pokarm = arr[4]
+        oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], pokarm)
     elseif table.size(arr) == 5 then
         -- karmienie nienazwanego zwierzaka miesem lub sokola jedzeniem/ryba
         if( arr[4] == 'miesem' ) then
-            oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], arr[4].." "..arr[5])
+            pokarm = arr[4].." "..arr[5]
+            oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], pokarm)
         else
-            oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3].." "..arr[4], arr[5])
+            pokarm = arr[5]
+            oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3].." "..arr[4], pokarm)
         end
     elseif table.size(arr) == 6 then
         -- karmienie nienazwanego sokola miesem
-        oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3].." "..arr[4], arr[5].." "..arr[6])
+        pokarm = arr[5].." "..arr[6]
+        oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3].." "..arr[4], pokarm)
     else
         display("trigger do karmiania nic nie rozpoznal")
+    end
+    if selectString(pokarm, 1) > -1 then
+        creplace(pokarm .. "("..oswajanie.core.get_symbol(pokarm)..")")
+        resetFormat()
     end
     oswajanie.trigger.feed_alert(oswajanie.config.recovery_time*60)
     oswajanie.feeding_date = getEpoch()

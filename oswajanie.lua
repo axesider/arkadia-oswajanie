@@ -5,7 +5,7 @@ oswajanie = {
   config = {},
   feeding_date = 0,
   timer = nil,
-  version = "0.62"
+  version = "0.63"
 }
 
 oswajanie.config.recovery_time = 20 -- in min
@@ -309,7 +309,7 @@ function oswajanie.core.get_symbol(text)
     end
     for k,v in pairs(warzywa) do
         if v.narzednik == text then
-            symbol = "🥔"
+            return "🥔"
             break
         end
     end
@@ -497,35 +497,39 @@ function oswajanie.core.getfoods_by_animal(animal, food)
 end
 
 function oswajanie.alias.print_animals()
-  local q = "select animal,active from feeding group by animal order by animal"
-  local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    local q = "select animal,active from feeding group by animal order by animal"
+    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
   
-  cecho("\n")
-  cecho("  <light_slate_blue>Oswajane zwierzeta:")
-  cecho("\n")
+    cecho("\n")
+    cecho("  <light_slate_blue>Oswajane zwierzeta:")
+    cecho("\n")
 
-  local a = "nieaktywne"
-  local command = nil
-  local tip = ""
-  
+    local command = nil
+    local tip = ""
+    local maxlen = 0
+    for k, v in pairs(r) do
+        local length = string.len(v["animal"])
+        if length > maxlen then maxlen = length end
+  end
   for k, v in pairs(r) do
-    if ( v["active"] == 1 ) then
-      a = "aktywne"
-      command = [[expandAlias("/o_wylacz ]].. v["animal"] .. [[")]]
-      tip = "/o_wylacz ".. v["animal"]
+    local a = "(<red>nieaktywne<grey>)"
+    if v["active"] == 1 then
+        a = " (<green>aktywne<grey>)  "
+        command = [[expandAlias("/o_wylacz ]].. v["animal"] .. [[")]]
+        tip = "/o_wylacz ".. v["animal"]
     else
-      a = "nieaktywne"
-      command = [[expandAlias("/o_wlacz ]].. v["animal"] .. [[")]]
-      tip = "/o_wlacz ".. v["animal"]    
+        command = [[expandAlias("/o_wlacz ]].. v["animal"] .. [[")]]
+        tip = "/o_wlacz ".. v["animal"]    
     end
     cecho("\n  - <yellow>")
     cechoLink("<yellow>"..v["animal"], [[expandAlias("/o_pokaz ]].. v["animal"] .. [[")]], "/o_pokaz ".. v["animal"], true)
-    cechoLink("<grey> (<red>"..a.."<grey>)", command, tip, true)
+    echo(string.rep(" ", 1 + maxlen - string.len(v["animal"])))
+    cechoLink(a, command, tip, true)
     cecho(" sprawdz czego nie jadl:")
-    cechoLink("<light_slate_blue> szczatki", [[zryby:brakujace_szczatki("]] ..v["animal"].. [[")]], "pokaz szcztki", true)
-    cechoLink("<light_slate_blue> owoce", [[zryby:brakujace_owoce("]] ..v["animal"].. [[")]], "pokaz szcztki", true)
+    cechoLink("<light_slate_blue> szczatki", [[zryby:brakujace_szczatki("]] ..v["animal"].. [[")]], "pokaz szczatki", true)
+    cechoLink("<light_slate_blue> owoce", [[zryby:brakujace_owoce("]] ..v["animal"].. [[")]], "pokaz szczatki", true)
   end
-  cecho("\n\n")
+  cecho("\n")
 end
 
 function oswajanie.alias.print_table_by_animal_all()

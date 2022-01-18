@@ -310,7 +310,6 @@ function oswajanie.core.get_symbol(text)
     for k,v in pairs(warzywa) do
         if v.narzednik == text then
             return "🥔"
-            break
         end
     end
     for k,v in pairs(szczatki) do

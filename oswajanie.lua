@@ -12,10 +12,18 @@ oswajanie.config.recovery_time = 20 -- in min
 oswajanie.config.feeding_time = 120 -- in hours
 
 local warzywa = {
+    ["burak"] = {narzednik = "burakiem"},
+    ["cebula"] = {narzednik = "cebula"},
+    ["dynia"] = {narzednik = "dynia"},
     ["glowka kapusty"] = {narzednik = "glowka"},
+    ["kalafior"] = {narzednik = "kalafiorem"},
+    ["kalarepa"] = {narzednik = "kalarepa"},
+    ["marchew"] = {narzednik = "marchwia"},
+    ["ogorek"] = {narzednik = "ogorkiem"},
+    ["pietruszka"] = {narzednik = "pietruszka"},
     ["pomidor"] = {narzednik = "pomidorem"},
+    ["salata"] = {narzednik = "salata"},
     ["ziemniak"] = {narzednik = "ziemniakiem"},
-    --[""] = {narzednik = ""},   
 }
 
 local szczatki = {
@@ -314,7 +322,7 @@ function oswajanie.core.get_symbol(text)
     end
     for k,v in pairs(szczatki) do
         if v.narzednik == text then
-            return "☣"
+            return "👁️"
         end
     end
     local prefix = "miesem"
@@ -892,17 +900,24 @@ function zryby:init()
     
     local dodaj_owoce = true
     local dodaj_ryby = true
+    local dodaj_warzywa = true
     for k,v in pairs(scripts.inv.pretty_containers.group_definitions) do
             if v.name == "ryby"  then dodaj_ryby = false
-        elseif v.name == "owoce" then dodaj_owoce = false end
+        elseif v.name == "owoce" then dodaj_owoce = false
+        elseif v.name == "warzywa" then dodaj_warzywa = false
+            end
     end
     if dodaj_ryby then
         local ryby = { "surow[ae] (\\w+) ryb[ey]" }
         table.insert(scripts.inv.pretty_containers.group_definitions, {name ="ryby", filter = scripts.inv.pretty_containers:create_regexp_filter(ryby) })
     end
     if dodaj_owoce then
-        local owoce = { "agrest(|ow|y)","(?(?=zoltych)zoltych cytryn|cytryn(e|y))", "czeresni(|e)","daktyl","fig(|e|i)","grusz(ke|ki|ek)","jabl(ek|ko|ka)","malin(|e|y)","mandaryn(ek|ke|ki)","mango","melon(|y)","oliw(ek|ke|ki)","orzech(|y)","papaje","pomarancz(e|y)","sliw(ke|ek|ki)","winogron","wisni(|e)","truskaw(ek|ke|ki)"}
+        local owoce = { "agrest(|y|ow)","(?(?=zoltych)zoltych cytryn|cytryn(e|y|))", "czeresni(|e)","daktyl(|e|i)","fig(e|i|)","grusz(ke|ki|ek)","jabl(ko|ka|ek)","malin(e|y|)","mandaryn(ek|ke|ki)","mango","melon(|y)","oliw(ek|ke|ki)","orzech(|y)","papaje","pomarancz(e|y)","sliw(ke|ek|ki)","winogron","wisni(|e)","truskaw(ek|ke|ki)"}
         table.insert(scripts.inv.pretty_containers.group_definitions, {name ="owoce", filter = scripts.inv.pretty_containers:create_regexp_filter(owoce) })
+    end
+    if dodaj_warzywa then
+        local warzywa = { "burak(|i|ow)", "cebul(a|e|)", "dyn(ia|ie|)", "kalafior(|y|ow)", "kalarep(a|y|)", "kapust(a|y|)", "march(ew|wie|)", "ogor(ek|ki|kow)", "pietrusz(ka|ki|ek)", "pomidor(|y|ow)", "salat(a|y|)", "ziemniak(|i|ow)"}
+        table.insert(scripts.inv.pretty_containers.group_definitions, {name ="warzywa", filter = scripts.inv.pretty_containers:create_regexp_filter(warzywa) })
     end
     
     tempTimer(5, [[ oswajanie.core.print_start_message() ]])

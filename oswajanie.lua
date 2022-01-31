@@ -5,7 +5,6 @@ oswajanie = {
   config = {},
   feeding_date = 0,
   timer = nil,
-  version = "0.63"
 }
 
 oswajanie.config.recovery_time = 20 -- in min
@@ -609,8 +608,6 @@ end
 function oswajanie.alias.print_help()
     local q = "select animal from feeding where active = 1 order by changed desc limit 1"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
-    cecho("\n <green>Arkadia oswajanie, ver " .. string.sub(oswajanie.version .. "   ", 0, 5) .. "\n")
-    cecho("\n")
     cecho(" Ogolnie informacje: Baza oswajania zaczyna sie budowac po pierwszym oswajaniu zwierzecia.\n")
     cecho(" Dopiero wtedy dostepne aliasy wyswietlaja pomocne informacje.\n")
     cecho(" Po oswojeniu nalezy ")
@@ -696,10 +693,6 @@ function oswajanie.core.full_string(str, len)
   local l1 = string.len(str)
   local l2 = len - l1
   return str..string.rep(" ",l2)
-end
-
-function oswajanie.core.print_start_message()
-    scripts:print_log("Uzywasz pluginu arkadia-oswajanie, ver. " .. oswajanie.version .. ". Pomoc dostepna w '/o_pomoc'")
 end
 
 function oswajanie.trigger.feed_alert(czas)
@@ -920,7 +913,7 @@ function zryby:init()
         table.insert(scripts.inv.pretty_containers.group_definitions, {name ="warzywa", filter = scripts.inv.pretty_containers:create_regexp_filter(warzywa) })
     end
     
-    tempTimer(5, [[ oswajanie.core.print_start_message() ]])
+    scripts.plugins_updateCheck:checkNewVersion("arkadia-oswajanie", "axesider")
 end
 
 function zryby:brakujace_szczatki(animal)

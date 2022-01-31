@@ -1,4 +1,3 @@
 return {
-  "oswajanie",
-  "update-check"
+  "oswajanie"
 }

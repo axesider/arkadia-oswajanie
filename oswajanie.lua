@@ -271,7 +271,7 @@ end
 function oswajanie.core.insert_animal_level(zwierzak, poziom)
     local q = "select animal from animals where animal='"..zwierzak.."' and level='"..poziom.."' "
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
-    if( r == nil or table.size(r) == 0 ) then
+    if r == nil or table.size(r) == 0 then
         db:add(mydb_oswajanie.animals, { animal = zwierzak, level = poziom })
     end
 end
@@ -783,6 +783,17 @@ function zryby:zwierzejest()
     local zwierzak = oswajanie.tmp_animal
     local level = matches[2]
     oswajanie.core.insert_animal_level(zwierzak, level)
+    
+    if selectString(level, 1) > -1 then
+        local q = "select count(*)as count from feeding as F where animal = '".. zwierzak .. "' and changed > (select A.changed from animals as A where A.level = '".. level .. "' and A.animal = F.animal)"
+        local result = db:fetch_sql(mydb_oswajanie.feeding, q)
+        
+        local add_text = " <light_slate_blue>" .. misc.animal_levels[level]
+        add_text = add_text .. "<reset>, karmione " .. result[1]['count'] .. " razy<reset>"
+        creplace(level .. add_text)
+    end
+
+    
     self:disableTrigger()
 end
 
@@ -857,6 +868,8 @@ end
 function zryby:init()
     scripts:print_log("Laduje plugin arkadia-oswajanie")
 
+    disableTrigger("poziomy-zwierzat")
+
     for _,v in pairs(self.ryby_trigger) do
         killTrigger(v)
     end
@@ -913,7 +926,7 @@ function zryby:init()
         table.insert(scripts.inv.pretty_containers.group_definitions, {name ="warzywa", filter = scripts.inv.pretty_containers:create_regexp_filter(warzywa) })
     end
     
-    scripts.plugins_updateCheck:checkNewVersion("arkadia-oswajanie", "axesider")
+    scripts.plugins_update_check:github_check_version("arkadia-oswajanie", "axesider")
 end
 
 function zryby:brakujace_szczatki(animal)

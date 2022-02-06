@@ -158,7 +158,7 @@ local ryby = {
     ["belona"]      = {narzednik = "belona",        short = "ciemnoniebieska", },
     ["beryks"]      = {narzednik = "beryksem",      short = "ciemnoczerwona", },
     ["bielmik"]     = {narzednik = "bielmikiem",    short = "jasnomiedziana", },
-    ["bolen"]       = {narzednik = "bolenem",       short = "blekitnawa", },
+    ["bolen"]       = {narzednik = "bolenem",       short = "blekitnawa", opis = "Ryba posiada wydluzone, nieco bocznie splaszczone cialo o spiczastej glowie i malych oczkach. Otwor gebowy jest szeroki, zuchwa nieco dluzsza z trojkatna wypukloscia, ktora przy zamknieciu pyska wchodzi w zaglebienie szczeki gornej. Jej pokryty malymi, kolistymi luskami grzbiet ma  oliwkowozielona, blekitnie lsniaca barwe, boki sa nieco jasniejsze z zoltawym polyskiem, brzuch srebrzystobialy zas pletwy maja ladna, czerwona barwe."},
     ["brama"]       = {narzednik = "brama",         short = "zielonkawobrazowa", },
     ["bulawik"]     = {narzednik = "bulawikiem",    short = "czarna", },
     ["certa"]       = {narzednik = "certa",         short = "srebrzysta", },
@@ -170,13 +170,13 @@ local ryby = {
     ["drum"]        = {narzednik = "drumem",        short = "pasiasta", },
     ["dubiel"]      = {narzednik = "dubielem",      short = "srebrzystoszara", },
     ["glowacica"]   = {narzednik = "glowacica",     short = "zielonkawoszara", },
-    ["glowacz"]     = {narzednik = "glowaczem",     short = "szara", },
+    ["glowacz"]     = {narzednik = "glowaczem",     short = "szara", opis = "Ryba ta ma kijankowate, pozbawione lusek cialo o szerokiej i plaskiej glowie. Oczy umieszczone sa wysoko zas pokrywe skrzelowa zdobi zakrzywiony, silny kolec. Jej grzbiet i boki sa szarego koloru, zas przesuniete na gardlo pletwy brzuszne jasne, niepregowane. Linia boczna biegnie srodkiem boku ryby i siega nasady pletwy ogonowej, znajduje sie na niej okolo trzydziestu malych plytek kostnych. Pletwy piersiowe sa szerokie, ich dolne promienie dlugie, wystajace z blony pletwowej. Ten gatunek ryby zwany jest glowaczem, wystepuje w zimnych i czystych, dobrze natlenionych wodach srodladowych o piaszczystym i zwirowatym dnie. Nie nalezy on do ryb wielkich, osiagajac dlugosc zaledwie do dwudziestu centymetrow."},
     ["granik"]      = {narzednik = "granikiem",     short = "plamiasta", },
     ["gromadnik"]   = {narzednik = "gromadnikiem",  short = "czarnoniebieska", },
     ["iglik"]       = {narzednik = "iglikiem",      short = "brazowawa", },
     ["jaskron"]     = {narzednik = "jaskronem",     short = "czerwonobrazowa", opis = "Ryba ma podluzne, owalne cialo o malej glowie i krotkim pysku. Jej grzbiet jest czerwonobrazowy, boki zoltobrazowe zas strona brzuszna srebrzyscie lsniaca."},
     ["jazgarz"]     = {narzednik = "jazgarzem",     short = "oliwkowozielona", },
-    ["jelec"]       = {narzednik = "jelcem",        short = "stalowoszara", },
+    ["jelec"]       = {narzednik = "jelcem",        short = "stalowoszara", opis = "Cialo tej ryby jest wydluzone, niemal okragle w przekroju, o nieduzej glowie z waskim, przesunietym nieco w dolne polozenie otworem gebowym. Pokrywaja ja duze luski, stalowoszare z olowianym polyskiem na grzbiecie, zoltawosrebrzyste na bokach i bialawe na brzuchu."},
     ["jesiotr"]     = {narzednik = "jesiotrem",     short = "brazowoszara", },
     ["kabryl"]      = {narzednik = "kabrylem",      short = "purpurowa", },
     ["kantar"]      = {narzednik = "kantarem",      short = "okraglawa", opis = "Ryba ma wygrzbiecone, bocznie splaszczone cialo. Ubarwiona jest na ciemnoniebieski, wpadajacy prawie w czern kolor, a na jej bokach widnieje po siedem jasniejszych opasek."},
@@ -185,7 +185,7 @@ local ryby = {
     ["karp"]        = {narzednik = "karpiem",       short = "szarobrazowa", },
     ["karpienczyk"] = {narzednik = "karpienczykiem",short = "czerwonozlota", },
     ["kielb"]       = {narzednik = "kielbem",       short = "niebieskawobrazowa", },
-    ["kielec"]      = {narzednik = "kielecem",       short = "srebrzysta", opis = "Cialo ryby jest owalne, bocznie splaszczone o duzej i masywnej glowie. Grzbiet ma ubarwiony srebrzyscie, na bokach widnieje piec niewyraznych, ciemnych poprzecznych preg. Strona brzuszna srebrzyscie lsniaca."},
+    ["kielec"]      = {narzednik = "kielecem",      short = "srebrzysta", opis = "Cialo ryby jest owalne, bocznie splaszczone o duzej i masywnej glowie. Grzbiet ma ubarwiony srebrzyscie, na bokach widnieje piec niewyraznych, ciemnych poprzecznych preg. Strona brzuszna srebrzyscie lsniaca."},
     ["kolen"]       = {narzednik = "kolenem",       short = "zoltawa", },
     ["konger"]      = {narzednik = "kongerem",      short = "wezowata", },
     ["koryfena"]    = {narzednik = "koryfena",      short = "blekitnawozielona", },
@@ -193,7 +193,7 @@ local ryby = {
     ["kulbin"]      = {narzednik = "kulbinem",      short = "srebrzystoszara", },
     ["labraks"]     = {narzednik = "labraksem",     short = "srebrzysta", },
     ["lamna"]       = {narzednik = "lamna",         short = "ciemnoszara", },
-    ["leszcz"]      = {narzednik = "leszczem",      short = "srebrnobrunatna",  },
+    ["leszcz"]      = {narzednik = "leszczem",      short = "srebrnobrunatna", opis = "Ryba ta ma mocno splaszczone bocznie cialo o dosc malej glowie i tepym pysku z poldolnym otworem gebowym. Pokryta jest niewielkimi luskami, na grzbiecie olowianej barwy z zielonkawym polyskiem, na bokach jasniejsza, metalicznie polyskujaca. Jej brzuch ma kolor bialawy z perlowym polyskiem."},
     ["lin"]         = {narzednik = "linem",         short = "zielonobrunatna", },
     ["lipien"]      = {narzednik = "lipieniem",     short = "srebrzystobiala", },
     ["losos"]       = {narzednik = "lososiem",      short = "oliwkowosrebrzysta", opis = "Nachodzace na siebie, okraglawe luski tej ryby posiadaja odcien oliwkowosrebrzysty, zas pomiedzy pletwami grzbietowa i brzuszna oraz ogonowa dostrzegasz pojedyncza, nieparzysta."},
@@ -213,8 +213,8 @@ local ryby = {
     ["pagrus"]      = {narzednik = "pagrusem",      short = "szarosrebrzysta", opis = "Cialo ryby jest owalne, bocznie splaszczone i pokryte duzymi luskami. Ubarwiona jest na szarosrebrzysty kolor, pletwy zas maja rdzawy odcien."},
     ["pilczyk"]     = {narzednik = "pilczykiem",    short = "zoltobrazowa", },
     ["piotrosz"]    = {narzednik = "piotroszem",    short = "zoltawa", },
-    ["piskorz"]     = {narzednik = "piskorzem",     short = "ciemnobrazowa", },
-    ["plotka"]      = {narzednik = "plotka",        short = "niebieskozielona", },
+    ["piskorz"]     = {narzednik = "piskorzem",     short = "ciemnobrazowa", opis = "Ryba ta ma z przodu cialo niemal idealnie walcowate, z tylu bocznie splaszczone z silnie sluzowata, niezbyt przyjemna w dotyku skora. Pokryta jest malenkimi luskami, na grzbiecie ciemnobrazowymi, na bokach nieco jasniejszymi z szeroka, ciemna smuga posrodku oraz biegnacymi nad i pod nia, podluznymi pasami. Ryba ma niewielki, dolny otwor gebowy, szesc wasikow umieszczonych na gornej szczece oraz cztery na dolnej."},
+    ["plotka"]      = {narzednik = "plotka",        short = "niebieskozielona", opis = "Ryba ta ma cialo ksztaltu wrzecionowatego, lekko splaszczone bocznie i pokryte duzymi, kolistymi luskami. Jej grzbiet ma barwe niebieskozielona, boki zas sa srebrzyste o zoltawym polysku. Brzuch bialawy, w okresie godowym opalizujacy na czerwono, u samcow wystepuje rowniez perlowa posypka. Poczatek pletwy grzbietowej znajduje sie nad nasada pletw brzusznych a waski otwor gebowy ustawiony jest prawie pionowo. Wsrod rybakow ryba ta zowie sie plotka, natrafic na nia mozna w wolno plynacych badz stojacych wodach. Przedstawiciele tego gatunku osiagaja zazwyczaj do czterdziestu centymetrow dlugosci, chociaz moga sie trafic i nieco wieksze sztuki."},
     ["pstrag"]      = {narzednik = "pstragiem",     short = "nakrapiana", },
     ["rdzawiec"]    = {narzednik = "rdzawiecem",    short = "brazowawa", },
     ["sajka"]       = {narzednik = "sajka",         short = "brazowa", },
@@ -230,17 +230,17 @@ local ryby = {
     ["strojnik"]    = {narzednik = "strojnikem",    short = "fioletowoniebieska", opis = "Ryba ta ma wysokie, bocznie splaszczone cialo z malymi luskami. Jej grzbiet ma fioletowe zabarwienie, boki sa niebieskawe. Strona brzuszna rozowa."},
     ["strzepiel"]   = {narzednik = "strzepielem",   short = "wzorzysta", },
     ["sum"]         = {narzednik = "sumem",         short = "wasata", },
-    ["szczupak"]    = {narzednik = "szczupakiem",   short = "ciemnozielona", },
+    ["szczupak"]    = {narzednik = "szczupakiem",   short = "ciemnozielona", opis = "Ryba ta ma silnie wydluzone, splaszczone bocznie cialo z przesunieta daleko ku tylowi pletwa grzbietowa. Dluga glowa ma plaski, podobny do kaczego dzioba pysk ze szczekami najezonymi niewielkimi, ostrymi zabkami. Pokryty drobna luska grzbiet ma barwe ciemnozielona, wpadajaca lekko w braz, boki sa wyraznie jasniejsze z poprzecznymi, ciemnymi pasami i plamami a brzuch bialawy. Rowniez pletwy naznaczone sa nieregularnymi, ciemnymi plamkami a linia boczna jest wielokrotnie przerywana. Doswiadczony rybak na pierwszy rzut oka rozpozna w rybie tej szczupaka. Spotkac go mozna w jeziorach i rzekach terenow o umiarkowanym klimacie a bywa, ze zapedzi sie i do morza. Dorosle osobniki moga osiagac do okolo poltora metra dlugosci."},
     ["szprot"]      = {narzednik = "szprotem",      short = "niebieskawa", },
     ["tasergal"]    = {narzednik = "tasergalem",    short = "niebieskawa", },
-    ["tolpyga"]     = {narzednik = "tolpyga",       short = "olowianoszara", },
+    ["tolpyga"]     = {narzednik = "tolpyga",       short = "olowianoszara", opis = "Ryba ma wydluzone, silnie splaszczone bocznie cialo o szerokiej, zaostrzonej z przodu glowie z gornym, ustawionym prawie pionowo otworem gebowym. Jej oczy sa male i leza ponizej linii srodkowej glowy. Pokrywajace ja luski sa niewielkie, na grzbiecie ciemne a po bokach olowianoszare. Pletwa grzbietowa posiada okolo dziesieciu promieni, z czego jedynie dwa pierwsze sa slabo skostniale."},
     ["topornik"]    = {narzednik = "topornikem",    short = "czarna", },
     ["tunczyk"]     = {narzednik = "tunczykiem",    short = "stalowoblekitna", },
-    ["ukleja"]      = {narzednik = "ukleja",        short = {"szarozielona", "szarosrebrzysta"}, },
+    ["ukleja"]      = {narzednik = "ukleja",        short = {"szarozielona", "szarosrebrzysta"}, opis = "Niewielka rybka ma smukle, bocznie splaszczone cialo. Pokrywaja ja nieduze, koliste luski, jednak bialawy brzuch jest ich kompletnie pozbawiony. Grzbiet ma barwe szarozielona, boki sa jasniejsze z silnym, srebrzystym polyskiem. Pletwy grzbietowa i ogonowa sa jasnoszare zas plewy parzyste i odbytowa bialawe z ladnymi, pomaranczowymi nasadami."},
     ["wegorz"]      = {narzednik = "wegorzem",      short = "wezowata", },
     ["wezyna"]      = {narzednik = "wezyna",        short = "zoltobrazowa", },
     ["widlak"]      = {narzednik = "widlakiem",     short = "barwna", },
-    ["wzdrega"]     = {narzednik = "wzdrega",       short = "brazowozielona", },
+    ["wzdrega"]     = {narzednik = "wzdrega",       short = "brazowozielona", opis = "Ryba ta ma wygrzbiecone, bocznie splaszczone cialo i waski, skierowany skosnie ku gorze, polgorny otwor gebowy. Pokryta jest duzymi luskami, na grzbiecie brazowozielonymi, po bokach jasniejszymi z miedzianym polyskiem. Teczowka oka jest pomaranczowoczerwona a przednia krawedz pletwy grzbietowej znajduje sie za nasadami pletw brzusznych."},
 }
 
 mydb_oswajanie = db:create("feeding", {
@@ -482,7 +482,7 @@ function oswajanie.core.getlevel_by_animal(animal, time)
     if table.size(r3) > 0 then next_feeding_time = r3[1]['count'] end
     
     if next_feeding_time == 0 and string.len(next_level) > 0 then return next_level end
-    if next_feeding_time == 0 and string.len(prev_level) > 0 ) then return prev_level end
+    if next_feeding_time == 0 and string.len(prev_level) > 0 then return prev_level end
     if next_level_time == 0 then return prev_level end
     if prev_level_time == 0 then return oswajanie.level_min end
     if next_level_time > next_feeding_time then return prev_level end
@@ -611,8 +611,8 @@ function oswajanie.alias.print_help()
     cecho("           wywola /o_pokaz <zwierze>, klikniecie na status zmieni go w bazie \n")
     cecho(" <light_slate_blue>/o_pokaz <zwierze><grey> - pokazuje spis oswajan <zwierzecia>\n")
     cecho("           Klikniecie na wybrane pozywienie wywola probe oswajania tym pokarmem.\n")
-    if( table.size(r) > 0 ) then
-      cechoLink("\n <light_slate_blue>/o_pokaz "..r[1]['animal'], [[oswajanie.alias.print_table_by_animal("]]..r[1]['animal']..[[", true)]], "/o_pokaz "..r[1]['animal'], true)
+    if table.size(r) > 0 then
+        cechoLink("\n <light_slate_blue>/o_pokaz "..r[1]['animal'], [[oswajanie.alias.print_table_by_animal("]]..r[1]['animal']..[[", true)]], "/o_pokaz "..r[1]['animal'], true)
       cecho("<grey> - ostatnio oswajane zwierze\n\n")
     end
     cechoLink(" <light_slate_blue>/o_historia", [[expandAlias("/o_historia")]], "/o_historia", true)
@@ -783,7 +783,7 @@ function zryby:zwierzejest()
             local Q = "select avg(cnt)as count from ( select count(*)as cnt from animals as A inner join feeding as F on A.animal = F.animal where A.animal = '".. zwierzak .. "' and F.changed > A.changed and F.changed < (select min(changed) from animals as AA where AA.changed > A.changed) group by A.level )"
             local Result = db:fetch_sql(mydb_oswajanie.feeding, Q)
             add_text = add_text .. "<reset>, karmione " .. result[1]['count'] .. " razy<reset>"
-            if table.size(Result) > 0 then
+            if table.size(Result[1]) > 0 then
                 local avg = math.floor(Result[1]['count'] + .5)
                 add_text = add_text .. " z ".. avg
             end

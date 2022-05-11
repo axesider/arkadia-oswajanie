@@ -220,7 +220,7 @@ local ryby = {
     ["piotrosz"]    = {narzednik = "piotroszem",    short = "zoltawa", opis = "Ryba ta ma bardzo wysokie, bocznie sciesnione cialo, okryte malymi luskami. Ubarwieniona jest na zoltawy kolor, z niewyraznymi, ciemniejszymi plamami."},
     ["piskorz"]     = {narzednik = "piskorzem",     short = "ciemnobrazowa", opis = "Ryba ta ma z przodu cialo niemal idealnie walcowate, z tylu bocznie splaszczone z silnie sluzowata, niezbyt przyjemna w dotyku skora. Pokryta jest malenkimi luskami, na grzbiecie ciemnobrazowymi, na bokach nieco jasniejszymi z szeroka, ciemna smuga posrodku oraz biegnacymi nad i pod nia, podluznymi pasami. Ryba ma niewielki, dolny otwor gebowy, szesc wasikow umieszczonych na gornej szczece oraz cztery na dolnej."},
     ["plotka"]      = {narzednik = "plotka",        short = "niebieskozielona", opis = "Ryba ta ma cialo ksztaltu wrzecionowatego, lekko splaszczone bocznie i pokryte duzymi, kolistymi luskami. Jej grzbiet ma barwe niebieskozielona, boki zas sa srebrzyste o zoltawym polysku. Brzuch bialawy, w okresie godowym opalizujacy na czerwono, u samcow wystepuje rowniez perlowa posypka. Poczatek pletwy grzbietowej znajduje sie nad nasada pletw brzusznych a waski otwor gebowy ustawiony jest prawie pionowo. Wsrod rybakow ryba ta zowie sie plotka, natrafic na nia mozna w wolno plynacych badz stojacych wodach. Przedstawiciele tego gatunku osiagaja zazwyczaj do czterdziestu centymetrow dlugosci, chociaz moga sie trafic i nieco wieksze sztuki."},
-    ["pstrag"]      = {narzednik = "pstragiem",     short = "nakrapiana", },
+    ["pstrag"]      = {narzednik = "pstragiem",     short = "nakrapiana", opis = "Jest to spora, ciemnozlocista ryba. Posiada duza, trojkatna pletwe ogonowa, trzy pary malych pletw brzusznych oraz dwie pletwy grzbietowe, zas jej luski sa nakrapiane. Przypomina troche lososia, jednak zapewne nie jest to przedstawiciel tego gatunku."},
     ["rdzawiec"]    = {narzednik = "rdzawcem",      short = "brazowawa", opis = "Ryba ta ma mocno wydluzone cialo o wyraznie wysunietej, dolnej szczece. Ponadto na dolnej szczece znajduje sie malenki wasik. Linia boczna wygieta jest w kierunku grzbietu ponad pletwami piersiowymi. Grzbiet ubarwiony jest na ciemnobrazowy kolor, ostro przechodzacy w jasne boki i jasny braz glowy. Pletwa ogonowa mieni sie teczowo."},
     ["sajka"]       = {narzednik = "sajka",         short = "brazowa", opis = "Ryba ma wydluzone, bardzo smukle, silnie zwezajace sie ku tylowi cialo. Grzbiet brazowego koloru zas dolna strona ciala jasna, srebrzyscie lsniaca. Szczeka dolna jest lekko wysunieta a na podbrodku widnieje maly wasik. Na grzbiecie znajduja sie trzy, daleko odsuniete od siebie pletwy grzbietowe."},
     ["salpa"]       = {narzednik = "salpa",         short = "srebrzysta", opis = "Ryba ma owalne, bocznie sciesnione cialo, pokryte niewielkimi luskami. Jej ubarwienie jest szarosrebrzyste z dziesiecioma zlocistymi, dlugimi paskami wzdluz bokow."},
@@ -352,7 +352,7 @@ function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, 
     cecho("<grey>|"..oswajanie.core.lcstr(color, col3, " ", col3_len))
     cecho("<grey>|"..oswajanie.core.lcstr(color, col4, " ", col4_len))
     cecho("<grey>|")
-    if( string.len(col5) > 0 ) then
+    if string.len(col5) > 0 then
         local text = col5
         local czym = col5
         local symbol = (text=="pokarmem" and "" ) or oswajanie.core.get_symbol(text)
@@ -531,7 +531,7 @@ function oswajanie.alias.print_animals()
     cechoLink(a, command, tip, true)
     cecho(" sprawdz czego nie jadl:")
     cechoLink("<light_slate_blue> szczatki", [[zryby:brakujace_szczatki("]] ..v["animal"].. [[")]], "pokaz szczatki", true)
-    cechoLink("<light_slate_blue> owoce", [[zryby:brakujace_owoce("]] ..v["animal"].. [[")]], "pokaz szczatki", true)
+    cechoLink("<light_slate_blue> owoce", [[zryby:brakujace_owoce("]] ..v["animal"].. [[")]], "pokaz owoce", true)
   end
   cecho("\n")
 end
@@ -911,30 +911,20 @@ function zryby:init()
     self.ogladasz_trigger = tempRegexTrigger("^Ogladasz dokladnie (.*)\\.$", function() self:ogladasz() end)
     
     if self.oswajasz_trigger then killTrigger(self.oswajasz_trigger) end
-    self.oswajasz_trigger = tempRegexTrigger("^Karmiac (.+) (?>zachecasz|oswajasz) .*", function() self:oswajasz() end)
+    self.oswajasz_trigger = tempRegexTrigger("^Karmiac (.+?) (?>zachecasz|oswajasz) .*", function() self:oswajasz() end)
     
-    local dodaj_owoce = true
-    local dodaj_ryby = true
-    local dodaj_warzywa = true
+    local definitions ={
+        ["ryby"] = { "surow(a|e|ych) (\\w+) ryb(|a|e|y)" },
+        ["owoce"] = { "agrest(|y|ow)","(?(?=zoltych)zoltych cytryn|cytryn(e|y|))", "czeresni(|e)","daktyl(|e|i)","fig(e|i|)","grusz(ke|ki|ek)","jabl(ko|ka|ek)","malin(e|y|)","mandaryn(ek|ke|ki)","mango","melon(|y)","oliw(ek|ke|ki)","orzech(|y)","papaje","pomarancz(e|y)","sliw(ke|ek|ki)","winogron","wisni(|e)","truskaw(ek|ke|ki)"},
+        ["warzywa"] = { "burak(|i|ow)", "cebul(a|e|)", "dyn(ia|ie|)", "kalafior(|y|ow)", "kalarep(a|y|)", "kapust(a|y|)", "march(ew|wie|)", "ogor(ek|ki|kow)", "pietrusz(ka|ki|ek)", "pomidor(|y|ow)", "salat(a|y|)", "ziemniak(|i|ow)"}
+    }
     for k,v in pairs(scripts.inv.pretty_containers.group_definitions) do
-            if v.name == "ryby"  then dodaj_ryby = false
-        elseif v.name == "owoce" then dodaj_owoce = false
-        elseif v.name == "warzywa" then dodaj_warzywa = false
-            end
+        if definitions[v.name] ~= nil then
+            scripts.inv.pretty_containers.group_definitions[k] = nil
+            table.insert(scripts.inv.pretty_containers.group_definitions, {name = v.name, filter = scripts.inv.pretty_containers:create_regexp_filter(definitions[v.name]) })
+        end
     end
-    if dodaj_ryby then
-        local ryby = { "surow(a|e|ych) (\\w+) ryb(|a|e|y)" }
-        table.insert(scripts.inv.pretty_containers.group_definitions, {name ="ryby", filter = scripts.inv.pretty_containers:create_regexp_filter(ryby) })
-    end
-    if dodaj_owoce then
-        local owoce = { "agrest(|y|ow)","(?(?=zoltych)zoltych cytryn|cytryn(e|y|))", "czeresni(|e)","daktyl(|e|i)","fig(e|i|)","grusz(ke|ki|ek)","jabl(ko|ka|ek)","malin(e|y|)","mandaryn(ek|ke|ki)","mango","melon(|y)","oliw(ek|ke|ki)","orzech(|y)","papaje","pomarancz(e|y)","sliw(ke|ek|ki)","winogron","wisni(|e)","truskaw(ek|ke|ki)"}
-        table.insert(scripts.inv.pretty_containers.group_definitions, {name ="owoce", filter = scripts.inv.pretty_containers:create_regexp_filter(owoce) })
-    end
-    if dodaj_warzywa then
-        local warzywa = { "burak(|i|ow)", "cebul(a|e|)", "dyn(ia|ie|)", "kalafior(|y|ow)", "kalarep(a|y|)", "kapust(a|y|)", "march(ew|wie|)", "ogor(ek|ki|kow)", "pietrusz(ka|ki|ek)", "pomidor(|y|ow)", "salat(a|y|)", "ziemniak(|i|ow)"}
-        table.insert(scripts.inv.pretty_containers.group_definitions, {name ="warzywa", filter = scripts.inv.pretty_containers:create_regexp_filter(warzywa) })
-    end
-    
+   
     scripts.plugins_update_check:github_check_version("arkadia-oswajanie", "axesider")
 end
 

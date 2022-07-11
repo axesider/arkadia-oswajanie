@@ -82,6 +82,10 @@ local owoce = {
     ["truskawka"] = {narzednik = "truskawka"},
     ["wisnia"] = {narzednik = "wisnia"},
 }
+local inne = {
+    ["bulka"] = {narzednik = "bulka"},
+    ["chleb"] = {narzednik = "chlebem"},
+}
 local przymiotniki = {
     ["barwna"]              = {"barwne","barwnych"},
     ["blekitnawa"]          = {"blekitnawe","blekitnawa"},
@@ -337,6 +341,11 @@ function oswajanie.core.get_symbol(text)
     for k,v in pairs(szczatki) do
         if v.narzednik == text then
             return "👁️"
+        end
+    end
+    for k,v in pairs(inne) do
+        if v.narzednik == text then
+            return "🍽️"
         end
     end
     local prefix = "miesem"

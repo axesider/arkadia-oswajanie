@@ -17,18 +17,18 @@ oswajanie.config.recovery_time = 20 -- in min
 oswajanie.config.feeding_time = 120 -- in hours
 
 local warzywa = {
-    ["burak"] = {narzednik = "burakiem"},
-    ["cebula"] = {narzednik = "cebula"},
-    ["dynia"] = {narzednik = "dynia"},
-    ["glowka kapusty"] = {narzednik = "glowka"},
-    ["kalafior"] = {narzednik = "kalafiorem"},
-    ["kalarepa"] = {narzednik = "kalarepa"},
-    ["marchew"] = {narzednik = "marchwia"},
-    ["ogorek"] = {narzednik = "ogorkiem"},
-    ["pietruszka"] = {narzednik = "pietruszka"},
-    ["pomidor"] = {narzednik = "pomidorem"},
-    ["salata"] = {narzednik = "salata"},
-    ["ziemniak"] = {narzednik = "ziemniakiem"},
+    ["burak"] = {narzednik = "burakiem", r = "burak(|i|ow)"},
+    ["cebula"] = {narzednik = "cebula", r = "cebul(a|e|)"},
+    ["dynia"] = {narzednik = "dynia", r = "dyn(ia|ie|)"},
+    ["glowka kapusty"] = {narzednik = "glowka", r = "kapust(a|y|)"},
+    ["kalafior"] = {narzednik = "kalafiorem", r = "kalafior(|y|ow)"},
+    ["kalarepa"] = {narzednik = "kalarepa", r = "kalarep(a|y|)"},
+    ["marchew"] = {narzednik = "marchwia", r = "march(ew|wie|)"},
+    ["ogorek"] = {narzednik = "ogorkiem", r = "ogor(ek|ki|kow)"},
+    ["pietruszka"] = {narzednik = "pietruszka", r = "pietrusz(ka|ki|ek)"},
+    ["pomidor"] = {narzednik = "pomidorem", r = "pomidor(|y|ow)"},
+    ["salata"] = {narzednik = "salata", r = "salat(a|y|)"},
+    ["ziemniak"] = {narzednik = "ziemniakiem", r = "ziemniak(|i|ow)"},
 }
 
 local szczatki = {
@@ -59,28 +59,32 @@ local szczatki = {
     ["wij"] = {narzednik = "wijem"},
     ["woreczek"] = {narzednik = "woreczkiem"},
 }
+
 local owoce = {
-    ["agrest"] = {narzednik = "agrestem"},
-    ["cytryna"] = {narzednik = "cytryna"},
-    ["czeresnia"] = {narzednik = "czeresnia"},
-    ["daktyl"] = {narzednik = "daktylem"},
-    ["figa"] = {narzednik = "figa"},
-    ["gruszka"] = {narzednik = "gruszka"},
-    ["jablko"] = {narzednik = "jablkiem"},
-    ["jagoda"] = {narzednik = "jagoda"},
-    ["kisc"] = {narzednik = "kiscia"},   
-    ["malina"] = {narzednik = "malina"},
-    ["mandarynka"] = {narzednik = "mandarynka"},
-    ["mango"] = {narzednik = "mango"},
-    ["melon"] = {narzednik = "melonem"},
-    ["oliwka"] = {narzednik = "oliwka"},
-    ["orzech"] = {narzednik = "orzechem"},
+    ["agrest"] = {narzednik = "agrestem", r = "agrest(|y|ow)"},
+    ["cytryna"] = {narzednik = "cytryna", r = "(?(?=zoltych)zoltych cytryn|cytryn(e|y|))"},
+    ["czeresnia"] = {narzednik = "czeresnia", r = "czeresni(|e)"},
+    ["daktyl"] = {narzednik = "daktylem", r = "daktyl(|e|i)"},
+    ["figa"] = {narzednik = "figa", r = "fig(e|i|)"},
+    ["gruszka"] = {narzednik = "gruszka", r = "grusz(ke|ki|ek)"},
+    ["jablko"] = {narzednik = "jablkiem", r = "jabl(ko|ka|ek)"},
+    ["jagoda"] = {narzednik = "jagoda", r = "malin(e|y|)"},
+    ["jezyna"] = {narzednik = "jezyna", r = "jezyn"},
+    ["kisc"] = {narzednik = "kiscia", removed = true},
+    ["malina"] = {narzednik = "malina", r = "malin"},
+    ["mandarynka"] = {narzednik = "mandarynka", r = "mandaryn(ek|ke|ki)"},
+    ["mango"] = {narzednik = "mango", r = "mango"},
+    ["morela"] = {narzednik = "morela", r = "morele"},
+    ["melon"] = {narzednik = "melonem", r = "melon(|y)"},
+    ["oliwka"] = {narzednik = "oliwka", r = "oliw(ek|ke|ki)"},
+    ["orzech"] = {narzednik = "orzechem", r = "orzech(|y)"},
     ["owoc"] = {narzednik = "owocem"},
-    ["papaja"] = {narzednik = "papaja"},
-    ["pomarancz"] = {narzednik = "pomarancza"},
-    ["sliwka"] = {narzednik = "sliwka"},
-    ["truskawka"] = {narzednik = "truskawka"},
-    ["wisnia"] = {narzednik = "wisnia"},
+    ["papaja"] = {narzednik = "papaja", r = "papaje"},
+    ["pomarancz"] = {narzednik = "pomarancza", r = "pomarancz(e|y)"},
+    ["sliwka"] = {narzednik = "sliwka", r = "sliw(ke|ek|ki)"},
+    ["truskawka"] = {narzednik = "truskawka", r = "truskaw(ek|ke|ki)"},
+    ["winogrono"] = {narzednik = "winogronami", r = "winogron"},
+    ["wisnia"] = {narzednik = "wisnia", r = "wisni(|e)"},
 }
 local inne = {
     ["bulka"] = {narzednik = "bulka"},
@@ -924,14 +928,17 @@ function zryby:init()
     
     local definitions ={
         ["ryby"] = { "surow(a|e|ych) (\\w+) ryb(|a|e|y)" },
-        ["owoce"] = { "agrest(|y|ow)","(?(?=zoltych)zoltych cytryn|cytryn(e|y|))", "czeresni(|e)","daktyl(|e|i)","fig(e|i|)","grusz(ke|ki|ek)","jabl(ko|ka|ek)","malin(e|y|)","mandaryn(ek|ke|ki)","mango","melon(|y)","oliw(ek|ke|ki)","orzech(|y)","papaje","pomarancz(e|y)","sliw(ke|ek|ki)","winogron","wisni(|e)","truskaw(ek|ke|ki)"},
-        ["warzywa"] = { "burak(|i|ow)", "cebul(a|e|)", "dyn(ia|ie|)", "kalafior(|y|ow)", "kalarep(a|y|)", "kapust(a|y|)", "march(ew|wie|)", "ogor(ek|ki|kow)", "pietrusz(ka|ki|ek)", "pomidor(|y|ow)", "salat(a|y|)", "ziemniak(|i|ow)"}
+        ["owoce"] = {},
+        ["warzywa"] = {}
     }
-    for k,v in pairs(scripts.inv.pretty_containers.group_definitions) do
-        if definitions[v.name] ~= nil then
+    for k,v in pairs(warzywa) do if v.r then table.insert(definitions["warzywa"], v.r) end end
+    for k,v in pairs(owoce) do if v.r then table.insert(definitions["owoce"], v.r) end end
+    
+    for k,v in pairs(definitions) do
+        if scripts.inv.pretty_containers.group_definitions[k] ~= nil then
             scripts.inv.pretty_containers.group_definitions[k] = nil
-            table.insert(scripts.inv.pretty_containers.group_definitions, {name = v.name, filter = scripts.inv.pretty_containers:create_regexp_filter(definitions[v.name]) })
-        end
+        end        
+        table.insert(scripts.inv.pretty_containers.group_definitions, {name = k, filter = scripts.inv.pretty_containers:create_regexp_filter(definitions[k]) })
     end
    
     scripts.plugins_update_check:github_check_version("arkadia-oswajanie", "axesider")
@@ -963,7 +970,7 @@ function zryby:brakujace(tablica, animal)
                 break
             end
         end
-        if found == false then
+        if found == false and (v.removed ~= true)   then
             table.insert(missing, v.narzednik)
         end
     end

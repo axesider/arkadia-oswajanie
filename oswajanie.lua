@@ -68,7 +68,7 @@ local owoce = {
     ["figa"] = {narzednik = "figa", r = "fig(e|i|)"},
     ["gruszka"] = {narzednik = "gruszka", r = "grusz(ke|ki|ek)"},
     ["jablko"] = {narzednik = "jablkiem", r = "jabl(ko|ka|ek)"},
-    ["jagoda"] = {narzednik = "jagoda", r = "jagod(|a)"},
+    ["jagoda"] = {narzednik = "jagoda", r = "jagod(|a)"}, --fioletowych jagod
     ["jezyna"] = {narzednik = "jezyna", r = "jezyn"},
     ["kisc"] = {narzednik = "kiscia", removed = true},
     ["malina"] = {narzednik = "malina", r = "malin(|y)"},
@@ -77,7 +77,7 @@ local owoce = {
     ["morela"] = {narzednik = "morela", r = "morel(e|i)"},
     ["melon"] = {narzednik = "melonem", r = "melon(|y)"},
     ["oliwka"] = {narzednik = "oliwka", r = "oliw(ek|ke|ki)"},
-    ["orzech"] = {narzednik = "orzechem", r = "orzech(|y)"},
+    ["orzech"] = {narzednik = "orzechem", r = "(orzech(|y|ow)|(orzech\w+? laskowy\w+?))"},
     ["owoc"] = {narzednik = "owocem"},
     ["papaja"] = {narzednik = "papaja", r = "papa(i|je)"},
     ["pomarancz"] = {narzednik = "pomarancza", r = "pomarancz(e|y)"},

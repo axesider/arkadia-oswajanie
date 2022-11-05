@@ -62,6 +62,7 @@ local szczatki = {
 
 local owoce = {
     ["agrest"] = {narzednik = "agrestem", r = "agrest(|y|ow)"},
+    ["brzoskwinia"] = {narzednik = "brzoskwinia", r = "brzoskwin(ia|ie|)"},
     ["cytryna"] = {narzednik = "cytryna", r = "(?(?=zoltych)zoltych cytryn|cytryn(e|y|))"},
     ["czeresnia"] = {narzednik = "czeresnia", r = "czeresni(|e)"},
     ["daktyl"] = {narzednik = "daktylem", r = "daktyl(|e|i)"},

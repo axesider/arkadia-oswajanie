@@ -546,6 +546,7 @@ function oswajanie.alias.print_animals()
     cecho(" sprawdz czego nie jadl:")
     cechoLink("<light_slate_blue> szczatki", [[zryby:brakujace_szczatki("]] ..v["animal"].. [[")]], "pokaz szczatki", true)
     cechoLink("<light_slate_blue> owoce", [[zryby:brakujace_owoce("]] ..v["animal"].. [[")]], "pokaz owoce", true)
+    cechoLink("<light_slate_blue> miesa", [[zryby:brakujace_miesa("]] ..v["animal"].. [[")]], "pokaz miesa", true)
   end
   cecho("\n")
 end
@@ -798,7 +799,8 @@ function zryby:zwierzejest()
     self:disableTrigger()
     
     if selectString(level, 1) > -1 then
-        local q = "select count(*)as count from feeding as F where animal = '".. zwierzak .. "' and changed > (select A.changed from animals as A where A.level = '".. level .. "' and A.animal = F.animal)"
+        local q = "select count(*)as count from feeding as F where animal = '".. zwierzak .. "'"
+        if level ~= "plochliwe" then q = q .. " and changed > (select A.changed from animals as A where A.level = '".. level .. "' and A.animal = F.animal)" end
         local result = db:fetch_sql(mydb_oswajanie.feeding, q)
               
         local add_text = " <light_slate_blue>" .. misc.animal_levels[level]
@@ -957,6 +959,18 @@ function zryby:brakujace_owoce(animal)
     zryby:brakujace(owoce, animal)
 end
 
+function zryby:brakujace_miesa(animal)
+    animal = animal or oswajanie.core.getlastanimal()
+    local q = "select distinct food from feeding where food like 'miesem%' ORDER by food"
+    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    local miesa = {}
+    for _, val in pairs(r) do
+        local f = val["food"]
+        miesa[f] = {narzednik = f}
+    end
+    zryby:brakujace(miesa, animal)
+end
+
 function zryby:brakujace(tablica, animal)
     local q = "select distinct food from feeding where animal = '".. animal.."'"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
@@ -965,7 +979,7 @@ function zryby:brakujace(tablica, animal)
 
     for k,v in pairs(tablica) do
         local found = false
-        for key, val in pairs(r) do
+        for _, val in pairs(r) do
             if v.narzednik == val["food"] then
                 found = true
                 break

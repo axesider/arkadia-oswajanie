@@ -16,7 +16,6 @@ end
 function oswajanie.window:print()
     clearWindow(self.windowName)
     oswajanie.print_compact_activeanimal(self.windowName)
-    cechoLink(self.windowName, "<light_blue>Odswiez\n", function() oswajanie.window:print() end, "odswiez okno")
 end
 
 oswajanie.window:init()

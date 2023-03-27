@@ -898,6 +898,7 @@ function zryby:disableTrigger()
 end
 
 function zryby:oswajasz()
+    display(matches)
     if matches['zwierze'] then
         pokarm = matches['food']
         oswajanie.alias.insert_feeding_entry(matches['zwierze'], pokarm)
@@ -954,7 +955,7 @@ function zryby:init()
     self.ogladasz_trigger = tempRegexTrigger("^Ogladasz dokladnie (.*)\\.$", function() self:ogladasz() end)
     
     if self.oswajasz_trigger then killTrigger(self.oswajasz_trigger) end
-    self.oswajasz_trigger = tempRegexTrigger("^Karmiac (?'raw'(?:(?'zwierze'.+?) (kawalkiem miesa|kawalkiem|miesem) (?'food'.+?)|.+?)) (?>zachecasz|oswajasz).*", function() self:oswajasz() end)
+    self.oswajasz_trigger = tempRegexTrigger("^Karmiac (?'raw'(?:(?'zwierze'.+?) (?'food'(?:kawalkiem miesa|kawalkiem|miesem) .+?)|.+?)) (?:zachecasz|oswajasz).*", function() self:oswajasz() end)
     
     local definitions ={
         ["ryby"] = { "surow(a|e|ych) (\\w+) ryb(|a|e|y)" },

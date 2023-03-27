@@ -27,19 +27,19 @@ local UNK = "unk"
 --mieso, jaja i ryby, okruszki chleba, owoce i robaki
 
 oswajanie.food_db = {
-    ["burak"] = {typ=WARZYWA, D="", N="burakiem", r="burak(|i|ow)"},
-    ["cebula"] = {typ=WARZYWA, D="", N="cebula", r = "cebul(a|e|)"},
-    ["cukinia"] = {typ=WARZYWA, D="", N="cukinia", r = "cukini(a|e|ii)"},
-    ["dynia"] = {typ=WARZYWA, D="", N="dynia", r = "dyn(ia|ie|)"},
-    ["glowka kapusty"] = {typ=WARZYWA, D="", N="glowka", r = "kapust(a|y|)"},
-    ["kalafior"] = {typ=WARZYWA, D="", N="kalafiorem", r = "kalafior(|y|ow)"},
-    ["kalarepa"] = {typ=WARZYWA, D="", N="kalarepa", r = "kalarep(a|y|)"},
-    ["marchew"] = {typ=WARZYWA, D="", N="marchwia", r = "march(ew|wie|)"},
-    ["ogorek"] = {typ=WARZYWA, D="", N="ogorkiem", r = "ogor(ek|ki|kow)"},
-    ["pietruszka"] = {typ=WARZYWA, D="", N="pietruszka", r = "pietrusz(ka|ki|ek)"},
-    ["pomidor"] = {typ=WARZYWA, D="", N="pomidorem", r = "pomidor(|y|ow)"},
-    ["salata"] = {typ=WARZYWA, D="", N="salata", r = "salat(a|y|)"},
-    ["ziemniak"] = {typ=WARZYWA, D="", N="ziemniakiem", r = "ziemniak(|i|ow)"},
+    ["burak"] = {typ=WARZYWA, D="buraka", N="burakiem", r="burak(|i|ow)"},
+    ["cebula"] = {typ=WARZYWA, D="cebuli", N="cebula", r = "cebul(a|e|)"},
+    ["cukinia"] = {typ=WARZYWA, D="cukinii", N="cukinia", r = "cukini(a|e|ii)"},
+    ["dynia"] = {typ=WARZYWA, D="dynii", N="dynia", r = "dyn(ia|ie|)"},
+    ["glowka kapusty"] = {typ=WARZYWA, D="kapusty", N="glowka", r = "kapust(a|y|)"},
+    ["kalafior"] = {typ=WARZYWA, D="kalafiora", N="kalafiorem", r = "kalafior(|y|ow)"},
+    ["kalarepa"] = {typ=WARZYWA, D="kalarepy", N="kalarepa", r = "kalarep(a|y|)"},
+    ["marchew"] = {typ=WARZYWA, D="marchwii", N="marchwia", r = "march(ew|wie|)"},
+    ["ogorek"] = {typ=WARZYWA, D="ogorka", N="ogorkiem", r = "ogor(ek|ki|kow)"},
+    ["pietruszka"] = {typ=WARZYWA, D="pietruszki", N="pietruszka", r = "pietrusz(ka|ki|ek)"},
+    ["pomidor"] = {typ=WARZYWA, D="pomidora", N="pomidorem", r = "pomidor(|y|ow)"},
+    ["salata"] = {typ=WARZYWA, D="salaty", N="salata", r = "salat(a|y|)"},
+    ["ziemniak"] = {typ=WARZYWA, D="ziemniaka", N="ziemniakiem", r = "ziemniak(|i|ow)"},
 
     ["gruczol"] = {typ=SZCZATKI, D="gruczolu", N="gruczolem"},
     ["grzebien"] = {typ=SZCZATKI, D="grzebienia", N="grzebieniem"},
@@ -68,157 +68,35 @@ oswajanie.food_db = {
     ["woreczek"] = {typ=SZCZATKI, D="woreczka", N="woreczkiem"},
     ["zuchwa"] = {typ=SZCZATKI, D="zuchwy", N="zuchwa"},
 
+    ["agrest"] = {typ=OWOCE, D="agrestu", N="agrestem", r = "agrest(|y|ow)"},
+    ["brzoskwinia"] = {typ=OWOCE, D="brzoskwini", N="brzoskwinia", r = "brzoskwin(ia|ie|)"},
+    ["cytryna"] = {typ=OWOCE, D="cytryny", N="cytryna", r = "(?(?=zoltych)zoltych cytryn|cytryn(e|y|))"},
+    ["czeresnia"] = {typ=OWOCE, D="czeresni", N="czeresnia", r = "czeresni(|e)"},
+    ["daktyl"] = {typ=OWOCE, D="daktyla", N="daktylem", r = "daktyl(|e|i)"},
+    ["figa"] = {typ=OWOCE, D="figi", N="figa", r = "fig(e|i|)"},
+    ["gruszka"] = {typ=OWOCE, D="gruszki", N="gruszka", r = "grusz(ke|ki|ek)"},
+    ["jablko"] = {typ=OWOCE, D="jablka", N="jablkiem", r = "jabl(ko|ka|ek)"},
+    ["jagoda"] = {typ=OWOCE, D="jagody", N="jagoda", r = "jagod(|a)"}, --fioletowych jagod
+    ["jezyna"] = {typ=OWOCE, D="jezyny", N="jezyna", r = "jezyn"},
+    ["kisc"] = {typ=OWOCE, D="kiscia", N="kiscia", removed = true},
+    ["malina"] = {typ=OWOCE, D="maliny", N="malina", r = "malin(|y)"},
+    ["mandarynka"] = {typ=OWOCE, D="mandarynki", N="mandarynka", r = "mandaryn(ek|ke|ki)"},
+    ["mango"] = {typ=OWOCE, D="manga", N="mango", r = "mango"},
+    ["morela"] = {typ=OWOCE, D="moreli", N="morela", r = "morel(e|i)"},
+    ["melon"] = {typ=OWOCE, D="melona", N="melonem", r = "melon(|y)"},
+    ["oliwka"] = {typ=OWOCE, D="oliwki", N="oliwka", r = "oliw(ek|ke|ki)"},
+    ["orzech"] = {typ=OWOCE, D="orzecha", N="orzechem", r = "(orzech(|y|ow)|(orzech\w+? laskowy\w+?))"},
+    ["owoc"] = {typ=OWOCE, D="owoca", N="owocem"},
+    ["papaja"] = {typ=OWOCE, D="papai", N="papaja", r = "papa(i|je)"},
+    ["pomarancz"] = {typ=OWOCE, D="pomaranczy", N="pomarancza", r = "pomarancz(e|y)"},
+    ["sliwka"] = {typ=OWOCE, D="sliwki", N="sliwka", r = "sliw(ke|ek|ki)"},
+    ["truskawka"] = {typ=OWOCE, D="truskawki", N="truskawka", r = "truskaw(ek|ke|ki)"},
+    ["winogrono"] = {typ=OWOCE, D="winogrona", N="winogronami", r = "winogron"},
+    ["wisnia"] = {typ=OWOCE, D="wisni", N="wisnia", r = "wisni(|e)"},
+
     ["bulka"] = {typ=INNE, D="bulki", N="bulka"},
     ["chleb"] = {typ=INNE, D="chleba", N="chlebem"},
-}
 
-local warzywa = {
-    ["burak"] = {narzednik = "burakiem", r = "burak(|i|ow)"},
-    ["cebula"] = {narzednik = "cebula", r = "cebul(a|e|)"},
-    ["cukinia"] = {narzednik = "cukinia", r = "cukini(a|e|ii)"},
-    ["dynia"] = {narzednik = "dynia", r = "dyn(ia|ie|)"},
-    ["glowka kapusty"] = {narzednik = "glowka", r = "kapust(a|y|)"},
-    ["kalafior"] = {narzednik = "kalafiorem", r = "kalafior(|y|ow)"},
-    ["kalarepa"] = {narzednik = "kalarepa", r = "kalarep(a|y|)"},
-    ["marchew"] = {narzednik = "marchwia", r = "march(ew|wie|)"},
-    ["ogorek"] = {narzednik = "ogorkiem", r = "ogor(ek|ki|kow)"},
-    ["pietruszka"] = {narzednik = "pietruszka", r = "pietrusz(ka|ki|ek)"},
-    ["pomidor"] = {narzednik = "pomidorem", r = "pomidor(|y|ow)"},
-    ["salata"] = {narzednik = "salata", r = "salat(a|y|)"},
-    ["ziemniak"] = {narzednik = "ziemniakiem", r = "ziemniak(|i|ow)"},
-}
-
-local szczatki = {
-    ["gruczol"] = {narzednik = "gruczolem"},
-    ["grzebien"] = {narzednik = "grzebieniem"},
-    ["jajko"] = {narzednik = "jajkiem"},
-    ["jajo"] = {narzednik = "jajem"},
-    ["jezor"] = {narzednik = "jezorem"},
-    ["jezyk"] = {narzednik = "jezykiem"},
-    ["kiel"] = {narzednik = "klem"},
-    ["macka"] = {narzednik = "macka"},
-    ["nerka"] = {narzednik = "nerka"},
-    ["noga"] = {narzednik = "noga"},
-    ["nos"] = {narzednik = "nosem"},
-    ["odnoze"] = {narzednik = "odnozem"},
-    ["oko"] = {narzednik = "okiem"},
-    ["paznokiec"] = {narzednik = "paznokciem"},
-    ["pazur"] = {narzednik = "pazurem"},
-    ["pecherz"] = {narzednik = "pecherzem"},
-    ["serce"] = {narzednik = "sercem"},
-    ["skalp"] = {narzednik = "skalpem"},
-    ["skrzydlo"] = {narzednik = "skrzydlem"},
-    ["szczekonoze"] = {narzednik = "szczekonozem"},
-    ["szpon"] = {narzednik = "szponem"},
-    ["ucho"] = {narzednik = "uchem"},
-    ["watroba"] = {narzednik = "watroba"},
-    ["wij"] = {narzednik = "wijem"},
-    ["woreczek"] = {narzednik = "woreczkiem"},
-    ["zuchwa"] = {narzednik = "zuchwa"},
-}
-
-local owoce = {
-    ["agrest"] = {narzednik = "agrestem", r = "agrest(|y|ow)"},
-    ["brzoskwinia"] = {narzednik = "brzoskwinia", r = "brzoskwin(ia|ie|)"},
-    ["cytryna"] = {narzednik = "cytryna", r = "(?(?=zoltych)zoltych cytryn|cytryn(e|y|))"},
-    ["czeresnia"] = {narzednik = "czeresnia", r = "czeresni(|e)"},
-    ["daktyl"] = {narzednik = "daktylem", r = "daktyl(|e|i)"},
-    ["figa"] = {narzednik = "figa", r = "fig(e|i|)"},
-    ["gruszka"] = {narzednik = "gruszka", r = "grusz(ke|ki|ek)"},
-    ["jablko"] = {narzednik = "jablkiem", r = "jabl(ko|ka|ek)"},
-    ["jagoda"] = {narzednik = "jagoda", r = "jagod(|a)"}, --fioletowych jagod
-    ["jezyna"] = {narzednik = "jezyna", r = "jezyn"},
-    ["kisc"] = {narzednik = "kiscia", removed = true},
-    ["malina"] = {narzednik = "malina", r = "malin(|y)"},
-    ["mandarynka"] = {narzednik = "mandarynka", r = "mandaryn(ek|ke|ki)"},
-    ["mango"] = {narzednik = "mango", r = "mango"},
-    ["morela"] = {narzednik = "morela", r = "morel(e|i)"},
-    ["melon"] = {narzednik = "melonem", r = "melon(|y)"},
-    ["oliwka"] = {narzednik = "oliwka", r = "oliw(ek|ke|ki)"},
-    ["orzech"] = {narzednik = "orzechem", r = "(orzech(|y|ow)|(orzech\w+? laskowy\w+?))"},
-    ["owoc"] = {narzednik = "owocem"},
-    ["papaja"] = {narzednik = "papaja", r = "papa(i|je)"},
-    ["pomarancz"] = {narzednik = "pomarancza", r = "pomarancz(e|y)"},
-    ["sliwka"] = {narzednik = "sliwka", r = "sliw(ke|ek|ki)"},
-    ["truskawka"] = {narzednik = "truskawka", r = "truskaw(ek|ke|ki)"},
-    ["winogrono"] = {narzednik = "winogronami", r = "winogron"},
-    ["wisnia"] = {narzednik = "wisnia", r = "wisni(|e)"},
-}
-local inne = {
-    ["bulka"] = {narzednik = "bulka"},
-    ["chleb"] = {narzednik = "chlebem"},
-}
-local przymiotniki = {
-    ["barwna"]              = {"barwne","barwnych"},
-    ["blekitnawa"]          = {"blekitnawe","blekitnawa"},
-    ["blekitnawozielona"]   = {"blekitnawozielone","blekitnawozielona"},
-    ["brazowa"]             = {"brazowe","brazowa", "brazowych"},
-    ["brazowawa"]           = {"brazowawe","brazowawych", "brazowawych"},
-    ["brazowoczerwona"]     = {"brazowoczerwone","brazowoczerwona"},
-    ["brazowoszara"]        = {"brazowoszare","brazowoszara"},
-    ["brazowozielona"]      = {"brazowozielone","brazowozielona"},
-    ["ciemnobrazowa"]       = {"ciemnobrazowe","ciemnobrazowa"},
-    ["ciemnoczerwona"]      = {"ciemnoczerwone","ciemnoczerwona", "ciemnoczerwonych"},
-    ["ciemnoniebieska"]     = {"ciemnoniebieskie","ciemnoniebieska"},
-    ["ciemnoszara"]         = {"ciemnoszare","ciemnoszara"},
-    ["ciemnozielona"]       = {"ciemnozielone","ciemnozielona"},
-    ["czarna"]              = {"czarne","czarna"},
-    ["czarnoniebieska"]     = {"czarnoniebieskie","czarnoniebieska"},
-    ["czerwonawa"]          = {"czerwonawe","czerwonawa"},
-    ["czerwonobrazowa"]     = {"czerwonobrazowe","czerwonobrazowa"},
-    ["czerwonozlota"]       = {"czerwonozlote","czerwonozlota"},
-    ["fioletowoniebieska"]  = {"fioletowoniebieskie","fioletowoniebieska"},
-    ["jasnomiedziana"]      = {"jasnomiedziane","jasnomiedziana"},
-    ["jasnopomaranczowa"]   = {"jasnopomaranczowe","jasnopomaranczowa", "jasnopomaranczowych"},
-    ["jasnoszara"]          = {"jasnoszare","jasnoszara"},
-    ["marmurkowana"]        = {"marmurkowane","marmurkowana"},
-    ["metaliczna"]          = {"metaliczne","metaliczna"},
-    ["mosieznozlota"]       = {"mosieznozlote","mosieznozlota"},
-    ["nakrapiana"]          = {"nakrapiane","nakrapiana"},
-    ["niebieskawa"]         = {"niebieskawe","niebieskawa"},
-    ["niebieskawobrazowa"]  = {"niebieskawobrazowe","niebieskawobrazowa"},
-    ["niebieskosrebrzysta"] = {"niebieskosrebrzyste","niebieskosrebrzysta"},
-    ["niebieskoszara"]      = {"niebieskoszare","niebieskoszara"},
-    ["niebieskozielona"]    = {"niebieskozielone","niebieskozielona"},
-    ["okraglawa"]           = {"okraglawe","okraglawa"},
-    ["oliwkowosrebrzysta"]  = {"oliwkowosrebrzyste","oliwkowosrebrzysta"},
-    ["oliwkowozielona"]     = {"oliwkowozielone","oliwkowozielona"},
-    ["olowianoszara"]       = {"olowianoszare","olowianoszara"},
-    ["pasiasta"]            = {"pasiaste","pasiasta"},
-    ["plamiasta"]           = {"plamiaste","plamiasta"},
-    ["plaska"]              = {"plaskie","plaska"},
-    ["prazkowana"]          = {"prazkowane","prazkowana"},
-    ["pregowana"]           = {"pregowane","pregowana"},
-    ["purpurowa"]           = {"purpurowe","purpurowa"},
-    ["rozowawa"]            = {"rozowawe","rozowawa"},
-    ["srebrnobrunatna"]     = {"srebrnobrunatne","srebrnobrunatna"},
-    ["srebrnoluska"]        = {"srebrnoluskie","srebrnoluska"},
-    ["srebrzysta"]          = {"srebrzyste","srebrzysta"},
-    ["srebrzystobiala"]     = {"srebrzystobiale","srebrzystobiala"},
-    ["srebrzystoszara"]     = {"srebrzystoszare","srebrzystoszara"},
-    ["srebrzystozielona"]   = {"srebrzystozielone","srebrzystozielona"},
-    ["stalowoblekitna"]     = {"stalowoblekitne","stalowoblekitna", "stalowoblekitnych"},
-    ["stalowoszara"]        = {"stalowoszare","stalowoszara"},
-    ["szara"]               = {"szare","szara"},
-    ["szarobrazowa"]        = {"szarobrazowe","szarobrazowa"},
-    ["szarosrebrzysta"]     = {"szarosrebrzyste","szarosrebrzysta"},
-    ["szarozielona"]        = {"szarozielone","szarozielona"},
-    ["wasata"]              = {"wasate","wasata"},
-    ["wezowata"]            = {"wezowate","wezowata"},
-    ["wylupiastooka"]       = {"wylupiastookie","wylupiastooka"},
-    ["wzorzysta"]           = {"wzorzyste","wzorzysta"},
-    ["zielonkawa"]          = {"zielonkawe","zielonkawa"},
-    ["zielonkawobrazowa"]   = {"zielonkawobrazowe","zielonkawobrazowa", "zielonkawobrazowych"},
-    ["zielonkawoszara"]     = {"zielonkawoszare","zielonkawoszara"},
-    ["zielonobrunatna"]     = {"zielonobrunatne","zielonobrunatna"},
-    ["zielononiebieska"]    = {"zielononiebieskie","zielononiebieska"},
-    ["zlocistobrazowa"]     = {"zlocistobrazowe","zlocistobrazowa"},
-    ["zoltawa"]             = {"zoltawe","zoltawa"},
-    ["zoltobrazowa"]        = {"zoltobrazowe","zoltobrazowa", "zoltobrazowych"},
-    ["nieznany"] = {"nieznane","nieznana"}
-}
-
-local ryby = {
     ["amarel"]      = {typ=RYBY, D="amarela",   N="amarelem",      short={"zlocistobrazowa"}, opis = "Ryba ma owalne, bocznie sciesnione cialo, pokryte grzebykowatymi luskami. Jej grzbiet ma barwe zlocistobrazowa, brzuch mieni sie srebrzyscie. Na bokach ma kilkanascie zlocistych, podluznych pasow, zas na glowie i nasadzie ogona widnieja dwie czarne plamy."},
     ["amur"]        = {typ=RYBY, D="amura",     N="amurem",        short={"ciemnozielona"}, opis = "Ryba ta ma wydluzone, wrzecionowate, bardzo slabo bocznie splaszczone cialo o dosc duzej glowie z tepym pyskiem i poldolnym otworem gebowym. Jej cialo pokrywaja duze luski o ciemnych krawedziach, tworzace siatkowaty rysunek. Na grzbiecie ciemnozielone, po bokach sa jasniejsze, zielonkawe, przechodza w bialawy brzuch. Jej zeby gardlowe sa dwuszeregowe o skosnie scietych, gleboko bruzdowanych krawedziach."},
     ["antias"]      = {typ=RYBY, D="antiasa",   N="antiasem",      short={"czerwonawa"}, opis = "Cialo ryby jest podluznie owalne, bocznie silnie sciesnione i pokryte duzymi luskami. Jej pletwa ogonowa jest duza, gleboko widlasto wcieta, a jej dolny plat jest wiekszy od gornego. Grzbiet i boki maja ladny, czerwony kolor, podbrzusze natomiast delikatny, rozowawy odcien."},
@@ -314,6 +192,76 @@ local ryby = {
     ["wzdrega"]     = {typ=RYBY, D="wzdregi",   N="wzdrega",       short={"brazowozielona"}, opis = "Ryba ta ma wygrzbiecone, bocznie splaszczone cialo i waski, skierowany skosnie ku gorze, polgorny otwor gebowy. Pokryta jest duzymi luskami, na grzbiecie brazowozielonymi, po bokach jasniejszymi z miedzianym polyskiem. Teczowka oka jest pomaranczowoczerwona a przednia krawedz pletwy grzbietowej znajduje sie za nasadami pletw brzusznych."},
 }
 
+local przymiotniki = {
+    ["barwna"]              = {"barwne","barwnych"},
+    ["blekitnawa"]          = {"blekitnawe","blekitnawa"},
+    ["blekitnawozielona"]   = {"blekitnawozielone","blekitnawozielona"},
+    ["brazowa"]             = {"brazowe","brazowa", "brazowych"},
+    ["brazowawa"]           = {"brazowawe","brazowawych", "brazowawych"},
+    ["brazowoczerwona"]     = {"brazowoczerwone","brazowoczerwona"},
+    ["brazowoszara"]        = {"brazowoszare","brazowoszara"},
+    ["brazowozielona"]      = {"brazowozielone","brazowozielona"},
+    ["ciemnobrazowa"]       = {"ciemnobrazowe","ciemnobrazowa"},
+    ["ciemnoczerwona"]      = {"ciemnoczerwone","ciemnoczerwona", "ciemnoczerwonych"},
+    ["ciemnoniebieska"]     = {"ciemnoniebieskie","ciemnoniebieska"},
+    ["ciemnoszara"]         = {"ciemnoszare","ciemnoszara"},
+    ["ciemnozielona"]       = {"ciemnozielone","ciemnozielona"},
+    ["czarna"]              = {"czarne","czarna"},
+    ["czarnoniebieska"]     = {"czarnoniebieskie","czarnoniebieska"},
+    ["czerwonawa"]          = {"czerwonawe","czerwonawa"},
+    ["czerwonobrazowa"]     = {"czerwonobrazowe","czerwonobrazowa"},
+    ["czerwonozlota"]       = {"czerwonozlote","czerwonozlota"},
+    ["fioletowoniebieska"]  = {"fioletowoniebieskie","fioletowoniebieska"},
+    ["jasnomiedziana"]      = {"jasnomiedziane","jasnomiedziana"},
+    ["jasnopomaranczowa"]   = {"jasnopomaranczowe","jasnopomaranczowa", "jasnopomaranczowych"},
+    ["jasnoszara"]          = {"jasnoszare","jasnoszara"},
+    ["marmurkowana"]        = {"marmurkowane","marmurkowana"},
+    ["metaliczna"]          = {"metaliczne","metaliczna"},
+    ["mosieznozlota"]       = {"mosieznozlote","mosieznozlota"},
+    ["nakrapiana"]          = {"nakrapiane","nakrapiana"},
+    ["niebieskawa"]         = {"niebieskawe","niebieskawa"},
+    ["niebieskawobrazowa"]  = {"niebieskawobrazowe","niebieskawobrazowa"},
+    ["niebieskosrebrzysta"] = {"niebieskosrebrzyste","niebieskosrebrzysta"},
+    ["niebieskoszara"]      = {"niebieskoszare","niebieskoszara"},
+    ["niebieskozielona"]    = {"niebieskozielone","niebieskozielona"},
+    ["okraglawa"]           = {"okraglawe","okraglawa"},
+    ["oliwkowosrebrzysta"]  = {"oliwkowosrebrzyste","oliwkowosrebrzysta"},
+    ["oliwkowozielona"]     = {"oliwkowozielone","oliwkowozielona"},
+    ["olowianoszara"]       = {"olowianoszare","olowianoszara"},
+    ["pasiasta"]            = {"pasiaste","pasiasta"},
+    ["plamiasta"]           = {"plamiaste","plamiasta"},
+    ["plaska"]              = {"plaskie","plaska"},
+    ["prazkowana"]          = {"prazkowane","prazkowana"},
+    ["pregowana"]           = {"pregowane","pregowana"},
+    ["purpurowa"]           = {"purpurowe","purpurowa"},
+    ["rozowawa"]            = {"rozowawe","rozowawa"},
+    ["srebrnobrunatna"]     = {"srebrnobrunatne","srebrnobrunatna"},
+    ["srebrnoluska"]        = {"srebrnoluskie","srebrnoluska"},
+    ["srebrzysta"]          = {"srebrzyste","srebrzysta"},
+    ["srebrzystobiala"]     = {"srebrzystobiale","srebrzystobiala"},
+    ["srebrzystoszara"]     = {"srebrzystoszare","srebrzystoszara"},
+    ["srebrzystozielona"]   = {"srebrzystozielone","srebrzystozielona"},
+    ["stalowoblekitna"]     = {"stalowoblekitne","stalowoblekitna", "stalowoblekitnych"},
+    ["stalowoszara"]        = {"stalowoszare","stalowoszara"},
+    ["szara"]               = {"szare","szara"},
+    ["szarobrazowa"]        = {"szarobrazowe","szarobrazowa"},
+    ["szarosrebrzysta"]     = {"szarosrebrzyste","szarosrebrzysta"},
+    ["szarozielona"]        = {"szarozielone","szarozielona"},
+    ["wasata"]              = {"wasate","wasata"},
+    ["wezowata"]            = {"wezowate","wezowata"},
+    ["wylupiastooka"]       = {"wylupiastookie","wylupiastooka"},
+    ["wzorzysta"]           = {"wzorzyste","wzorzysta"},
+    ["zielonkawa"]          = {"zielonkawe","zielonkawa"},
+    ["zielonkawobrazowa"]   = {"zielonkawobrazowe","zielonkawobrazowa", "zielonkawobrazowych"},
+    ["zielonkawoszara"]     = {"zielonkawoszare","zielonkawoszara"},
+    ["zielonobrunatna"]     = {"zielonobrunatne","zielonobrunatna"},
+    ["zielononiebieska"]    = {"zielononiebieskie","zielononiebieska"},
+    ["zlocistobrazowa"]     = {"zlocistobrazowe","zlocistobrazowa"},
+    ["zoltawa"]             = {"zoltawe","zoltawa"},
+    ["zoltobrazowa"]        = {"zoltobrazowe","zoltobrazowa", "zoltobrazowych"},
+    ["nieznany"] = {"nieznane","nieznana"}
+}
+
 mydb_oswajanie = db:create("feeding", {
     feeding = {
       animal = "",
@@ -386,24 +334,17 @@ local kawalkiem_miesa = "kawalkiem miesa"
 local miesem = "miesem"
 
 function get_food_type(food)
-    local result = food
+    local result = ""
     if string.sub(food, 1, string.len(kawalkiem_miesa)) == kawalkiem_miesa then
         -- kawalkiem miesa zajaca
         result = "miesem" .. string.sub(food, #kawalkiem_miesa + 1)
     elseif string.sub(food, 1, string.len(kawalkiem)) == kawalkiem then
         -- kawalkiem karpia
-        result = string.sub(food, #kawalkiem + 2)
-        local r = find_record(ryby, result, "dopelniacz")
+        local r = find_record(oswajanie.food_db, string.sub(food, #kawalkiem + 2), "dopelniacz")
         if r then
             result = r.N
         else
-            r = find_record(oswajanie.food_db, result, "dopelniacz")
-            if r then
-                result = r.N
-            else
-                echo("\nNie wiem co to '" .. result .. "' ")
-                return ""
-            end
+            echo("\nNie ma w bazie '" .. result .. "' ")
         end
     end
     return result
@@ -450,27 +391,12 @@ function oswajanie.core.get_symbol(text)
 
     if string.sub(text, 1, string.len(kawalkiem)) == kawalkiem then
         local food = string.sub(text, #kawalkiem + 2)
-        local r = find_record(ryby, food, "dopelniacz")
-        if r then
-            text = text .. " *".. table.concat(r.short, " ") .. "*"
-            return food_symbol[RYBY]
-        end
         r = find_record(oswajanie.food_db, food, "dopelniacz")
-        if r then
-            return food_symbol[r.typ]
-        end
-        return food_symbol[UNK]
+        return r and food_symbol[r.typ] or food_symbol[UNK]
     end
-    
-    local r = find_record(ryby, text, "narzednik")
-    if r then
-        text = text .. " *".. table.concat(r.short, " ") .. "*"
-        return food_symbol[RYBY]
-    end
-    
+       
     r = find_record(oswajanie.food_db, text, "narzednik")
-    if r then return food_symbol[r.typ] end
-    return food_symbol[UNK]
+    return r and food_symbol[r.typ] or food_symbol[UNK]
 end
 
 function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, col3_len, col4, col4_len, col5, col5_len, window)
@@ -854,7 +780,7 @@ zryby = zryby or {
 function zryby:get_nazwe_ryby(ryba, narzednik, animal)
     local q = "select food, max(strftime('%s',changed)) as count from feeding where animal='"..animal.."' and food_type='"..narzednik.."'"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
-    local result = (ryby[ryba].opis and "" or "<u>")
+    local result = (oswajanie.food_db[ryba].opis and "" or "<u>")
     if table.size(r) > 0 and r[1]["count"] then
         local s = getEpoch() - r[1]["count"]
         local shortest_feeding_time_in_sec = oswajanie.config.feeding_time * 60 * 60 -- 432000 s
@@ -886,11 +812,13 @@ function zryby:ryba(nazwa)
     local animal = oswajanie.core.getlastanimal()
     if animal ~= "" then
         nazwa = ""
-        for k,v in pairs(ryby) do
-            for p,s in pairs(v.short) do
-                if self:czy_opis(s, matches['opis']) then
-                    nazwa = nazwa ..(nazwa=="" and "" or "|").. self:get_nazwe_ryby(k, v.N, animal)
-                    break
+        for k,v in pairs(oswajanie.food_db) do
+            if v.typ == RYBY then
+                for p,s in pairs(v.short) do
+                    if self:czy_opis(s, matches['opis']) then
+                        nazwa = nazwa ..(nazwa=="" and "" or "|").. self:get_nazwe_ryby(k, v.N, animal)
+                        break
+                    end
                 end
             end
         end
@@ -970,57 +898,17 @@ function zryby:disableTrigger()
 end
 
 function zryby:oswajasz()
-    local raw = matches[2]
-    local arr = string.split(raw, " ")
-    local pokarm = ""
-    
-    local animal = oswajanie.core.getlastanimal()
-    if animal ~= "" then
-        if string.sub(raw, 1, string.len(animal)) == animal then
+    if matches['zwierze'] then
+        pokarm = matches['food']
+        oswajanie.alias.insert_feeding_entry(matches['zwierze'], pokarm)
+    else    
+        local animal = oswajanie.core.getlastanimal()
+        if animal ~= "" and string.sub(raw, 1, string.len(animal)) == animal then
             pokarm = string.sub(raw, #animal + 2)
             oswajanie.alias.insert_feeding_entry(animal, pokarm)
         end
     end
-    
-    if pokarm == "" then
-    if table.size(arr) == 2 then
-        -- karmienie nazwanego zwierzaka jedzeniem lub ryba
-        pokarm = arr[2]
-        oswajanie.alias.insert_feeding_entry(arr[1], pokarm)
-    elseif table.size(arr) == 3 then
-        -- karmienie nazwanego zwierzaka miesem
-        pokarm = arr[2].." "..arr[3]
-        oswajanie.alias.insert_feeding_entry(arr[1], pokarm)
-    elseif table.size(arr) == 4 then
-        -- karmienie nienazwanego zwierzaka jedzeniem lub ryba
-        pokarm = arr[4]
-        oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], pokarm)
-    elseif table.size(arr) == 5 then
-        -- karmienie nienazwanego zwierzaka miesem lub sokola jedzeniem/ryba
-        if arr[4] == 'miesem' then
-            pokarm = "miesem "..arr[5]
-            oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], pokarm)
-        if arr[4] == 'kawalkiem' then
-            pokarm = "miesem "..arr[5]
-            oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], pokarm)
-        end
-        else
-            pokarm = arr[5]
-            oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3].." "..arr[4], pokarm)
-        end
-    elseif table.size(arr) == 6 then
-        -- karmienie nienazwanego sokola miesem lub zwierzaka kawalkiem miesa
-        if arr[4] == 'kawalkiem' and arr[5] == 'miesa' then
-            pokarm = "miesem "..arr[6]
-            oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3], pokarm)
-        else
-            pokarm = arr[5].." "..arr[6]
-            oswajanie.alias.insert_feeding_entry(arr[1].." "..arr[2].." "..arr[3].." "..arr[4], pokarm)
-        end
-    else
-        display("trigger do karmiania nic nie rozpoznal")
-    end
-    end
+
     if selectString(pokarm, 1) > -1 then
         creplace(pokarm .. "("..oswajanie.core.get_symbol(pokarm)..")")
         resetFormat()
@@ -1045,20 +933,14 @@ function zryby:init()
     self.ryby_trigger = {}
 
     local shorty = {}
-    for k,v in pairs(ryby) do
-        if type(v.short) == "table" then
+    for k,v in pairs(oswajanie.food_db) do
+        if v.typ == RYBY then
             for p,s in pairs(v.short) do
                 if shorty[s] == nil then
                     shorty[s] = k
                 else
                     shorty[s] = shorty[s] .. "|"..k
                 end
-            end
-        else
-            if shorty[v.short] == nil then
-                shorty[v.short] = k
-            else
-                shorty[v.short] = shorty[v.short] .. "|"..k
             end
         end
     end
@@ -1072,16 +954,17 @@ function zryby:init()
     self.ogladasz_trigger = tempRegexTrigger("^Ogladasz dokladnie (.*)\\.$", function() self:ogladasz() end)
     
     if self.oswajasz_trigger then killTrigger(self.oswajasz_trigger) end
-    self.oswajasz_trigger = tempRegexTrigger("^Karmiac (.+?) (?>zachecasz|oswajasz) .*", function() self:oswajasz() end)
+    self.oswajasz_trigger = tempRegexTrigger("^Karmiac (?'raw'(?:(?'zwierze'.+?) (kawalkiem miesa|kawalkiem|miesem) (?'food'.+?)|.+?)) (?>zachecasz|oswajasz).*", function() self:oswajasz() end)
     
     local definitions ={
         ["ryby"] = { "surow(a|e|ych) (\\w+) ryb(|a|e|y)" },
         ["owoce"] = {},
         ["warzywa"] = {}
     }
-    for k,v in pairs(warzywa) do if v.r then table.insert(definitions["warzywa"], v.r) end end
-    for k,v in pairs(owoce) do if v.r then table.insert(definitions["owoce"], v.r) end end
-    
+    for k,v in pairs(oswajanie.food_db) do
+        if v.typ == WARZYWA and v.r then table.insert(definitions["warzywa"], v.r) end
+        if v.typ == OWOCE and v.r then table.insert(definitions["owoce"], v.r) end
+    end
     for k,v in pairs(definitions) do
         if scripts.inv.pretty_containers.group_definitions[k] ~= nil then
             scripts.inv.pretty_containers.group_definitions[k] = nil

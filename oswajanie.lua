@@ -338,6 +338,9 @@ function get_food_type(food)
     if string.sub(food, 1, string.len(kawalkiem_miesa)) == kawalkiem_miesa then
         -- kawalkiem miesa zajaca
         result = "miesem" .. string.sub(food, #kawalkiem_miesa + 1)
+    elseif string.sub(food, 1, string.len(miesem)) == miesem then
+        -- miesem zajaca
+        result = food
     elseif string.sub(food, 1, string.len(kawalkiem)) == kawalkiem then
         -- kawalkiem karpia
         local r = find_record(oswajanie.food_db, string.sub(food, #kawalkiem + 2), "dopelniacz")
@@ -441,7 +444,7 @@ end
 
 function oswajanie.alias.print_table_by_animal(animal, compact, window)
     window = window or "main"
-    local q = "select f.food_type, strftime('%Y-%m-%d %H:%M',f.changed, 'localtime') as datetime, strftime('%s',f.changed) as count from feeding as f where f.animal = '"..animal.."' order by count desc"
+    local q = "select f.food_type,f.food, strftime('%Y-%m-%d %H:%M',f.changed, 'localtime') as datetime, strftime('%s',f.changed) as count from feeding as f where f.animal = '"..animal.."' order by count desc"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
 
     local max_food_len = 0
@@ -898,7 +901,6 @@ function zryby:disableTrigger()
 end
 
 function zryby:oswajasz()
-    display(matches)
     if matches['zwierze'] then
         pokarm = matches['food']
         oswajanie.alias.insert_feeding_entry(matches['zwierze'], pokarm)

@@ -79,6 +79,7 @@ oswajanie.food_db = {
     ["jagoda"] = {typ=OWOCE, D="jagody", N="jagoda", r = "jagod(|a)"}, --fioletowych jagod
     ["jezyna"] = {typ=OWOCE, D="jezyny", N="jezyna", r = "jezyn"},
     ["kisc"] = {typ=OWOCE, D="kiscia", N="kiscia", removed = true},
+    ["kiwi"] = {typ=OWOCE, D="kiwi", N="kiwi", r = "kiwi"},
     ["malina"] = {typ=OWOCE, D="maliny", N="malina", r = "malin(|y)"},
     ["mandarynka"] = {typ=OWOCE, D="mandarynki", N="mandarynka", r = "mandaryn(ek|ke|ki)"},
     ["mango"] = {typ=OWOCE, D="manga", N="mango", r = "mango"},

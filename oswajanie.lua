@@ -1,3 +1,11 @@
+local OWOCE = "owoce"
+local MIESO = "mieso"
+local RYBY = "ryby"
+local WARZYWA = "warzywa"
+local SZCZATKI = "szczatki"
+local INNE = "inne"
+local UNK = "unk"
+
 oswajanie = oswajanie or {
     alias = {},
     trigger = {},
@@ -14,16 +22,10 @@ oswajanie = oswajanie or {
     cl_maybe = "<yellow>",
     cl_soon = "<DarkGreen>",
     cl_not = "<red>",
+    food_symbol = {[OWOCE]="🍎", [MIESO]="🥩", [RYBY]="🐟", [WARZYWA]="🥔", [SZCZATKI]="👁️ ", [INNE]="🍽️", [UNK] = "?",}
 }
 
 
-local OWOCE = "owoce"
-local MIESO = "mieso"
-local RYBY = "ryby"
-local WARZYWA = "warzywa"
-local SZCZATKI = "szczatki"
-local INNE = "inne"
-local UNK = "unk"
 --mieso, jaja i ryby, okruszki chleba, owoce i robaki
 
 oswajanie.food_db = {
@@ -374,33 +376,27 @@ function find_record(tbl, text, odmiana)
     return nil
 end
 
-food_symbol = {
-    [OWOCE] = "🍎",
-    [MIESO] = "🥩",
-    [RYBY] = "🐟",
-    [WARZYWA] = "🥔",
-    [SZCZATKI] = "👁️ ",
-    [INNE] = "🍽️",
-    [UNK] = "?",
-}
-
-function oswajanie.core.get_symbol(text)
+function oswajanie.get_food_type(text)
     if string.sub(text, 1, string.len(kawalkiem_miesa)) == kawalkiem_miesa then
-        return food_symbol[MIESO]
+        return MIESO
     end
 
     if string.sub(text, 1, string.len(miesem)) == miesem then
-        return food_symbol[MIESO]
+        return MIESO
     end
 
     if string.sub(text, 1, string.len(kawalkiem)) == kawalkiem then
         local food = string.sub(text, #kawalkiem + 2)
         r = find_record(oswajanie.food_db, food, "dopelniacz")
-        return r and food_symbol[r.typ] or food_symbol[UNK]
+        return r and r.typ or UNK
     end
        
     r = find_record(oswajanie.food_db, text, "narzednik")
-    return r and food_symbol[r.typ] or food_symbol[UNK]
+    return r and r.typ or UNK
+end
+
+function oswajanie.get_symbol(text)    
+    return oswajanie.food_symbol[oswajanie.get_food_type(text)]
 end
 
 function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, col3_len, col4, col4_len, col5, col5_len, window)
@@ -413,8 +409,8 @@ function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, 
     if string.len(col5) > 0 then
         local text = col5
         local czym = col5
-        local symbol = (text=="pokarmem" and "" ) or oswajanie.core.get_symbol(text)
-        if symbol == "🐟" then
+        local food_type = oswajanie.get_food_type(text)
+        if food_type == oswajanie.food_symbol[RYBY] then
             for k,v in pairs(ryby) do
                 if v.N == text then
                     local opis = ""
@@ -431,6 +427,7 @@ function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, 
         end
     end
         
+    local symbol = (text=="pokarmem" and "" ) or oswajanie.food_symbol[food_type]
     echo(window, symbol)
     cechoLink(window, "<light_slate_blue> "..text, [[send("oswajaj zwierze ]] ..czym.. [[")]], "oswajaj zwierze "..col5, true)
   end
@@ -448,8 +445,13 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
     local q = "select f.food_type,f.food, strftime('%Y-%m-%d %H:%M',f.changed, 'localtime') as datetime, strftime('%s',f.changed) as count from feeding as f where f.animal = '"..animal.."' order by count desc"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
 
+    local karmienie = {}
     local max_food_len = 0
-    for key, val in pairs(r) do
+    for _, val in pairs(r) do
+        if oswajanie.food_db[val['food_type']] then
+            local k = oswajanie.food_db[val['food_type']].typ
+            karmienie[k] = 1
+        end
         local t = string.len(val["food_type"])
         if t > max_food_len then
             max_food_len = t
@@ -474,6 +476,16 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
     cecho(window, oswajanie.core.ccstr("<green>", "Oswajane zwierze", "-", sum_line_len))
     cecho(window, "\n  <white>"..animal.."<grey> ")
     cechoLink(window, "🔄", function() oswajanie.window:print() end, "odswiez okno")
+    if karmienie[SZCZATKI] then
+        cechoLink(window, oswajanie.food_symbol[SZCZATKI], function() zryby:brakujace(SZCZATKI, animal) end, "Karmienie szczatkami")
+    end
+    if karmienie[OWOCE] then
+        cechoLink(window, oswajanie.food_symbol[OWOCE], function() zryby:brakujace(OWOCE, animal) end, "Karmienie owocami")
+    end
+    if karmienie[WARZYWA] then
+        cechoLink(window, oswajanie.food_symbol[WARZYWA], function() zryby:brakujace(WARZYWA, animal) end, "Karmienie warzywami")
+    end
+    
     cecho(window, "\n"..string.rep("-",sum_line_len))
     oswajanie.core.print_line("<light_slate_blue>", "ile", col1_len, "ostatnio", col2_len, "nastepne", col3_len, "poziom oswojenia", col4_len, "pokarmem", col5_len, window)
 
@@ -914,7 +926,7 @@ function zryby:oswajasz()
     end
 
     if selectString(pokarm, 1) > -1 then
-        creplace(pokarm .. "("..oswajanie.core.get_symbol(pokarm)..")")
+        creplace(pokarm .. "("..oswajanie.get_symbol(pokarm)..")")
         resetFormat()
     end
     oswajanie.trigger.feed_alert(oswajanie.config.recovery_time*60)
@@ -991,10 +1003,8 @@ function zryby:brakujace_owoce(animal)
     zryby:brakujace(OWOCE, animal)
 end
 
-function zryby:brakujace_miesa(animal)
-end
-
 function zryby:brakujace(typ, animal)
+    cecho(animal .. "<reset> mozesz karmic:")
     local q = "select distinct food_type from feeding where animal = '".. animal.."'"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
     

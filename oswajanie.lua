@@ -448,7 +448,9 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
     local karmienie = {}
     local max_food_len = 0
     for _, val in pairs(r) do
-        if oswajanie.food_db[val['food_type']] then
+        if val['food_type'] and string.sub(val['food_type'], 1, string.len(miesem)) == miesem then
+            karmienie[MIESO] = 1
+        elseif oswajanie.food_db[val['food_type']] then
             local k = oswajanie.food_db[val['food_type']].typ
             karmienie[k] = 1
         end
@@ -474,8 +476,9 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
     --- title
     cecho(window, "\n")
     cecho(window, oswajanie.core.ccstr("<green>", "Oswajane zwierze", "-", sum_line_len))
-    cecho(window, "\n  <white>"..animal.."<grey> ")
+    cecho(window, "\n  ")
     cechoLink(window, "🔄", function() oswajanie.window:print() end, "odswiez okno")
+    cecho(window, " <white>"..animal.."<reset> ")
     if karmienie[SZCZATKI] then
         cechoLink(window, oswajanie.food_symbol[SZCZATKI], function() zryby:brakujace(SZCZATKI, animal) end, "Karmienie szczatkami")
     end
@@ -484,6 +487,9 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
     end
     if karmienie[WARZYWA] then
         cechoLink(window, oswajanie.food_symbol[WARZYWA], function() zryby:brakujace(WARZYWA, animal) end, "Karmienie warzywami")
+    end
+    if karmienie[MIESO] then
+        cechoLink(window, oswajanie.food_symbol[MIESO], function() zryby:brakujace_mieso(animal) end, "Karmienie miesem")
     end
     
     cecho(window, "\n"..string.rep("-",sum_line_len))
@@ -612,7 +618,7 @@ function oswajanie.alias.print_animals()
     cecho(" sprawdz czego nie jadl:")
     cechoLink("<light_slate_blue> szczatki", [[zryby:brakujace_szczatki("]] ..v["animal"].. [[")]], "pokaz szczatki", true)
     cechoLink("<light_slate_blue> owoce", [[zryby:brakujace_owoce("]] ..v["animal"].. [[")]], "pokaz owoce", true)
-    cechoLink("<light_slate_blue> miesa", [[zryby:brakujace_miesa("]] ..v["animal"].. [[")]], "pokaz miesa", true)
+    cechoLink("<light_slate_blue> miesa", [[zryby:brakujace_mieso("]] ..v["animal"].. [[")]], "pokaz miesa", true)
   end
   cecho("\n")
 end
@@ -973,13 +979,14 @@ function zryby:init()
     self.oswajasz_trigger = tempRegexTrigger("^Karmiac (?'raw'(?:(?'zwierze'.+?) (?'food'(?:kawalkiem miesa|kawalkiem|miesem) .+?)|.+?)) (?:zachecasz|oswajasz).*", function() self:oswajasz() end)
     
     local definitions ={
-        ["ryby"] = { "surow(a|e|ych) (\\w+) ryb(|a|e|y)" },
-        ["owoce"] = {},
-        ["warzywa"] = {}
+        [RYBY] = { "surow(a|e|ych) (\\w+) ryb(|a|e|y)" },
+        [MIESO] = {"surow(?:e|ych) miesiw(?:|a|o) (\\w+)"},
+        [OWOCE] = {},
+        [WARZYWA] = {}
     }
     for k,v in pairs(oswajanie.food_db) do
-        if v.typ == WARZYWA and v.r then table.insert(definitions["warzywa"], v.r) end
-        if v.typ == OWOCE and v.r then table.insert(definitions["owoce"], v.r) end
+        if v.typ == WARZYWA and v.r then table.insert(definitions[WARZYWA], v.r) end
+        if v.typ == OWOCE and v.r then table.insert(definitions[OWOCE], v.r) end
     end
     for k,v in pairs(definitions) do
         if scripts.inv.pretty_containers.group_definitions[k] ~= nil then
@@ -1003,14 +1010,25 @@ function zryby:brakujace_owoce(animal)
     zryby:brakujace(OWOCE, animal)
 end
 
-function zryby:brakujace(typ, animal)
+function zryby:brakujace_mieso(animal)
+    local q = "select distinct food_type from feeding where food_type like 'miesem%' order by food_type"
+    local r = db:fetch_sql(mydb_oswajanie.feeding, q)
+    local food_db = {}
+    for _, val in pairs(r) do
+        food_db[val.food_type] = {typ=MIESO, N=val.food_type}
+    end
+    zryby:brakujace(MIESO, animal, food_db)
+end
+
+function zryby:brakujace(typ, animal, food_db)
     cecho(animal .. "<reset> mozesz karmic:")
     local q = "select distinct food_type from feeding where animal = '".. animal.."'"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
     
     local missing = {}
-
-    for k,v in pairs(oswajanie.food_db) do if v.typ == typ then
+    
+    food_db = food_db or oswajanie.food_db
+    for k,v in pairs(food_db) do if v.typ == typ then
         local found = false
         for _, val in pairs(r) do
             if v.N == val["food_type"] then

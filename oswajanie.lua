@@ -85,7 +85,7 @@ oswajanie.food_db = {
     ["kiwi"] = {typ=OWOCE, D="kiwi", N="kiwi", r = "kiwi"},
     ["malina"] = {typ=OWOCE, D="maliny", N="malina", r = "malin(|y)"},
     ["mandarynka"] = {typ=OWOCE, D="mandarynki", N="mandarynka", r = "mandaryn(ek|ke|ki)"},
-    ["mango"] = {typ=OWOCE, D="manga", N="mango", r = "mango"},
+    ["mango"] = {typ=OWOCE, D="mango", N="mango", r = "mango"},
     ["morela"] = {typ=OWOCE, D="moreli", N="morela", r = "morel(e|i)"},
     ["melon"] = {typ=OWOCE, D="melona", N="melonem", r = "melon(|y)"},
     ["oliwka"] = {typ=OWOCE, D="oliwki", N="oliwka", r = "oliw(ek|ke|ki)"},
@@ -352,7 +352,7 @@ function get_food_type(food)
         if r then
             result = r.N
         else
-            echo("\nNie ma w bazie '" .. result .. "' ")
+            echo("\nNie ma w bazie '" .. food .. "' ")
         end
     end
     return result

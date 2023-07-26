@@ -923,7 +923,8 @@ function zryby:disableTrigger()
 end
 
 function zryby:oswajasz()
-    if matches['zwierze'] then
+    local pokarm = ""
+    if matches['zwierze'] == "" then
         pokarm = matches['food']
         oswajanie.alias.insert_feeding_entry(matches['zwierze'], pokarm)
     else    

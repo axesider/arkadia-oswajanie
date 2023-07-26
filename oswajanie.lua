@@ -101,7 +101,6 @@ oswajanie.food_db = {
 
     ["bulka"] = {typ=INNE, D="bulki", N="bulka"},
     ["chleb"] = {typ=INNE, D="chleba", N="chlebem"},
-    ["owoc"]  = {typ=INNE, D="owocu", N="owocem"},
 
     ["amarel"]      = {typ=RYBY, D="amarela",   N="amarelem",      short={"zlocistobrazowa"}, opis = "Ryba ma owalne, bocznie sciesnione cialo, pokryte grzebykowatymi luskami. Jej grzbiet ma barwe zlocistobrazowa, brzuch mieni sie srebrzyscie. Na bokach ma kilkanascie zlocistych, podluznych pasow, zas na glowie i nasadzie ogona widnieja dwie czarne plamy."},
     ["amur"]        = {typ=RYBY, D="amura",     N="amurem",        short={"ciemnozielona"}, opis = "Ryba ta ma wydluzone, wrzecionowate, bardzo slabo bocznie splaszczone cialo o dosc duzej glowie z tepym pyskiem i poldolnym otworem gebowym. Jej cialo pokrywaja duze luski o ciemnych krawedziach, tworzace siatkowaty rysunek. Na grzbiecie ciemnozielone, po bokach sa jasniejsze, zielonkawe, przechodza w bialawy brzuch. Jej zeby gardlowe sa dwuszeregowe o skosnie scietych, gleboko bruzdowanych krawedziach."},
@@ -404,10 +403,10 @@ end
 
 function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, col3_len, col4, col4_len, col5, col5_len, window)
     window = window or "main"
-    cecho(window, "\n"..oswajanie.core.rcstr(color, col1, " ", col1_len))
-    cecho(window, "<grey>|"..oswajanie.core.lcstr(color, col2, " ", col2_len))
-    cecho(window, "<grey>|"..oswajanie.core.lcstr(color, col3, " ", col3_len))
-    cecho(window, "<grey>|"..oswajanie.core.lcstr(color, col4, " ", col4_len))
+    cecho(window, "\n"..oswajanie.core:rcstr(color, col1, " ", col1_len))
+    cecho(window, "<grey>|"..oswajanie.core:lcstr(color, col2, " ", col2_len))
+    cecho(window, "<grey>|"..oswajanie.core:lcstr(color, col3, " ", col3_len))
+    cecho(window, "<grey>|"..oswajanie.core:lcstr(color, col4, " ", col4_len))
     cecho(window, "<grey>|")
     if string.len(col5) > 0 then
         local text = col5
@@ -437,7 +436,7 @@ function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, 
 end
 
 function oswajanie.print_compact_activeanimal(window)   
-    local animal = oswajanie.core.getlastanimal()
+    local animal = oswajanie.core:getlastanimal()
     if animal == "" then return end
     window = window or "main"
     oswajanie.alias.print_table_by_animal(animal, true, window)    
@@ -478,7 +477,7 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
 
     --- title
     cecho(window, "\n")
-    cecho(window, oswajanie.core.ccstr("<green>", "Oswajane zwierze", "-", sum_line_len))
+    cecho(window, oswajanie.core:ccstr("<green>", "Oswajane zwierze", "-", sum_line_len))
     cecho(window, "\n  ")
     cechoLink(window, "🔄", function() oswajanie.window:print() end, "odswiez okno")
     cecho(window, " <white>"..animal.."<reset> ")
@@ -496,7 +495,7 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
     end
     
     cecho(window, "\n"..string.rep("-",sum_line_len))
-    oswajanie.core.print_line("<light_slate_blue>", "ile", col1_len, "ostatnio", col2_len, "nastepne", col3_len, "poziom oswojenia", col4_len, "pokarmem", col5_len, window)
+    oswajanie.core:print_line("<light_slate_blue>", "ile", col1_len, "ostatnio", col2_len, "nastepne", col3_len, "poziom oswojenia", col4_len, "pokarmem", col5_len, window)
 
     local tmp = {}
     local shortest_feeding_time_in_sec = oswajanie.config.feeding_time * 60 * 60 -- 432000 s
@@ -506,7 +505,7 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
         local food_type = v['food_type']
         if tmp[food_type] == nil then
             tmp[food_type] = 1
-            local a = oswajanie.core.getfoods_by_animal(animal, food_type)
+            local a = oswajanie.core:getfoods_by_animal(animal, food_type)
             if not compact then cecho(window, "\n"..string.rep("-", sum_line_len)) end
             local prev_epoch = 0
             local shortest = shortest_feeding_time_in_sec
@@ -535,7 +534,7 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
                         nt = "odrazu"
                     end
                 end
-                oswajanie.core.print_line(cl, col1, col1_len, v1["datetime"], col2_len, nt, col3_len, oswajanie.core.getlevel_by_animal(animal, v1["count"]), col4_len, food, col5_len, window)
+                oswajanie.core:print_line(cl, col1, col1_len, v1["datetime"], col2_len, nt, col3_len, oswajanie.core:getlevel_by_animal(animal, v1["count"]), col4_len, food, col5_len, window)
                 if compact and k1 == 1 then
                     break
                 end
@@ -640,7 +639,7 @@ function oswajanie.alias.print_table_by_animal_all()
         if t > max_food_len then max_food_len = t end
         local t2 = string.len(val["animal"])
         if t2 > max_animal_len then max_animal_len = t2 end
-        local t3 = string.len(oswajanie.core.getlevel_by_animal(val["animal"], val["animal_type"]))
+        local t3 = string.len(oswajanie.core:getlevel_by_animal(val["animal"], val["animal_type"]))
         if t3 > max_level_len then max_level_len = t3 end    
     end
   
@@ -665,14 +664,14 @@ function oswajanie.alias.print_table_by_animal_all()
 
     --- title
     cecho("\n")
-    cecho(oswajanie.core.ccstr("<green>", "Oswajano zwierzeta", "-", sum_line_len))
-    oswajanie.core.print_line("<light_slate_blue>", "nr", col1_len, "zwierze", col2_len, "data", col3_len, "poziom oswojenia", col4_len, "pokarmem", col5_len)
+    cecho(oswajanie.core:ccstr("<green>", "Oswajano zwierzeta", "-", sum_line_len))
+    oswajanie.core:print_line("<light_slate_blue>", "nr", col1_len, "zwierze", col2_len, "data", col3_len, "poziom oswojenia", col4_len, "pokarmem", col5_len)
     cecho("\n"..string.rep("-",sum_line_len))
 
     --- content
     for k1, v1 in pairs(r) do
-        local level = oswajanie.core.getlevel_by_animal(v1["animal"], v1["animal_type"])
-        oswajanie.core.print_line("<green>", s, col1_len, v1["animal"], col2_len, v1["datetime"], col3_len, level, col4_len, v1["food"], col5_len)
+        local level = oswajanie.core:getlevel_by_animal(v1["animal"], v1["animal_type"])
+        oswajanie.core:print_line("<green>", s, col1_len, v1["animal"], col2_len, v1["datetime"], col3_len, level, col4_len, v1["food"], col5_len)
         s = s - 1
     end
     cecho ("\n"..string.rep("-",sum_line_len).."\n")
@@ -703,7 +702,7 @@ function oswajanie.alias.print_help()
     cecho("           wywola /o_pokaz <zwierze>, klikniecie na status zmieni go w bazie \n")
     cecho(" <light_slate_blue>/o_pokaz <zwierze><grey> - pokazuje spis oswajan <zwierzecia>\n")
     cecho("           Klikniecie na wybrane pozywienie wywola probe oswajania tym pokarmem.\n")
-    local animal = oswajanie.core.getlastanimal()
+    local animal = oswajanie.core:getlastanimal()
     if animal ~= "" then
         cechoLink("\n <light_slate_blue>/o_pokaz "..animal, [[oswajanie.alias.print_table_by_animal("]]..animal..[[", true)]], "/o_pokaz "..animal, true)
         cecho("<grey> - ostatnio oswajane zwierze\n\n")
@@ -834,7 +833,7 @@ function trigger_func_oswajanie_ryby_opis(opis)
 end
 
 function zryby:ryba(nazwa)  
-    local animal = oswajanie.core.getlastanimal()
+    local animal = oswajanie.core:getlastanimal()
     if animal ~= "" then
         nazwa = ""
         for k,v in pairs(oswajanie.food_db) do
@@ -868,7 +867,7 @@ end
 function zryby:zwierzejest()
     local zwierzak = oswajanie.tmp_animal
     local level = matches[2]
-    oswajanie.core.insert_animal_level(zwierzak, level)
+    oswajanie.core:insert_animal_level(zwierzak, level)
 
     self:disableTrigger()
     
@@ -924,18 +923,23 @@ end
 
 function zryby:oswajasz()
     local pokarm = ""
-    if matches['zwierze'] == "" then
+    if matches['zwierze'] ~= "" then
         pokarm = matches['food']
         oswajanie.alias.insert_feeding_entry(matches['zwierze'], pokarm)
     else    
-        local animal = oswajanie.core.getlastanimal()
+        local animal = oswajanie.core:getlastanimal()
         if animal ~= "" and string.sub(raw, 1, string.len(animal)) == animal then
             pokarm = string.sub(raw, #animal + 2)
             oswajanie.alias.insert_feeding_entry(animal, pokarm)
         end
     end
 
-    if selectString(pokarm, 1) > -1 then
+    if pokarm == "" then
+        scripts:print_log("Cos poszlo nie tak z oswajaniem. Zerknij do debug")
+        for k, v in pairs(multimatches) do 
+            debugc(k..":"..table.concat(v,"|"))
+        end
+    elseif selectString(pokarm, 1) > -1 then
         creplace(pokarm .. "("..oswajanie.get_symbol(pokarm)..")")
         resetFormat()
     end
@@ -1003,13 +1007,13 @@ function zryby:init()
 end
 
 function zryby:brakujace_szczatki(animal)
-    animal = animal or oswajanie.core.getlastanimal()
+    animal = animal or oswajanie.core:getlastanimal()
     cecho("Brakujace szczatki <yellow>" .. animal .. "<reset>:")
     zryby:brakujace(SZCZATKI, animal)
 end
 
 function zryby:brakujace_owoce(animal)
-    animal = animal or oswajanie.core.getlastanimal()
+    animal = animal or oswajanie.core:getlastanimal()
     cecho("Brakujace owoce <yellow>" .. animal .. "<reset>:")
     zryby:brakujace(OWOCE, animal)
 end

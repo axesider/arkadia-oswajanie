@@ -299,7 +299,7 @@ function oswajanie.alias.insert_feeding_entry(zwierzak, pokarm)
     db:add(mydb_oswajanie.feeding, { animal = zwierzak, food = pokarm, food_type = get_food_type(pokarm)})
 end
 
-function oswajanie.core.insert_animal_level(zwierzak, poziom)
+function oswajanie.core:insert_animal_level(zwierzak, poziom)
     local q = "select animal from animals where animal='"..zwierzak.."' and level='"..poziom.."' "
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
     if r == nil or table.size(r) == 0 then
@@ -307,7 +307,7 @@ function oswajanie.core.insert_animal_level(zwierzak, poziom)
     end
 end
 
-function oswajanie.core.lcstr(color, str, fill_char, to_len)
+function oswajanie.core:lcstr(color, str, fill_char, to_len)
     str = " "..str.." "
     local l = to_len - string.len(str)
     local l_l = 0
@@ -316,7 +316,7 @@ function oswajanie.core.lcstr(color, str, fill_char, to_len)
     return s
 end
 
-function oswajanie.core.rcstr(color, str, fill_char, to_len)
+function oswajanie.core:rcstr(color, str, fill_char, to_len)
     str = " "..str.." "
     local l = to_len - string.len(str)
     local l_r = 0
@@ -325,7 +325,7 @@ function oswajanie.core.rcstr(color, str, fill_char, to_len)
     return s
 end
 
-function oswajanie.core.ccstr(color, str, fill_char, to_len)
+function oswajanie.core:ccstr(color, str, fill_char, to_len)
     str = " "..str.." "
     local l = to_len - string.len(str)
     local l_l = math.floor(l / 2)
@@ -401,7 +401,7 @@ function oswajanie.get_symbol(text)
     return oswajanie.food_symbol[oswajanie.get_food_type(text)]
 end
 
-function oswajanie.core.print_line(color, col1, col1_len, col2, col2_len, col3, col3_len, col4, col4_len, col5, col5_len, window)
+function oswajanie.core:print_line(color, col1, col1_len, col2, col2_len, col3, col3_len, col4, col4_len, col5, col5_len, window)
     window = window or "main"
     cecho(window, "\n"..oswajanie.core:rcstr(color, col1, " ", col1_len))
     cecho(window, "<grey>|"..oswajanie.core:lcstr(color, col2, " ", col2_len))
@@ -545,7 +545,7 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
     cecho(window, " Najszybciej co " .. math.floor(theshortest/60/60).."h\n")
 end
 
-function oswajanie.core.getlevel_by_animal(animal, time)
+function oswajanie.core:getlevel_by_animal(animal, time)
     time = tonumber(time)
     local next_level = ""
     local prev_level = oswajanie.level_min
@@ -582,7 +582,7 @@ function oswajanie.core.getlevel_by_animal(animal, time)
     return next_level
 end
 
-function oswajanie.core.getfoods_by_animal(animal, food_type)
+function oswajanie.core:getfoods_by_animal(animal, food_type)
     local q = "select f.food_type, strftime('%Y-%m-%d %H:%M',f.changed, 'localtime') as datetime, strftime('%s',f.changed) as count from feeding as f where f.animal = '"..animal.."' and f.food_type = '"..food_type.."' order by count desc"
     local r3 = db:fetch_sql(mydb_oswajanie.feeding, q)
     return r3
@@ -677,7 +677,7 @@ function oswajanie.alias.print_table_by_animal_all()
     cecho ("\n"..string.rep("-",sum_line_len).."\n")
 end
 
-function oswajanie.core.getlastanimal()
+function oswajanie.core:getlastanimal()
     local q = "select animal from feeding where active = 1 order by changed desc limit 1"
     local r = db:fetch_sql(mydb_oswajanie.feeding, q)
     if table.size(r) > 0 then
@@ -769,7 +769,7 @@ function oswajanie.alias.rename(animal, new_name)
     end
 end
 
-function oswajanie.core.full_string(str, len)
+function oswajanie.core:full_string(str, len)
     local l1 = string.len(str)
     local l2 = len - l1
     return str..string.rep(" ",l2)

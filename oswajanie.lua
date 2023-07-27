@@ -928,6 +928,7 @@ function zryby:oswajasz()
         oswajanie.alias.insert_feeding_entry(matches['zwierze'], pokarm)
     else    
         local animal = oswajanie.core:getlastanimal()
+        local raw = matches['raw']
         if animal ~= "" and string.sub(raw, 1, string.len(animal)) == animal then
             pokarm = string.sub(raw, #animal + 2)
             oswajanie.alias.insert_feeding_entry(animal, pokarm)

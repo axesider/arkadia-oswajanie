@@ -912,7 +912,7 @@ function zryby:zwierze_zmeczenie()
 end
 
 function zryby:enableTrigger()
-    if self.oswojenie_trigger == nil then self.oswojenie_trigger = tempRegexTrigger("^Sadzac po zachowaniu (?:zwierze|kotka) jest (.*)\\.$", function() self:zwierzejest() end) end
+    if self.oswojenie_trigger == nil then self.oswojenie_trigger = tempRegexTrigger("^Sadzac po zachowaniu (?:zwierze jest|kotka wydaje sie byc) (.*)\\.$", function() self:zwierzejest() end) end
     if self.zmeczenie_trigger == nil then self.zmeczenie_trigger = tempRegexTrigger("^Jest calkowicie wykonczon[ay] i bedzie potrzebowac jeszcze (.+?) czasu do pelnej regeneracji sil\\.$", function() self:zwierze_zmeczenie() end) end
 end
 

@@ -25,6 +25,30 @@ oswajanie = oswajanie or {
     food_symbol = {[OWOCE]="🍎", [MIESO]="🥩", [RYBY]="🐟", [WARZYWA]="🥔", [SZCZATKI]="👁️ ", [INNE]="🍽️", [UNK] = "?",}
 }
 
+misc["animal_levels"] = {
+    ["plochliwe"] = "[1/10]",
+    ["plochliwa"] = "[1/10]",
+    ["nerwowe"] = "[2/10]",
+    ["nerwowa"] = "[2/10]",
+    ["nieufne"] = "[3/10]",
+    ["nieufna"] = "[3/10]",
+    ["ulegle"] = "[4/10]",
+    ["ulegla"] = "[4/10]",
+    ["spokojne"] = "[5/10]",
+    ["spokojna"] = "[5/10]",
+    ["przywiazane"] = "[6/10]",
+    ["przywiazana"] = "[6/10]",
+    ["ufne"] = "[7/10]",
+    ["ufna"] = "[7/10]",
+    ["lojalne"] = "[8/10]",
+    ["lojalna"] = "[8/10]",
+    ["oddane"] = "[9/10]",
+    ["oddana"] = "[9/10]",
+    ["calkowicie oddane"] = "[10/10]",
+    ["calkowicie oddana"] = "[10/10]"
+}
+
+
 
 --mieso, jaja i ryby, okruszki chleba, owoce i robaki
 

@@ -89,7 +89,7 @@ oswajanie.food_db = {
     ["sluz"] = {typ=SZCZATKI, D="sluzu", N="sluzem"},
     ["skrzydlo"] = {typ=SZCZATKI, D="skrzydla", N="skrzydlem"},
     ["szczekonoze"] = {typ=SZCZATKI, D="szczekonoza", N="szczekonozem"},
-    ["szpon"] = {typ=SZCZATKI, D="szpona", N="szponem"},
+    ["szpon"] = {typ=SZCZATKI, D="szponu", N="szponem"},
     ["ucho"] = {typ=SZCZATKI, D="ucha", N="uchem"},
     ["watroba"] = {typ=SZCZATKI, D="watroby", N="watroba"},
     ["wij"] = {typ=SZCZATKI, D="wija", N="wijem"},

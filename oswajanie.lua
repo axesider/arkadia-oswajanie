@@ -69,6 +69,7 @@ oswajanie.food_db = {
 
     ["gruczol"] = {typ=SZCZATKI, D="gruczolu", N="gruczolem"},
     ["grzebien"] = {typ=SZCZATKI, D="grzebienia", N="grzebieniem"},
+    ["grzywa"] = {typ=SZCZATKI, D="grzywy", N="grzywa"},
     ["jajko"] = {typ=SZCZATKI, D="jajka", N="jajkiem"},
     ["jajo"] = {typ=SZCZATKI, D="jaja", N="jajem"},
     ["jezor"] = {typ=SZCZATKI, D="jezora", N="jezorem"},

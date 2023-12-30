@@ -17,7 +17,7 @@ oswajanie = oswajanie or {
     feeding_date = 0,
     timer = nil,
     level_min = "plochliwe",
-    level_max = "calkowicie oddane",
+    level_max = "calkowicie oddan",
     cl_ok = "<reset>",
     cl_maybe = "<yellow>",
     cl_soon = "<DarkGreen>",
@@ -26,26 +26,16 @@ oswajanie = oswajanie or {
 }
 
 misc["animal_levels"] = {
-    ["plochliwe"] = "[1/10]",
-    ["plochliwa"] = "[1/10]",
-    ["nerwowe"] = "[2/10]",
-    ["nerwowa"] = "[2/10]",
-    ["nieufne"] = "[3/10]",
-    ["nieufna"] = "[3/10]",
-    ["ulegle"] = "[4/10]",
-    ["ulegla"] = "[4/10]",
-    ["spokojne"] = "[5/10]",
-    ["spokojna"] = "[5/10]",
-    ["przywiazane"] = "[6/10]",
-    ["przywiazana"] = "[6/10]",
-    ["ufne"] = "[7/10]",
-    ["ufna"] = "[7/10]",
-    ["lojalne"] = "[8/10]",
-    ["lojalna"] = "[8/10]",
-    ["oddane"] = "[9/10]",
-    ["oddana"] = "[9/10]",
-    ["calkowicie oddane"] = "[10/10]",
-    ["calkowicie oddana"] = "[10/10]"
+    ["plochliw"] = "[1/10]",
+    ["nerwow"] = "[2/10]",
+    ["nieufn"] = "[3/10]",
+    ["ulegl"] = "[4/10]",
+    ["spokojn"] = "[5/10]",
+    ["przywiazan"] = "[6/10]",
+    ["ufn"] = "[7/10]",
+    ["lojaln"] = "[8/10]",
+    ["oddan"] = "[9/10]",
+    ["calkowicie oddan"] = "[10/10]"
 }
 
 
@@ -490,7 +480,7 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
     local col1_len = 5  --- trzycyfrowa liczba + brzegi
     local col2_len = 18 --- 2021-09-26 10:14 + brzegi
     local col3_len = 18 --- 2021-09-26 10:14 + brzegi
-    local col4_len = string.len(oswajanie.level_max) + 2
+    local col4_len = string.len(oswajanie.level_max) + 3
     local col5_len = 0
     if string.len("pokarmem") > max_food_len then
         col5_len = string.len("pokarmem") + 2
@@ -892,17 +882,18 @@ end
 function zryby:zwierzejest()
     local zwierzak = oswajanie.tmp_animal
     local level = matches[2]
+    local level_pre = level:sub(1, -2)
     oswajanie.core:insert_animal_level(zwierzak, level)
 
     self:disableTrigger()
     
     if selectString(level, 1) > -1 then
         local q = "select count(*)as count from feeding as F where animal = '".. zwierzak .. "'"
-        if level ~= "plochliwe" then q = q .. " and changed > (select A.changed from animals as A where A.level = '".. level .. "' and A.animal = F.animal)" end
+        if level_pre ~= "plochliw" then q = q .. " and changed > (select A.changed from animals as A where A.level = '".. level .. "' and A.animal = F.animal)" end
         local result = db:fetch_sql(mydb_oswajanie.feeding, q)
               
-        local add_text = " <light_slate_blue>" .. misc.animal_levels[level]
-        if level ~= oswajanie.level_max then
+        local add_text = " <light_slate_blue>" .. misc.animal_levels[level_pre]
+        if level_pre ~= oswajanie.level_max then
             local Q = "select avg(cnt)as count from ( select count(*)as cnt from animals as A inner join feeding as F on A.animal = F.animal where A.animal = '".. zwierzak .. "' and F.changed > A.changed and F.changed < (select min(changed) from animals as AA where AA.changed > A.changed) group by A.level )"
             local Result = db:fetch_sql(mydb_oswajanie.feeding, Q)
             add_text = add_text .. "<reset>, <light_slate_blue>karmione<reset> " .. result[1]['count'] .. " razy<reset>"

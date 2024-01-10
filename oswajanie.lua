@@ -733,7 +733,7 @@ function oswajanie.alias.print_help()
     cecho(" <light_slate_blue>/o_wlacz <zwierze><grey> - aktywuje <zwierze> w bazie.\n")
     cecho("           Alias w praktyce przydaje sie tylko przy komendzie '/o_historia' jesli\n")
     cecho("           chcemy aby pokazywalo historie karmienia konkretnego zwierzecia.\n")
-    cecho(" <light_slate_blue>/o_przemianuj <zwierze> na <Imie><grey> - zmienia opis <zwierzecia> w bazie na <imie>.\n")
+    cecho(" <light_slate_blue>/o_przemianuj <zwierze> na <Imie w bierniku><grey> - zmienia opis <zwierzecia> w bazie na <imie>.\n")
     cecho("           Alias przydaje sie gdy w trakcie karmienia nazwiemy zwierze i chcemy zaktualizowac \n")
     cecho("           wczeniejsze wpisy aby zsynchronizowac historie.\n")
     cecho(" ")
@@ -928,7 +928,7 @@ function zryby:zwierze_zmeczenie()
 end
 
 function zryby:enableTrigger()
-    if self.oswojenie_trigger == nil then self.oswojenie_trigger = tempRegexTrigger("^Sadzac po zachowaniu (?:zwierze jest|kotka wydaje sie byc) (.*)\\.$", function() self:zwierzejest() end) end
+    if self.oswojenie_trigger == nil then self.oswojenie_trigger = tempRegexTrigger("^Sadzac po zachowaniu (?:zwierze jest|kot(?:ka|) wydaje sie byc) (.*)\\.$", function() self:zwierzejest() end) end
     if self.zmeczenie_trigger == nil then self.zmeczenie_trigger = tempRegexTrigger("^Jest calkowicie wykonczon[ay] i bedzie potrzebowac jeszcze (.+?) czasu do pelnej regeneracji sil\\.$", function() self:zwierze_zmeczenie() end) end
 end
 
@@ -939,12 +939,12 @@ end
 
 function zryby:oswajasz()
     local pokarm = ""
-    if matches['zwierze'] ~= "" then
+    if matches['imie'] ~= "" then
+        pokarm = matches['imie_food']
+        oswajanie.alias.insert_feeding_entry(matches['imie'], pokarm)
+    elseif matches['zwierze'] ~= "" then
         pokarm = matches['food']
         oswajanie.alias.insert_feeding_entry(matches['zwierze'], pokarm)
-    elseif matches['imie'] ~= "" then
-        pokarm = string.sub(matches['raw'], 1, string.len(matches['imie'])+1)
-        oswajanie.alias.insert_feeding_entry(matches['imie'], pokarm)
     else
         local animal = oswajanie.core:getlastanimal()
         local raw = matches['raw']
@@ -1002,7 +1002,7 @@ function zryby:init()
     self.ogladasz_trigger = tempRegexTrigger("^Ogladasz dokladnie (.*)\\.$", function() self:ogladasz() end)
     
     if self.oswajasz_trigger then killTrigger(self.oswajasz_trigger) end
-    self.oswajasz_trigger = tempRegexTrigger("^Karmiac (?'raw'(?:(?'zwierze'.+?) (?'food'(?:kawalkiem miesa|kawalkiem|miesem) .+?)|(?:(?'imie'([A-Z]\\w+) .+?))|.+?)) (?:zachecasz|oswajasz).*", function() self:oswajasz() end)
+    self.oswajasz_trigger = tempRegexTrigger("^Karmiac (?'raw'(?:(?'imie'[A-Z]\\w+) (?'imie_food'.+?))|(?'zwierze'.+?) (?'food'(?:kawalkiem miesa|kawalkiem|miesem) .+?)|.+?) (?:zachecasz|oswajasz).*", function() self:oswajasz() end)
     
     local definitions ={
         [RYBY] = { "surow(a|e|ych) (\\w+) ryb(|a|e|y)" },

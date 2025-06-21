@@ -109,6 +109,7 @@ oswajanie.food_db = {
     ["owoc"] = {typ=OWOCE, D="owoca", N="owocem",r="owoc(e|)"},
     ["papaja"] = {typ=OWOCE, D="papai", N="papaja", r = "papa(i|je)"},
     ["pomarancz"] = {typ=OWOCE, D="pomaranczy", N="pomarancza", r = "pomarancz(e|y)"},
+    ["poziomki"] = {typ=OWOCE, D="poziomek", N="poziomka", r = "poziom(ka|ki|ek)"},
     ["sliwka"] = {typ=OWOCE, D="sliwki", N="sliwka", r = "sliw(ke|ek|ki)"},
     ["truskawka"] = {typ=OWOCE, D="truskawki", N="truskawka", r = "truskaw(ek|ke|ki)"},
     ["winogrono"] = {typ=OWOCE, D="winogron", N="winogronami", r = "winogron"},

@@ -112,7 +112,7 @@ oswajanie.food_db = {
     ["poziomki"] = {typ=OWOCE, D="poziomek", N="poziomka", r = "poziom(ka|ki|ek)"},
     ["sliwka"] = {typ=OWOCE, D="sliwki", N="sliwka", r = "sliw(ke|ek|ki)"},
     ["truskawka"] = {typ=OWOCE, D="truskawki", N="truskawka", r = "truskaw(ek|ke|ki)"},
-    ["winogrono"] = {typ=OWOCE, D="winogron", N="winogronami", r = "winogron"},
+    ["winogrono"] = {typ=OWOCE, D="winogrona", N="winogronami", r = "winogron"},
     ["wisnia"] = {typ=OWOCE, D="wisni", N="wisnia", r = "wisni(|e)"},
 
     ["bulka"] = {typ=INNE, D="bulki", N="bulka"},

@@ -8,11 +8,11 @@
 			<triggerType>0</triggerType>
 			<conditonLineDelta>0</conditonLineDelta>
 			<mStayOpen>0</mStayOpen>
-			<mCommand></mCommand>
-			<packageName></packageName>
+			<mCommand />
+			<packageName />
 			<mFgColor>#ff0000</mFgColor>
 			<mBgColor>#ffff00</mBgColor>
-			<mSoundFile></mSoundFile>
+			<mSoundFile />
 			<colorTriggerFgColor>#000000</colorTriggerFgColor>
 			<colorTriggerBgColor>#000000</colorTriggerBgColor>
 			<regexCodeList>
@@ -29,28 +29,28 @@
 			<name>pokaz oswajanie</name>
 			<script>local animal = string.sub(matches[1], 10)
 oswajanie.alias.print_table_by_animal(animal)</script>
-			<command></command>
+			<command />
 			<packageName>arkadia-oswajanie</packageName>
 			<regex>^/o_pokaz (.*)$</regex>
 		</Alias>
 		<Alias isActive="yes" isFolder="no">
 			<name>pokaz aktywne zwierzeta</name>
 			<script>oswajanie.alias.print_animals()</script>
-			<command></command>
+			<command />
 			<packageName>arkadia-oswajanie</packageName>
 			<regex>^/o_pokaz$</regex>
 		</Alias>
 		<Alias isActive="yes" isFolder="no">
 			<name>pokaz historie oswajania aktywnych zwierzat</name>
 			<script>oswajanie.alias.print_table_by_animal_all()</script>
-			<command></command>
+			<command />
 			<packageName>arkadia-oswajanie</packageName>
 			<regex>^/o_historia$</regex>
 		</Alias>
 		<Alias isActive="yes" isFolder="no">
 			<name>pomoc skryptow oswajania</name>
 			<script>oswajanie.alias.print_help()</script>
-			<command></command>
+			<command />
 			<packageName>arkadia-oswajanie</packageName>
 			<regex>^/o_pomoc$</regex>
 		</Alias>
@@ -58,7 +58,7 @@ oswajanie.alias.print_table_by_animal(animal)</script>
 			<name>wylacz zwierze w bazie</name>
 			<script>local animal = string.sub(matches[1], 11)
 oswajanie.alias.disable(animal)</script>
-			<command></command>
+			<command />
 			<packageName>arkadia-oswajanie</packageName>
 			<regex>^/o_wylacz (.*)$</regex>
 		</Alias>
@@ -66,7 +66,7 @@ oswajanie.alias.disable(animal)</script>
 			<name>wlacz zwierze w bazie</name>
 			<script>local animal = string.sub(matches[1], 10)
 oswajanie.alias.enable(animal)</script>
-			<command></command>
+			<command />
 			<packageName>arkadia-oswajanie</packageName>
 			<regex>^/o_wlacz (.*)$</regex>
 		</Alias>
@@ -75,7 +75,7 @@ oswajanie.alias.enable(animal)</script>
 			<script>local animal = string.trim(matches[2])
 			local new_name = string.trim(matches[3])
 			oswajanie.alias.rename(animal, new_name)</script>
-			<command></command>
+			<command />
 			<packageName>arkadia-oswajanie</packageName>
 			<regex>^/o_przemianuj (.*) na (.*)$</regex>
 		</Alias>
@@ -84,6 +84,6 @@ oswajanie.alias.enable(animal)</script>
 	<ScriptPackage />
 	<KeyPackage />
 	<HelpPackage>
-		<helpURL></helpURL>
+		<helpURL />
 	</HelpPackage>
 </MudletPackage>

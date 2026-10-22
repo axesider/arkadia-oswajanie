@@ -420,10 +420,11 @@ end
 function oswajanie.core:print_line(color, col1, col1_len, col2, col2_len, col3, col3_len, col4, col4_len, col5, col5_len, window)
     window = window or "main"
     cecho(window, "\n"..oswajanie.core:rcstr(color, col1, " ", col1_len))
-    cecho(window, "<grey>|"..oswajanie.core:lcstr(color, col2, " ", col2_len))
-    cecho(window, "<grey>|"..oswajanie.core:lcstr(color, col3, " ", col3_len))
-    cecho(window, "<grey>|"..oswajanie.core:lcstr(color, col4, " ", col4_len))
-    cecho(window, "<grey>|")
+    local sep = "<dim_grey>│"
+    cecho(window, sep..oswajanie.core:lcstr(color, col2, " ", col2_len))
+    cecho(window, sep..oswajanie.core:lcstr(color, col3, " ", col3_len))
+    cecho(window, sep..oswajanie.core:lcstr(color, col4, " ", col4_len))
+    cecho(window, sep.." ")
     if string.len(col5) > 0 then
         local text = col5
         local czym = col5
@@ -492,11 +493,9 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
     --- 3  | 2021-09-28 20:30 | 2021-10-03 20:30 | lojalne | mango
 
     --- title
-    cecho(window, "\n")
-    cecho(window, oswajanie.core:ccstr("<green>", "Oswajane zwierze", "-", sum_line_len))
-    cecho(window, "\n  ")
+    cecho(window, "\n ")
     cechoLink(window, "🔄", function() oswajanie.window:print() end, "odswiez okno")
-    cecho(window, " <white>"..animal.."<reset> ")
+    cecho(window, " <green>Oswajane zwierze: <white>"..animal.."<reset> ")
     if karmienie[SZCZATKI] then
         cechoLink(window, oswajanie.food_symbol[SZCZATKI], function() zryby:brakujace(SZCZATKI, animal) end, "Karmienie szczatkami")
     end
@@ -509,8 +508,6 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
     if karmienie[MIESO] then
         cechoLink(window, oswajanie.food_symbol[MIESO], function() zryby:brakujace_mieso(animal) end, "Karmienie miesem")
     end
-    
-    cecho(window, "\n"..string.rep("-",sum_line_len))
     oswajanie.core:print_line("<light_slate_blue>", "ile", col1_len, "ostatnio", col2_len, "nastepne", col3_len, "poziom oswojenia", col4_len, "pokarmem", col5_len, window)
 
     local tmp = {}
@@ -522,7 +519,6 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
         if tmp[food_type] == nil then
             tmp[food_type] = 1
             local a = oswajanie.core:getfoods_by_animal(animal, food_type)
-            if not compact then cecho(window, "\n"..string.rep("-", sum_line_len)) end
             local prev_epoch = 0
             local shortest = shortest_feeding_time_in_sec
             for k1, v1 in pairs(a) do
@@ -534,7 +530,7 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
             end
             theshortest = (shortest < theshortest and shortest) or theshortest
             for k1, v1 in pairs(a) do
-                local cl = oswajanie.cl_ok
+                local cl = (k1 == 1 and oswajanie.cl_ok) or "<dim_grey>"
                 local col1 = ""
                 local nt = ""
                 local food = ""
@@ -557,8 +553,7 @@ function oswajanie.alias.print_table_by_animal(animal, compact, window)
             end
         end
     end
-    cecho(window, "\n"..string.rep("-", 25))
-    cecho(window, " Najszybciej co " .. math.floor(theshortest/60/60).."h\n")
+    cecho(window, "\n\n  <dim_grey>Najszybciej co <grey>" .. math.floor(theshortest/60/60).."h<reset>\n")
 end
 
 function oswajanie.core:getlevel_by_animal(animal, time)
@@ -679,10 +674,8 @@ function oswajanie.alias.print_table_by_animal_all()
     --- 3  | 2021-09-28 20:30 | 2021-10-03 20:30 | lojalne | mango
 
     --- title
-    cecho("\n")
-    cecho(oswajanie.core:ccstr("<green>", "Oswajano zwierzeta", "-", sum_line_len))
+    cecho("\n  <green>Oswajano zwierzeta<reset>\n")
     oswajanie.core:print_line("<light_slate_blue>", "nr", col1_len, "zwierze", col2_len, "data", col3_len, "poziom oswojenia", col4_len, "pokarmem", col5_len)
-    cecho("\n"..string.rep("-",sum_line_len))
 
     --- content
     for k1, v1 in pairs(r) do
@@ -690,7 +683,7 @@ function oswajanie.alias.print_table_by_animal_all()
         oswajanie.core:print_line("<green>", s, col1_len, v1["animal"], col2_len, v1["datetime"], col3_len, level, col4_len, v1["food"], col5_len)
         s = s - 1
     end
-    cecho ("\n"..string.rep("-",sum_line_len).."\n")
+    cecho("\n")
 end
 
 function oswajanie.core:getlastanimal()
@@ -940,18 +933,26 @@ end
 
 function zryby:oswajasz()
     local pokarm = ""
-    if matches['imie'] ~= "" then
-        pokarm = matches['imie_food']
-        oswajanie.alias.insert_feeding_entry(matches['imie'], pokarm)
-    elseif matches['zwierze'] ~= "" then
-        pokarm = matches['food']
-        oswajanie.alias.insert_feeding_entry(matches['zwierze'], pokarm)
+    -- Nieaktywne grupy nazwane moga byc nil (nie tylko pustym stringiem).
+    local imie = matches['imie'] or ""
+    local imie_food = matches['imie_food'] or ""
+    local zwierze = matches['zwierze'] or ""
+    local food = matches['food'] or ""
+    local raw = matches['raw'] or ""
+
+    if imie ~= "" and imie_food ~= "" then
+        pokarm = imie_food
+        oswajanie.alias.insert_feeding_entry(imie, pokarm)
+    elseif zwierze ~= "" and food ~= "" then
+        pokarm = food
+        oswajanie.alias.insert_feeding_entry(zwierze, pokarm)
     else
         local animal = oswajanie.core:getlastanimal()
-        local raw = matches['raw']
-        if animal ~= "" and string.sub(raw, 1, string.len(animal)) == animal then
+        if animal ~= "" and string.sub(raw, 1, #animal + 1) == animal .. " " then
             pokarm = string.sub(raw, #animal + 2)
-            oswajanie.alias.insert_feeding_entry(animal, pokarm)
+            if pokarm ~= "" then
+                oswajanie.alias.insert_feeding_entry(animal, pokarm)
+            end
         end
     end
 
